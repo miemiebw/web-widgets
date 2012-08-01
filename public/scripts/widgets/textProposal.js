@@ -64,7 +64,7 @@
 
             console.dir($input.css('margin-left'));
             //设置下拉位置
-            $list.width($input.outerWidth(false))
+            $list.width($input.outerWidth(false)-2)
                 .css('top', $input.outerHeight(true))
                 .css('left', $input.css('margin-left'));
             if (opts.items) {
@@ -92,7 +92,7 @@
             $.each(items, function (index, item) {
                 var $li = $('<li></li>');
                 var $a = $('<a></a>').data('item', item)
-                    .text(opts.process(item))
+                    .html(opts.process(item))
                     .on('click', function (e) {
                         e.preventDefault();
                         var $this = $(this);

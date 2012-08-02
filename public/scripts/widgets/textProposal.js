@@ -11,7 +11,7 @@
         textProposal.options = options;
         $el.wrap('<div class="textProposal"></div>');
         textProposal.$list = $('<dl class="list clearfix"></dl>')
-            .appendTo($el.parent());
+            .appendTo($el.parent()).hide();
 
         textProposal.showHolder(true);
         $el.focus(function () {
@@ -88,7 +88,7 @@
             var $list = this.$list;
             var $input = this.$element;
             var opts = this.options;
-            $list.empty().show();
+            $list.empty();
             $.each(items, function (index, item) {
                 var $li = $('<li></li>');
                 var $a = $('<a></a>').data('item', item)
@@ -105,6 +105,9 @@
                     });
                 $li.append($a).appendTo($list);
             });
+            if($list.is(':hidden')){
+                $list.fadeIn('fast');
+            }
             if(opts.pageCount > 0){
                 var count = opts.pageCount;
                 if($('li',$list).length < opts.pageCount){
@@ -113,6 +116,8 @@
                 var ulminH = $('li',$list).eq(0).height() * count;
                 $list.height(ulminH);
             }
+
+
         },
         //键盘操作列表
         _keyboardAction: function(key){

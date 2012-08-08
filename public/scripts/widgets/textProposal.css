@@ -8,7 +8,7 @@
 }
 
 .textProposal .showHolder{
-    color: #d9d9d9;
+    color: #ccc;
 }
 
 .textProposal .list{
@@ -34,6 +34,7 @@
     display: block;
     padding: 0 5px;
     line-height: 20px;
+    text-decoration: none;
 }
 
 .textProposal .list li a.selected{

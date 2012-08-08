@@ -47,8 +47,6 @@
             if ($input.val() === '' || loading) {
                 $input.addClass('showHolder').val(this.options.placeHolder);
             }
-
-
         },
         hideHolder:function () {
             var $input = this.$element;
@@ -57,7 +55,6 @@
             }
         },
 
-
         showProposals:function (text) {
             console.dir(text);
             var $list = this.$list;
@@ -65,10 +62,11 @@
             var opts = this.options;
             var $this = this;
 
+            console.dir($input.css('margin-left'));
             //设置下拉位置
-            $list.width($input.outerWidth(true))
+            $list.width($input.outerWidth(false))
                 .css('top', $input.outerHeight(true))
-                .css('left', 0);
+                .css('left', $input.css('margin-left'));
             if (opts.items) {
                 $this._prcessProposals(opts.items);
             } else if (opts.url) {
@@ -116,6 +114,7 @@
                 $list.height(ulminH);
             }
         },
+        //键盘操作列表
         _keyboardAction: function(key){
             var $list = this.$list;
             var $alist = $('a',$list);

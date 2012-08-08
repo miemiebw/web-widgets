@@ -10,7 +10,7 @@
         textProposal.$element = $el;
         textProposal.options = options;
         $el.wrap('<div class="textProposal"></div>');
-        textProposal.$list = $('<dl class="list"></dl>')
+        textProposal.$list = $('<dl class="list clearfix"></dl>')
             .appendTo($el.parent());
 
         textProposal.showHolder(true);

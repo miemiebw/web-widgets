@@ -13,9 +13,6 @@
 
 .textProposal .list{
     position: absolute;
-    list-style: none;
-    margin: 0;
-    padding: 0;
     border-top: 1px solid #d9d9d9;
     border-bottom: 1px solid #d9d9d9;
     background: #fff;
@@ -27,10 +24,12 @@
 .textProposal .list li{
     border-left: 1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
-
+    float: left;
+    width: 100%;
 }
 
 .textProposal .list li a{
+    display: inline-block;
     display: block;
     padding: 0 5px;
     line-height: 20px;

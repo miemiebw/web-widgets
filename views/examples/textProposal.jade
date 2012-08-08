@@ -1,0 +1,28 @@
+extends ../layout
+
+block append link
+  link(rel='stylesheet', href='/scripts/widgets/textProposal.css')
+  style
+    #wrapper{
+      width: 300px;
+      margin:40px auto;
+    }
+block content
+  div#wrapper
+    input#search
+
+block append script
+  script(src='/scripts/widgets/textProposal.js');
+  script
+    $(document).ready(function(){
+      $('#search').textProposal({
+        items:[
+          'haahha',
+          'hohoho',
+          'heihei',
+          'hehehe',
+          'gaggagaga',
+          'lalalall'
+        ]
+      });
+    });

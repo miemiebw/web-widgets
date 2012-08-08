@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+html, body {
+    font-family: "微软雅黑", helvetica, arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+    width: 100%;
+    height: 100%;
+}
+
+/* 超链接*/
+a {
+    color: #b00;
+    text-decoration: none;
+}
+
+a {
+    blr: expression(this.onFocus=this.blur())
+}
+
+/*针对 IE*/
+a {
+    outline: none;
+}
+
+/*针对firefox等*/
+a:hover {
+    color: #b00;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+input {
+    font-size: 12px;
+    color: #333;
+}
+
+/*
+Layout
+*/
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both;
+}

@@ -1,0 +1,42 @@
+
+.textProposal{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    position: relative;
+    z-index: 100;
+}
+
+.textProposal .showHolder{
+    color: #d9d9d9;
+}
+
+.textProposal .list{
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    background: #fff;
+    z-index: 100;
+    overflow:hidden;
+    overflow-y:auto;
+}
+
+.textProposal .list li{
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+
+}
+
+.textProposal .list li a{
+    display: block;
+    padding: 0 5px;
+    line-height: 20px;
+}
+
+.textProposal .list li a.selected{
+    color: #fff;
+    background: #b00;
+}

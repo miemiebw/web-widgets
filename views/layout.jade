@@ -1,0 +1,12 @@
+doctype 5
+html
+  head
+    title= title
+    block link
+      link(rel='stylesheet', href='/styles/reset.css')
+      link(rel='stylesheet', href='/styles/base.css')
+  body
+    block content
+    block script
+      script(src='/scripts/jquery/jquery-1.7.2.min.js')
+      script(src='/scripts/plugins.js')

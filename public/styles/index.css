@@ -1,0 +1,13 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+ul {
+    list-style: disc;
+    margin: 20px;
+}

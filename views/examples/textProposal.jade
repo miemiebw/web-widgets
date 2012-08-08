@@ -6,10 +6,12 @@ block append link
     #wrapper{
       width: 300px;
       margin:40px auto;
+      line-height: 16px;
     }
 block content
   div#wrapper
-    input#search
+    input#search(style='vertical-align: middle;')
+    a.button(style='vertical-align: middle;margin-left:5px;') 搜索
 
 block append script
   script(src='/scripts/widgets/textProposal.js');
@@ -17,12 +19,12 @@ block append script
     $(document).ready(function(){
       $('#search').textProposal({
         items:[
-          'haahha',
-          'hohoho',
-          'heihei',
-          'hehehe',
-          'gaggagaga',
-          'lalalall'
+          '中船股份(600072)',
+          '人福医药(600079)',
+          '东方金钰(600086)',
+          '禾嘉股份(600093)',
+          '同方股份(600100)',
+          '美尔雅(600107)'
         ],
         pageCount: 5
       });

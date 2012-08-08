@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="use yahoo rest">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/textProposal.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/textProposal.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/textProposal.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/textProposal.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/styles/base.css" afterPath="$PROJECT_DIR$/public/styles/base.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/textProposal.jade" afterPath="$PROJECT_DIR$/views/examples/textProposal.jade" />
     </list>
     <ignored path="widgets.iws" />
@@ -41,7 +41,7 @@
       <file leaf-file-name="textProposal.jade" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/examples/textProposal.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="7" selection-start="558" selection-end="558" vertical-scroll-proportion="0.63712573">
+            <state line="13" column="59" selection-start="338" selection-end="338" vertical-scroll-proportion="0.29580837">
               <folding />
             </state>
           </provider>
@@ -50,7 +50,7 @@
       <file leaf-file-name="textProposal.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/scripts/widgets/textProposal.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0">
+            <state line="21" column="1" selection-start="372" selection-end="372" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -59,9 +59,9 @@
       <file leaf-file-name="base.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/styles/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="9" selection-start="507" selection-end="515" vertical-scroll-proportion="0.0">
+            <state line="52" column="21" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.0">
               <folding>
-                <marker date="1344406525781" expanded="true" signature="246:270" placeholder="{...}" />
+                <marker date="1344412143824" expanded="true" signature="246:270" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -101,12 +101,12 @@
         <option value="$PROJECT_DIR$/app/controllers/textProposal-controller.js" />
         <option value="$PROJECT_DIR$/views/index.jade" />
         <option value="$PROJECT_DIR$/views/layout.jade" />
-        <option value="$PROJECT_DIR$/views/examples/textProposal.jade" />
         <option value="$PROJECT_DIR$/public/styles/yahoo-rest.css" />
         <option value="$PROJECT_DIR$/public/styles/reset.css" />
-        <option value="$PROJECT_DIR$/public/styles/base.css" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/textProposal.js" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/textProposal.css" />
+        <option value="$PROJECT_DIR$/public/styles/base.css" />
+        <option value="$PROJECT_DIR$/views/examples/textProposal.jade" />
       </list>
     </option>
   </component>
@@ -409,7 +409,11 @@
       <created>1344406631418</created>
       <updated>1344406631418</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix in ie7 ie6">
+      <created>1344410195442</created>
+      <updated>1344410195442</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -473,7 +477,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix list postion" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix in ie7 ie6" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -489,6 +493,7 @@
     <MESSAGE value="init" />
     <MESSAGE value="use yahoo rest" />
     <MESSAGE value="fix list postion" />
+    <MESSAGE value="fix in ie7 ie6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -577,12 +582,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/styles/base.css">
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/textProposal.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="9" selection-start="507" selection-end="515" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1344406525781" expanded="true" signature="246:270" placeholder="{...}" />
-          </folding>
+        <state line="21" column="1" selection-start="372" selection-end="372" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -595,16 +598,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/textProposal.css">
+    <entry file="file://$PROJECT_DIR$/public/styles/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="52" column="21" selection-start="1182" selection-end="1182" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1344412143824" expanded="true" signature="246:270" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/examples/textProposal.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="7" selection-start="558" selection-end="558" vertical-scroll-proportion="0.63712573">
+        <state line="13" column="59" selection-start="338" selection-end="338" vertical-scroll-proportion="0.29580837">
           <folding />
         </state>
       </provider>

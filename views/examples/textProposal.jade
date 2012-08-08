@@ -6,11 +6,12 @@ block append link
     #wrapper{
       width: 300px;
       margin:40px auto;
-      line-height: 16px;
+
     }
 block content
-  div#wrapper
-    input#search(style='vertical-align: middle;')
+  div#wrapper.controller-group
+    label.label 关键字：
+    input#search(style='vertical-align: middle;margin-left:5px;width: 150px;')
     a.button(style='vertical-align: middle;margin-left:5px;') 搜索
 
 block append script

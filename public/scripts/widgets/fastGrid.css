@@ -3,10 +3,18 @@
 
 }
 
-.fastGrid .header{
-    text-align: center;
+.fastGrid .headWrapper{
+
 }
 
-.fastGrid .body{
+.fastGrid .headWrapper .thead{
+
+}
+
+.fastGrid .bodyWrapper{
+
+}
+
+.fastGrid .bodyWrapper .tbody{
 
 }

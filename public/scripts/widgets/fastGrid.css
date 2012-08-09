@@ -1,20 +1,46 @@
 
 .fastGrid {
+    border: 1px solid #ccc;
+    border-top: 0px;
+    overflow: hidden;
+}
+
+.fastGrid > .headWrapper{
+}
+
+.fastGrid > .headWrapper > .tableHead{
 
 }
 
-.fastGrid .headWrapper{
-
+.fastGrid > .bodyWrapper{
+    overflow: auto;
 }
 
-.fastGrid .headWrapper .thead{
-
+.fastGrid > .bodyWrapper > .tableBody{
 }
 
-.fastGrid .bodyWrapper{
 
+
+.fastGrid th,.fastGrid td{
+    border: 1px solid #ccc;
+    line-height: 2em;
+    text-align: center;
 }
 
-.fastGrid .bodyWrapper .tbody{
+.fastGrid th.first,.fastGrid td.first{
+    border-left: 0px;
+}
 
+.fastGrid th.last,.fastGrid td.last{
+}
+
+.fastGrid th{
+    font-weight: bold;
+}
+
+.fastGrid td{
+}
+
+.fastGrid td.topLine{
+    border-top: 0px;
 }

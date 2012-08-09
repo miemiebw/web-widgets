@@ -3,27 +3,52 @@ extends ../layout
 block append link
   link(rel='stylesheet', href='/scripts/widgets/fastGrid.css')
   style
-    #wrapper{
-      width: 400px;
+    .wrapper{
+      width: 600px;
       margin:40px auto;
     }
 block content
-  div#wrapper
+  div.wrapper
     table#hotTable
-      thead
-        tr
-          th 股票代码
-          th 股票名称
-          th 开盘价
-          th 收盘价
-          th 涨跌幅
-      tbody
-        tr
-          td 600000
-          td 浦发银行
-          td 12.22
-          td 12.53
-          td 2.15%
+
+  div.wrapper
+    div.fastGrid(style='width: 400px;height: 256px')
+      div.headWrapper(style='width: 446px;')
+        table.tableHead
+         thead
+           tr
+             th(style='width: 100px;') 股票代码
+             th(style='width: 100px;') 股票名称
+             th(style='width: 80px;') 开盘价
+             th(style='width: 80px;') 收盘价
+             th(style='width: 80px;') 涨跌幅
+
+      div.bodyWrapper
+        table.tableBody
+          tbody
+            tr
+              td 600000
+              td 浦发银行
+              td 12.22
+              td 12.53
+              td 2.15%
 
 block append script
   script(src='/scripts/widgets/fastGrid.js')
+  script
+    $(document).ready(function(){
+      $('#hotTable').fastGrid({
+        width: '400px',
+        height: '256px',
+        cols: [
+          {title:'股票代码', name:'secuCode', width: 100},
+          {title:'股票名称', name:'secuAbbr', width: 100},
+          {title:'开盘价', name:'prePrice', width: 80},
+          {title:'收盘价', name:'postPrice', width: 80},
+          {title:'涨跌幅', name:'range', width: 80}
+        ],
+        items: [
+          {secuCode:'600000', secuAbbr:'浦发银行', prePrice:12.22, postPrice:12.52, range:0.215}
+        ]
+      });
+    });

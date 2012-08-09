@@ -1,5 +1,4 @@
 /**
- * Created with JetBrains WebStorm.
  * User: meimeibw
  * Date: 12-8-9
  * Time: 下午2:03

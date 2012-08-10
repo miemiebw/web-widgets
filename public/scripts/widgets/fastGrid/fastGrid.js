@@ -74,27 +74,25 @@
                     $headTable.css('left',- $bodyWrapper.scrollLeft());
                 });
 
-
-
         },
 
         populate: function(items){
-            var $tbody = this.$tbody;//这里最好是先detach,以提高性能
+            var $tbody = this.$tbody.empty();//这里最好是先detach,以提高性能
             var opts = this.opts;
 
             if(items.length != 0){
+                var $thArr = $('th', this.$thead);
                 $.each(items, function(rowIndex, row){
                     var $tr = $('<tr></tr>').hover(function (e) {
-                        $(this).toggleClass('selected', e.type === 'mouseenter');
+                        $('td',this).toggleClass('hover', e.type === 'mouseenter');
                     });
-
-                    if(rowIndex % 2 === 1 ){
+                    var even = (rowIndex % 2 === 1);
+                    if(even){
                         $tr.addClass('even');
                     }
 
                     $.each(opts.cols, function(colIndex, col){
                         var $div = $('<div></div>');
-
 
                         var $td = $('<td></td>');
 
@@ -106,6 +104,14 @@
                         }
                         if(rowIndex === 0){
                             $td.addClass('topRow');
+                        }
+                        var $th = $thArr.eq(colIndex);
+                        if($th.data('sort')){
+                            if(even){
+                                $td.addClass('colSelectedEven');
+                            }else{
+                                $td.addClass('colSelected');
+                            }
                         }
 
                         $td.width(col.width)
@@ -133,6 +139,12 @@
                 this.$bodyWrapper.css('overflow-x', 'scroll');
             }
         },
+
+        setupStyle: function(){
+            var $tbody = this.$tbody;
+            $('tr:even', $body).addClass('even');
+        },
+
         //绑定排序功能
         bindSort: function($th){
             var thisObject = this;
@@ -140,7 +152,7 @@
 
             $th.append($('<div class="sort"></div>'));
             $th.on('click', function(){
-                thisObject.clearSortStatus();
+                thisObject.clearSortStatus($('th',$th.parent()).index($th));
                 var $this = $(this);
                 if(!$this.data('sort') || $this.data('sort') === 'desc'){
                     $this.data('sort','asc');
@@ -148,7 +160,9 @@
                     $this.data('sort','desc');
                 }
                 $this.mouseenter();
+                thisObject.populate(opts.items);
                 thisObject.processSort($('th',$th.parent()).index($th), $this.data('sort'));
+
             }).on('mouseenter', function(){
                 var $this = $(this);
                 $('.sort', $this).removeClass('up').removeClass('dn');
@@ -172,11 +186,22 @@
             var opts = this.opts;
             console.log('name: ',opts.cols[index].name);
             console.log('status: ', status);
+
+            this.$tbody.find('td').filter(function(){
+                return $(this).index() === index;
+            }).sortElements(function(a, b){
+                return $(a).text() > $(b).text() ? (status === 'asc' ? -1 : 1) : (status === 'asc' ? 1 : -1);
+            }, function(){
+                return this.parentNode;
+            });
+
         },
         //清除排序状态
-        clearSortStatus: function(){
+        clearSortStatus: function(colIndex){
             $('.sort', this.$thead).removeClass('up').removeClass('dn').each(function(index,item){
-               $(item).parent().data('sort',null);
+                if(colIndex != index){
+                    $(item).parent().data('sort',null);
+                }
             });
         }
     };
@@ -205,4 +230,50 @@
     };
 
     $.fn.fastGrid.Constructor = FastGrid;
+
+    $.fn.sortElements = (function(){
+
+        var sort = [].sort;
+
+        return function(comparator, getSortable) {
+
+            getSortable = getSortable || function(){return this;};
+
+            var placements = this.map(function(){
+
+                var sortElement = getSortable.call(this),
+                    parentNode = sortElement.parentNode,
+
+                // Since the element itself will change position, we have
+                // to have some way of storing its original position in
+                // the DOM. The easiest way is to have a 'flag' node:
+                    nextSibling = parentNode.insertBefore(
+                        document.createTextNode(''),
+                        sortElement.nextSibling
+                    );
+
+                return function() {
+
+                    if (parentNode === this) {
+                        throw new Error(
+                            "You can't sort elements if any one is a descendant of another."
+                        );
+                    }
+
+                    // Insert before flag:
+                    parentNode.insertBefore(this, nextSibling);
+                    // Remove flag:
+                    parentNode.removeChild(nextSibling);
+
+                };
+
+            });
+
+            return sort.call(this, comparator).each(function(i){
+                placements[i].call(getSortable.call(this));
+            });
+
+        };
+
+    })();
 }(window.jQuery);

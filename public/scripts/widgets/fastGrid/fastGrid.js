@@ -175,7 +175,9 @@
         },
         //清除排序状态
         clearSortStatus: function(){
-            $('.sort', this.$thead).removeClass('up').removeClass('dn').data('sort',null);
+            $('.sort', this.$thead).removeClass('up').removeClass('dn').each(function(index,item){
+               $(item).parent().data('sort',null);
+            });
         }
     };
 

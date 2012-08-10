@@ -40,13 +40,13 @@
 }
 
 .fastGrid th{
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ddd;
 
     line-height: 27px;
     font-weight: bold;
 }
 .fastGrid td{
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     line-height: 24px;
 }
 

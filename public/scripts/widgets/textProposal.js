@@ -153,7 +153,7 @@
     $.fn.textProposal.defaults = {
         placeHolder:'请输入...',
         url:null,
-        paramName: 'p',
+        paramName: 'q',
         items:null,
         startCharLength: 0,
         pageCount: 10,

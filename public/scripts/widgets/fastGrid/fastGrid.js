@@ -21,7 +21,7 @@
         $elParent.append(this.$fastGrid);
 
         this.init();
-        this.populate();
+        this.populate(options.items);
     };
 
     FastGrid.prototype = {
@@ -64,23 +64,31 @@
             var $headWrapper = this.$headWrapper;
             var $bodyWrapper = this.$bodyWrapper;
             var $headTable = this.$thead.parent();
-            $bodyWrapper.width(opts.width-2)
-                .height(this.$fastGrid.height() - $headWrapper.outerHeight(true)-2)
+            $bodyWrapper.width(opts.width)
+                .height(this.$fastGrid.height() - $headWrapper.outerHeight(true))
                 .on('scroll', function(e){
                     $headTable.css('left',- $bodyWrapper.scrollLeft());
                 });
         },
 
-        populate: function(){
+        populate: function(items){
             var $tbody = this.$tbody;//这里最好是先detach,以提高性能
             var opts = this.opts;
 
-            if(opts.items.length != 0){
-                $.each(opts.items, function(rowIndex, row){
-                    var $tr = $('<tr></tr>');
+            if(items.length != 0){
+                $.each(items, function(rowIndex, row){
+                    var $tr = $('<tr></tr>').hover(function (e) {
+                        $(this).toggleClass('selected', e.type === 'mouseenter');
+                    });
+
+                    if(rowIndex % 2 === 1 ){
+                        $tr.addClass('even');
+                    }
+
                     $.each(opts.cols, function(colIndex, col){
-                        var $div = $('<div></div>')
-                            .html(row[col.name]);
+                        var $div = $('<div></div>');
+
+
                         var $td = $('<td></td>');
 
                         if(colIndex === 0){
@@ -95,14 +103,23 @@
 
                         $td.width(col.width)
                             .append($div);
-
+                        if(col.renderer){
+                            var result = col.renderer(row[col.name], row, items, $tr, rowIndex);
+                            if( result instanceof jQuery){
+                                $div.append(result);
+                            }else{
+                                $div.html(result);
+                            }
+                        }else{
+                            $div.html(row[col.name]);
+                        }
                         $tr.append($td);
                     });
                     $tbody.append($tr);
                 });
 
             }
-            $tbody.parent().width( this.$thead.parent().width());
+            $tbody.parent().width( this.$thead.parent().width()+1);
         }
     };
 

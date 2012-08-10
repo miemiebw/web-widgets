@@ -1,7 +1,7 @@
 extends ../layout
 
 block append link
-  link(rel='stylesheet', href='/scripts/widgets/fastGrid.css')
+  link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
   style
     .wrapper{
       width: 600px;
@@ -34,13 +34,21 @@ block content
               td 2.15%
 
 block append script
-  script(src='/scripts/widgets/fastGrid.js')
+  script(src='/scripts/widgets/fastGrid/fastGrid.js')
   script
     $(document).ready(function(){
       $('#hotTable').fastGrid({
         width: '400px',
-        height: '256px',
+        height: 256,
         cols: [
+          {title:'行情', name:'', width: 40, renderer: function(val,item,items,$row,rowIndex){
+            console.log('val: ',val);
+            console.log('item: ',item);
+            console.log('items: ',items);
+            console.log('$row: ',$row);
+            console.log('rowIndex: ',rowIndex);
+            return '1';
+          }},
           {title:'股票代码', name:'secuCode', width: 100},
           {title:'股票名称', name:'secuAbbr', width: 100},
           {title:'开盘价', name:'prePrice', width: 80},

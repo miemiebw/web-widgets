@@ -1,13 +1,12 @@
 
 .fastGrid {
-
+    border: 1px solid #ccc;
     border-top: 0px;
     overflow: hidden;
 }
 
 .fastGrid > .headWrapper{
-    border: 1px solid #ccc;
-    border-bottom: 0px;
+    background: url(images/header_bg.gif) repeat-x;
     position: relative;
     overflow: hidden;
 }
@@ -17,27 +16,38 @@
 }
 
 .fastGrid > .bodyWrapper{
-    border: 1px solid #ccc;
-
     overflow: auto;
 }
 
 .fastGrid > .bodyWrapper > .tableBody{
 }
 
+.fastGrid tr{
 
+}
+
+.fastGrid tr.even{
+    background: #f7f7f7;
+}
+
+.fastGrid tr.selected{
+    background: #FFEDAC;
+}
 
 .fastGrid th,.fastGrid td{
-    line-height: 2em;
+
     text-align: center;
 }
 
 .fastGrid th{
     border-left: 1px solid #ccc;
+
+    line-height: 27px;
     font-weight: bold;
 }
 .fastGrid td{
     border: 1px solid #ccc;
+    line-height: 24px;
 }
 
 .fastGrid th.first,.fastGrid td.first{
@@ -45,9 +55,8 @@
 }
 
 .fastGrid th.last,.fastGrid td.last{
-    border-right: 0px;
+
 }
 
 .fastGrid td.topLine{
-    border-top: 0px;
 }

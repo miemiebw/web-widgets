@@ -132,7 +132,7 @@
 
             $('tr,td', this.$tbody).removeClass();
 
-            $('tr:even', $tbody).addClass('even');
+            $('tr:odd', $tbody).addClass('even');
             $('tr > td:first-child', $tbody).addClass('first');
             $('tr > td:last-child', $tbody).addClass('last');
             $('tr:first > td', $tbody).addClass('topRow');

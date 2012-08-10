@@ -2,24 +2,26 @@
 .fastGrid {
     border: 1px solid #ccc;
     border-top: 0px;
-    overflow: hidden;
+    position: relative;
+    overflow: hidden;;
 }
 
-.fastGrid > .headWrapper{
+.fastGrid  .headWrapper{
     background: url(images/header_bg.gif) repeat-x;
     position: relative;
     overflow: hidden;
 }
 
-.fastGrid > .headWrapper > .tableHead{
+.fastGrid .headWrapper .tableHead{
     position: relative;
 }
 
-.fastGrid > .bodyWrapper{
-    overflow: auto;
+.fastGrid .bodyWrapper{
+    overflow:auto;
 }
 
-.fastGrid > .bodyWrapper > .tableBody{
+.fastGrid .bodyWrapper .tableBody{
+
 }
 
 .fastGrid tr{
@@ -35,13 +37,11 @@
 }
 
 .fastGrid th,.fastGrid td{
-
     text-align: center;
 }
 
 .fastGrid th{
     border-left: 1px solid #ddd;
-
     line-height: 27px;
     font-weight: bold;
 }

@@ -69,6 +69,9 @@
                 .on('scroll', function(e){
                     $headTable.css('left',- $bodyWrapper.scrollLeft());
                 });
+
+
+
         },
 
         populate: function(items){
@@ -120,6 +123,12 @@
 
             }
             $tbody.parent().width( this.$thead.parent().width()+1);
+
+            //fix:IE8没有下方滚动条，不知道为什么,但是y滚动条的时候要算滚动条宽度才行
+            console.log($tbody.parent().width() +' '+this.$bodyWrapper.width());
+            if($tbody.parent().width() > this.$bodyWrapper.width()){
+                this.$bodyWrapper.css('overflow-x', 'scroll');
+            }
         }
     };
 

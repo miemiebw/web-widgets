@@ -4,7 +4,7 @@ block append link
   link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
   style
     .wrapper{
-      width: 600px;
+      width: 800px;
       margin:40px auto;
     }
     .btnPrice{
@@ -41,27 +41,6 @@ block content
   div.wrapper
     table#hotTable
 
-  div.wrapper
-    div.fastGrid(style='width: 400px;height: 256px')
-      div.headWrapper(style='width: 446px;')
-        table.tableHead
-         thead
-           tr
-             th(style='width: 100px;') 股票代码
-             th(style='width: 100px;') 股票名称
-             th(style='width: 80px;') 开盘价
-             th(style='width: 80px;') 收盘价
-             th(style='width: 80px;') 涨跌幅
-
-      div.bodyWrapper
-        table.tableBody
-          tbody
-            tr
-              td 600000
-              td 浦发银行
-              td 12.22
-              td 12.53
-              td 2.15%
 
 block append script
   script(src='/scripts/widgets/fastGrid/fastGrid.js')

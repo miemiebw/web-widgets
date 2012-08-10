@@ -86,25 +86,11 @@
                     var $tr = $('<tr></tr>').hover(function (e) {
                         $('td',this).toggleClass('hover', e.type === 'mouseenter');
                     });
-                    var even = (rowIndex % 2 === 1);
-                    if(even){
-                        $tr.addClass('even');
-                    }
-
                     $.each(opts.cols, function(colIndex, col){
                         var $div = $('<div></div>');
 
                         var $td = $('<td></td>');
 
-                        if(colIndex === 0){
-                            $td.addClass('first');
-                        }
-                        if(colIndex === opts.cols.length-1){
-                            $td.addClass('last');
-                        }
-                        if(rowIndex === 0){
-                            $td.addClass('topRow');
-                        }
                         var $th = $thArr.eq(colIndex);
                         if($th.data('sort')){
                             if(even){
@@ -114,8 +100,7 @@
                             }
                         }
 
-                        $td.width(col.width)
-                            .append($div);
+                        $td.width(col.width).append($div);
                         if(col.renderer){
                             var result = col.renderer(row[col.name], row, items, $tr, rowIndex);
                             if( result instanceof jQuery){
@@ -138,11 +123,26 @@
             if($tbody.parent().width() > this.$bodyWrapper.width()){
                 this.$bodyWrapper.css('overflow-x', 'scroll');
             }
+
+            this.setupStyle();
         },
 
         setupStyle: function(){
             var $tbody = this.$tbody;
-            $('tr:even', $body).addClass('even');
+
+            $('tr,td', this.$tbody).removeClass();
+
+            $('tr:even', $tbody).addClass('even');
+            $('tr > td:first-child', $tbody).addClass('first');
+            $('tr > td:last-child', $tbody).addClass('last');
+            $('tr:first > td', $tbody).addClass('topRow');
+
+
+            var sortIndex = $('th',this.$thead).index($('th',this.$thead).filter(function(){
+                return $(this).data('sort') === 'asc' || $(this).data('sort') === 'desc';
+            }));
+            console.log('sortIndex: ',sortIndex);
+            $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected').filter(':even').addClass('colSelectedEven');
         },
 
         //绑定排序功能
@@ -160,7 +160,7 @@
                     $this.data('sort','desc');
                 }
                 $this.mouseenter();
-                thisObject.populate(opts.items);
+                //thisObject.populate(opts.items);
                 thisObject.processSort($('th',$th.parent()).index($th), $this.data('sort'));
 
             }).on('mouseenter', function(){
@@ -187,6 +187,8 @@
             console.log('name: ',opts.cols[index].name);
             console.log('status: ', status);
 
+
+
             this.$tbody.find('td').filter(function(){
                 return $(this).index() === index;
             }).sortElements(function(a, b){
@@ -194,6 +196,8 @@
             }, function(){
                 return this.parentNode;
             });
+
+            this.setupStyle();
 
         },
         //清除排序状态

@@ -14,7 +14,7 @@ block append link
       margin: 0px auto;
       background: url(../images/botton_g1.gif) no-repeat;
     }
-    .btnPrice.selected{
+    .btnPriceSelected{
       background: url(../images/botton_g2.gif) no-repeat;
     }
     .btnDeep{
@@ -24,7 +24,7 @@ block append link
       margin: 0px auto;
       background: url(../images/botton_g4.gif) no-repeat;
     }
-    .btnDeep.selected{
+    .btnDeepSelected{
       background: url(../images/botton_g3.gif) no-repeat;
     }
     .btnCal{
@@ -34,7 +34,7 @@ block append link
       margin: 0px auto;
       background: url(../images/rl.png) no-repeat;
     }
-    .btnCal.selected{
+    .btnCalSelected{
       background: url(../images/rl1.png) no-repeat;
     }
 block content
@@ -52,7 +52,7 @@ block append script
         cols: [
           {title:'行情', name:'', width: 40, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
-              $(this).toggleClass('selected', e.type === 'mouseenter');
+              $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
             });
             return $a;
           }},
@@ -79,13 +79,13 @@ block append script
           {title:'市值', name:'marketValue', width: 80},
           {title:'深度', name:'', width: 50, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnDeep"></a>').hover(function (e) {
-              $(this).toggleClass('selected', e.type === 'mouseenter');
+              $(this).toggleClass('btnDeepSelected', e.type === 'mouseenter');
             });
             return $a;
           }},
           {title:'日历', name:'', width: 50, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnCal"></a>').hover(function (e) {
-              $(this).toggleClass('selected', e.type === 'mouseenter');
+              $(this).toggleClass('btnCalSelected', e.type === 'mouseenter');
             });
             return $a;
           }}

@@ -27,6 +27,7 @@
     FastGrid.prototype = {
 
         init: function(){
+            var thisObject = this;
             var $thead = this.$thead;
             var opts = this.opts;
             //设置高宽
@@ -52,9 +53,12 @@
                         }else{
                             contentWidth += col.width+1;
                         }
-
                         $th.width(col.width);
                     }
+                    if(opts.sort){
+                        thisObject.bindSort($th);
+                    }
+
                     $tr.append($th);
                 });
                 this.$thead.parent().width(contentWidth);
@@ -101,7 +105,7 @@
                             $td.addClass('last');
                         }
                         if(rowIndex === 0){
-                            $td.addClass('topLine');
+                            $td.addClass('topRow');
                         }
 
                         $td.width(col.width)
@@ -125,10 +129,53 @@
             $tbody.parent().width( this.$thead.parent().width()+1);
 
             //fix:IE8没有下方滚动条，不知道为什么,但是y滚动条的时候要算滚动条宽度才行
-            console.log($tbody.parent().width() +' '+this.$bodyWrapper.width());
             if($tbody.parent().width() > this.$bodyWrapper.width()){
                 this.$bodyWrapper.css('overflow-x', 'scroll');
             }
+        },
+        //绑定排序功能
+        bindSort: function($th){
+            var thisObject = this;
+            var opts = this.opts;
+
+            $th.append($('<div class="sort"></div>'));
+            $th.on('click', function(){
+                thisObject.clearSortStatus();
+                var $this = $(this);
+                if(!$this.data('sort') || $this.data('sort') === 'desc'){
+                    $this.data('sort','asc');
+                }else if($this.data('sort') === 'asc'){
+                    $this.data('sort','desc');
+                }
+                $this.mouseenter();
+                thisObject.processSort($('th',$th.parent()).index($th), $this.data('sort'));
+            }).on('mouseenter', function(){
+                var $this = $(this);
+                $('.sort', $this).removeClass('up').removeClass('dn');
+                if(!$this.data('sort') || $this.data('sort') === 'desc'){
+                    $('.sort', $this).addClass('up').css('left',($this.width()-7)/2);
+                }else if($this.data('sort') === 'asc'){
+                    $('.sort', $this).addClass('dn').css('left',($this.width()-7)/2);
+                }
+            }).on('mouseleave', function(){
+                var $this = $(this);
+                $('.sort', $this).removeClass('up').removeClass('dn');
+                if($this.data('sort') === 'asc'){
+                    $('.sort', $this).addClass('up').css('left',($this.width()-7)/2);
+                }else if($this.data('sort') === 'desc'){
+                    $('.sort', $this).addClass('dn').css('left',($this.width()-7)/2);
+                }
+            });
+        },
+        //处理排序
+        processSort: function(index, status){
+            var opts = this.opts;
+            console.log('name: ',opts.cols[index].name);
+            console.log('status: ', status);
+        },
+        //清除排序状态
+        clearSortStatus: function(){
+            $('.sort', this.$thead).removeClass('up').removeClass('dn').data('sort',null);
         }
     };
 
@@ -148,6 +195,10 @@
         params: false, //可以是object也可以是function
         items: [],
         cols: [],
+        sort: true,
+        sortName: false,
+        sortStatus: 'asc',
+        remoteSort: false,
         autoLoad: true
     };
 

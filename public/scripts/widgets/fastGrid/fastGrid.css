@@ -44,6 +44,7 @@
     border-left: 1px solid #ddd;
     line-height: 27px;
     font-weight: bold;
+    position: relative;
 }
 .fastGrid td{
     border: 1px solid #ddd;
@@ -58,5 +59,24 @@
 
 }
 
-.fastGrid td.topLine{
+.fastGrid td.topRow{
+}
+
+.fastGrid th .sort{
+    width: 7px;
+    height: 4px;
+    overflow: hidden;
+    position: absolute;
+    top: 2px;
+    display: none;
+}
+
+.fastGrid th .up{
+    background: url(images/up.png);
+    display: block;
+}
+
+.fastGrid th .dn{
+    background: url(images/dn.png);
+    display: block;
 }

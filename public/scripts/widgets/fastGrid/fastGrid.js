@@ -44,9 +44,15 @@
                     if(index === opts.cols.length-1){
                         $th.addClass('last');
                     }
-                    if(col.title){
-                        $th.html(col.title);
+                    var $div = $('<div class="content"></div>');
+                    if(col.align){
+                        $div.css('text-align',col.align);
                     }
+
+                    if(col.title){
+                        $div.html(col.title);
+                    }
+                    $th.append($div);
                     if(col.width){
                         if(index === 0){
                             contentWidth += col.width+2;
@@ -98,6 +104,10 @@
                             }else{
                                 $td.addClass('colSelected');
                             }
+                        }
+
+                        if(col.align){
+                            $div.css('text-align', col.align);
                         }
 
                         $td.width(col.width).append($div);
@@ -188,11 +198,21 @@
             console.log('status: ', status);
 
 
-
+            var col = opts.cols[index];
             this.$tbody.find('td').filter(function(){
                 return $(this).index() === index;
             }).sortElements(function(a, b){
-                return $(a).text() > $(b).text() ? (status === 'asc' ? -1 : 1) : (status === 'asc' ? 1 : -1);
+                var av = $(a).text();
+                var bv = $(b).text();
+                if(col.type === 'float'){
+                    av = parseFloat(av);
+                    bv = parseFloat(bv);
+                }else if(col.type === 'int'){
+                    av = parseInt(av, 10);
+                    bv = parseInt(bv, 10)
+                }
+
+                return av > bv ? (status === 'asc' ? -1 : 1) : (status === 'asc' ? 1 : -1);
             }, function(){
                 return this.parentNode;
             });

@@ -90,3 +90,7 @@
     background: url(images/dn.png);
     display: block;
 }
+.fastGrid td div,
+.fastGrid th div.content{
+    margin: 0 5px;
+}

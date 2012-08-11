@@ -60,7 +60,7 @@ block append script
           {title:'名称', name:'', width: 120, renderer: function(val,item){
             return item.secuAbbr + ' ' + item.secuCode;
           }},
-          {title:'最新价', name:'newPrice', width: 80, renderer: function(val,item){
+          {title:'最新价', name:'newPrice', width: 80, align: 'right', renderer: function(val,item){
             if(item.range > 0){
               return '<span style="color: #b00">' + val + '</span>';
             }else if(item.range < 0){
@@ -68,8 +68,8 @@ block append script
             }
             return val;
           }},
-          {title:'买入价', name:'inPrice', width: 80},
-          {title:'涨跌幅%', name:'range', width: 80, renderer: function(val,item){
+          {title:'买入价', name:'inPrice',type: 'float', width: 80, align: 'right'},
+          {title:'涨跌幅%', name:'range', width: 80, align: 'right', renderer: function(val,item){
             if(item.range > 0){
               return '<span style="color: #b00">' + val + '</span>';
             }else if(item.range < 0){
@@ -77,7 +77,7 @@ block append script
             }
             return val;
           }},
-          {title:'市值', name:'marketValue', width: 80},
+          {title:'市值', name:'marketValue', width: 80, align: 'right'},
           {title:'深度', name:'', width: 50, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnDeep"></a>').hover(function (e) {
               $(this).toggleClass('btnDeepSelected', e.type === 'mouseenter');
@@ -93,15 +93,15 @@ block append script
         ],
         items: [
           {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:-0.21 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:-0.215 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.215 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.215 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.215 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.215 ,marketValue: '5.38万'},
-          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.215 ,marketValue: '5.38万'}
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+          {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'}
 
         ]
       });

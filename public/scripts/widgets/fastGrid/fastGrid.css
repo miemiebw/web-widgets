@@ -6,6 +6,7 @@
 }
 
 .fastGrid .headWrapper{
+    width: 9999px;
     background: url(images/header_bg.gif) repeat-x;
     position: relative;
     overflow: hidden;
@@ -16,6 +17,7 @@
 }
 
 .fastGrid .bodyWrapper{
+    width: 9999px;
     overflow:auto;
 }
 
@@ -92,8 +94,8 @@
 }
 
 /*如果宽度不够了就显示省略号*/
-.fastGrid .tableHead th div.content,
-.fastGrid .tableBody td div.content{
+.fastGrid .tableHead th .content,
+.fastGrid .tableBody td .content{
     margin: 0 5px;
     text-align: left;
     white-space: nowrap;

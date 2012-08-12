@@ -46,10 +46,6 @@
             var $tbody = this.$tbody;
             var $noRecord = this.$noRecord;
 
-            //设置headWrapper和bodyWrapper宽度
-            $headWrapper.width(9999); //先设一个很大的宽度，让内部表格可以伸展
-
-
             var $tr = $('<tr></tr>');
             if(opts.cols){
                 $.each(opts.cols, function(index, col){
@@ -85,15 +81,9 @@
             }
             $thead.append($tr);
 
-            //调整各包装器
-            $headWrapper.width($thead.parent().outerWidth(true));//收缩包装器
-            $bodyWrapper.width($fastGrid.width())
-                .height($fastGrid.height() - $headWrapper.outerHeight(true))
-                .on('scroll', function(e){
-                    $thead.parent().css('left',- $bodyWrapper.scrollLeft());
-                });
-
-            $tbody.parent().width($thead.parent().width());
+            $bodyWrapper.on('scroll', function(e){
+                $thead.parent().css('left',- $bodyWrapper.scrollLeft());
+            });
 
             $noRecord.css({
                 'left': ($fastGrid.width() - $noRecord.width()) / 2,
@@ -160,6 +150,7 @@
                         if(col.align){
                             $content.css('text-align', col.align);
                         }
+
                         if(col.renderer){
                             var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
                             if(result instanceof jQuery){
@@ -201,7 +192,9 @@
             var sortIndex = $('.title',$thead).index($('.title',$thead).filter(function(){
                 return $(this).data('sort') === 'asc' || $(this).data('sort') === 'desc';
             }));
-            $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected').filter(':even').addClass('colSelectedEven');
+            $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected')
+                .filter(':even').addClass('colSelectedEven');
+
         },
 
         bindSorter: function(colIndex, $th){
@@ -276,16 +269,46 @@
         },
 
         adjustColumn: function(){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
+            var $thead = this.$thead;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $tbody = this.$tbody;
+            var $noRecord = this.$noRecord;
+
+            $headWrapper.width(9999);
+            $headWrapper.width(9999);
+
             var thArr = $('th', this.$thead);
             var tdArr = $('tr:first > td', this.$tbody);
             $.each(thArr, function(index, th){
                 var $th = $(th);
-                if($th.width() > tdArr.eq(index).width()){
-                    tdArr.eq(index).width($th.width());
+
+                if(opts.textEllipsis){
+                    if($th.width() > tdArr.eq(index).width()){
+                        tdArr.eq(index).width($th.width());
+                    }
+
+                    $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
                 }else{
-                    $th.width(tdArr.eq(index).width());
+                    if($th.width() > tdArr.eq(index).width()){
+                        tdArr.eq(index).width($th.width());
+                    }else{
+                        $th.width(tdArr.eq(index).width());
+                    }
                 }
+
             });
+
+            $headWrapper.width($thead.parent().outerWidth(true));//收缩包装器
+            $bodyWrapper.width($fastGrid.width())
+                .height($fastGrid.height() - $headWrapper.outerHeight(true));
+            $tbody.parent().width($thead.parent().width());
+        },
+
+        bindAdjustColumn: function(){
+
         }
     };
 
@@ -312,7 +335,8 @@
         sortName: false,
         sortStatus: 'asc',
         remoteSort: false,
-        autoLoad: true
+        autoLoad: true,
+        textEllipsis: true
 
     };
 

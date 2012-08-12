@@ -1,12 +1,11 @@
 
 .fastGrid {
     border: 1px solid #ccc;
-    border-top: 0px;
     position: relative;
-    overflow: hidden;;
+    overflow: hidden;
 }
 
-.fastGrid  .headWrapper{
+.fastGrid .headWrapper{
     background: url(images/header_bg.gif) repeat-x;
     position: relative;
     overflow: hidden;
@@ -24,73 +23,85 @@
 
 }
 
-.fastGrid tr{
+/*tableHead*/
 
-}
-
-.fastGrid tr.even{
-    background: #ededed;
-}
-
-
-
-.fastGrid th,.fastGrid td{
-    text-align: center;
-}
-
-.fastGrid th{
-    border-left: 1px solid #ddd;
+.fastGrid .tableHead th{
+    border-right: 1px solid #ddd;
     line-height: 27px;
     font-weight: bold;
     position: relative;
 }
-.fastGrid td{
+
+.fastGrid .tableHead th .title{
+    vertical-align: middle;
+    line-height: .9em;
+    color: #000;
+}
+
+.fastGrid .tableHead th .sort{
+    margin-left: 2px;
+    width: 7px;
+    height: 4px;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.fastGrid .tableHead th .asc{
+    background: url(images/up.png);
+}
+
+.fastGrid .tableHead th .desc{
+    background: url(images/dn.png);
+}
+
+/*tableBody。*/
+.fastGrid .tableBody tr{
+
+}
+
+.fastGrid .tableBody tr.even{
+    background: #ededed;
+}
+
+.fastGrid .tableBody td{
     border: 1px solid #ddd;
     line-height: 24px;
 }
 
-.fastGrid td.colSelected{
+.fastGrid .tableBody td.colSelected{
     background: #efefef;
 }
 
-.fastGrid td.colSelectedEven{
+.fastGrid .tableBody td.colSelectedEven{
     background: #e9e9e9;
 }
 
-.fastGrid th.first,.fastGrid td.first{
-    border-left: 0px;
-}
-
-.fastGrid th.last,.fastGrid td.last{
-
-}
-
-.fastGrid td.topRow{
-}
-
-.fastGrid td.hover{
+.fastGrid .tableBody td.hover{
     background: #FFEDAC;
 }
 
-.fastGrid th .sort{
-    width: 7px;
-    height: 4px;
-    overflow: hidden;
-    position: absolute;
-    top: 2px;
-    display: none;
+.fastGrid .tableHead th.first,.fastGrid .tableBody td.first{
+    border-left: 0px;
 }
 
-.fastGrid th .up{
-    background: url(images/up.png);
-    display: block;
+.fastGrid .tableHead th.last,.fastGrid .tableBody td.last{
+
 }
 
-.fastGrid th .dn{
-    background: url(images/dn.png);
-    display: block;
-}
-.fastGrid td div,
-.fastGrid th div.content{
+/*如果宽度不够了就显示省略号*/
+.fastGrid .tableHead th div.content,
+.fastGrid .tableBody td div.content{
     margin: 0 5px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fastGrid .noRecord{
+    text-align: center;
+    position: absolute;
 }

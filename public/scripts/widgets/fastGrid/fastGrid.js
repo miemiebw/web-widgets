@@ -9,33 +9,49 @@
         var $el = $(element);
         this.opts = options;
 
-        var $elParent = $el.parent();
-        $el.detach();
-        this.$fastGrid = $('<div class="fastGrid"></div>');
-        this.$headWrapper = $('<div class="headWrapper"></div>').appendTo(this.$fastGrid);
-        this.$thead = $('<thead></thead>').wrap('<table class="tableHead"></table>');
-        this.$thead.parent().appendTo(this.$headWrapper);
-        this.$bodyWrapper = $('<div class="bodyWrapper"></div>').appendTo(this.$fastGrid);
-        this.$tbody = $('<tbody></tbody>').appendTo($el);
-        $el.addClass('tableBody').appendTo(this.$bodyWrapper);
-        $elParent.append(this.$fastGrid);
-
-        this.init();
-        this.populate(options.items);
+        this.init($el);
+        this.initHeader();
+        if(this.opts.autoLoad){
+            this.load();
+        }
     };
 
     FastGrid.prototype = {
 
-        init: function(){
-            var thisObject = this;
-            var $thead = this.$thead;
-            var opts = this.opts;
+        init: function($el){
+            var $elParent = $el.parent();
+            $el.detach();
+            this.$fastGrid = $('<div class="fastGrid"></div>');
+            this.$headWrapper = $('<div class="headWrapper"></div>').appendTo(this.$fastGrid);
+            this.$thead = $('<thead></thead>').wrap('<table class="tableHead"></table>');
+            this.$thead.parent().appendTo(this.$headWrapper);
+            this.$bodyWrapper = $('<div class="bodyWrapper"></div>').appendTo(this.$fastGrid);
+            this.$tbody = $('<tbody></tbody>').appendTo($el);
+            $el.addClass('tableBody').appendTo(this.$bodyWrapper);
+            $elParent.append(this.$fastGrid);
+
             //设置高宽
-            this.$fastGrid.width(opts.width).height(opts.height);
+            this.$fastGrid.width(this.opts.width).height(this.opts.height);
+
+            this.$noRecord = $('<span></span>').html(this.opts.noRecord).addClass('noRecord').appendTo(this.$fastGrid);
+        },
+
+        initHeader: function(){
+            var thisObject = this;
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
+            var $thead = this.$thead;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $tbody = this.$tbody;
+            var $noRecord = this.$noRecord;
+
+            //设置headWrapper和bodyWrapper宽度
+            $headWrapper.width(9999); //先设一个很大的宽度，让内部表格可以伸展
+
 
             var $tr = $('<tr></tr>');
-            if(opts.cols.length != 0){
-                var contentWidth = 0;
+            if(opts.cols){
                 $.each(opts.cols, function(index, col){
                     var $th = $('<th></th>');
                     if(index === 0){
@@ -44,101 +60,125 @@
                     if(index === opts.cols.length-1){
                         $th.addClass('last');
                     }
-                    var $div = $('<div class="content"></div>');
-                    if(col.align){
-                        $div.css('text-align',col.align);
-                    }
 
-                    if(col.title){
-                        $div.html(col.title);
-                    }
-                    $th.append($div);
                     if(col.width){
-                        if(index === 0){
-                            contentWidth += col.width+2;
-                        }else{
-                            contentWidth += col.width+1;
-                        }
                         $th.width(col.width);
                     }
-                    if(opts.sort){
-                        thisObject.bindSort($th);
+
+                    //设置一个文字包装器
+                    var $content = $('<div class="content"></div>').appendTo($th);
+                    if(col.align){
+                        $content.css('text-align', col.align);
+                    }
+                    if(col.title){
+                        $('<span class="title"></span>')
+                            .html(col.title).appendTo($content);
+
+                    }
+                    //如果可以排序
+                    if(col.sortable){
+                        thisObject.bindSorter(index, $th);
                     }
 
                     $tr.append($th);
                 });
-                this.$thead.parent().width(contentWidth);
             }
             $thead.append($tr);
 
-            var $headWrapper = this.$headWrapper;
-            var $bodyWrapper = this.$bodyWrapper;
-            var $headTable = this.$thead.parent();
-            $bodyWrapper.width(opts.width)
-                .height(this.$fastGrid.height() - $headWrapper.outerHeight(true))
+            //调整各包装器
+            $headWrapper.width($thead.parent().outerWidth(true));//收缩包装器
+            $bodyWrapper.width($fastGrid.width())
+                .height($fastGrid.height() - $headWrapper.outerHeight(true))
                 .on('scroll', function(e){
-                    $headTable.css('left',- $bodyWrapper.scrollLeft());
+                    $thead.parent().css('left',- $bodyWrapper.scrollLeft());
                 });
+
+            $tbody.parent().width($thead.parent().width());
+
+            $noRecord.css({
+                'left': ($fastGrid.width() - $noRecord.width()) / 2,
+                'top': ($fastGrid.height() - $noRecord.height()) / 2
+            });
 
         },
 
-        populate: function(items){
-            var $tbody = this.$tbody.empty();//这里最好是先detach,以提高性能
+        load: function(){
+            var thisObject = this;
             var opts = this.opts;
+            var params = {};
+            //参数可以是个函数
+            if(typeof opts.params === 'function'){
+                params = opts.params();
+            }else{
+                params = opts.params;
+            }
+            if(opts.url){
+                $.ajax({
+                    type: opts.method,
+                    url: opts.url,
+                    data: params,
+                    dataType: 'json',
+                    cache: false//不缓存
+                }).done(function(data){
+                    thisObject.populate(data);
+                });
+            }else{
+                thisObject.populate(opts.items);
+            }
+        },
 
-            if(items.length != 0){
-                var $thArr = $('th', this.$thead);
-                $.each(items, function(rowIndex, row){
+        populate: function(items){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
+            var $thead = this.$thead;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $tbody = this.$tbody.empty();//这里最好是先detach,以提高性能
+
+            if(items && items.length != 0){
+                this.$noRecord.hide();
+                var $thArr = $('th', $thead);
+                $.each(items, function(rowIndex, item){
                     var $tr = $('<tr></tr>').hover(function (e) {
                         $('td',this).toggleClass('hover', e.type === 'mouseenter');
                     });
                     $.each(opts.cols, function(colIndex, col){
-                        var $div = $('<div></div>');
+                        var $td = $('<td></td>').width($thArr.eq(colIndex).width());
 
-                        var $td = $('<td></td>');
-
-                        var $th = $thArr.eq(colIndex);
-                        if($th.data('sort')){
-                            if(even){
-                                $td.addClass('colSelectedEven');
-                            }else{
-                                $td.addClass('colSelected');
-                            }
-                        }
-
+                        var $content = $('<div class="content"></div>');
                         if(col.align){
-                            $div.css('text-align', col.align);
+                            $content.css('text-align', col.align);
                         }
-
-                        $td.width(col.width).append($div);
                         if(col.renderer){
-                            var result = col.renderer(row[col.name], row, items, $tr, rowIndex);
-                            if( result instanceof jQuery){
-                                $div.append(result);
+                            var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
+                            if(result instanceof jQuery){
+                                $content.append(result);
                             }else{
-                                $div.html(result);
+                                $content.html(result);
                             }
                         }else{
-                            $div.html(row[col.name]);
+                            $content.html(item[col.name]);
                         }
-                        $tr.append($td);
+
+                        $tr.append($td.append($content));
                     });
                     $tbody.append($tr);
                 });
-
+                this.setRowStyle();
+            }else{
+                var $tr = $('<tr></tr>');
+                var $td = $('<td></td>').css({
+                    'border':'0px',
+                    'background': 'none'
+                }).html('&nbsp;').appendTo($tr);
+                $tbody.append($tr);
+                this.$noRecord.show();
             }
-            $tbody.parent().width( this.$thead.parent().width()+1);
-
-            //fix:IE8没有下方滚动条，不知道为什么,但是y滚动条的时候要算滚动条宽度才行
-            if($tbody.parent().width() > this.$bodyWrapper.width()){
-                this.$bodyWrapper.css('overflow-x', 'scroll');
-            }
-
-            this.setupStyle();
         },
 
-        setupStyle: function(){
+        setRowStyle: function(){
             var $tbody = this.$tbody;
+            var $thead = this.$thead;
 
             $('tr,td', this.$tbody).removeClass();
 
@@ -147,56 +187,50 @@
             $('tr > td:last-child', $tbody).addClass('last');
             $('tr:first > td', $tbody).addClass('topRow');
 
-
-            var sortIndex = $('th',this.$thead).index($('th',this.$thead).filter(function(){
+            var sortIndex = $('.title',$thead).index($('.title',$thead).filter(function(){
                 return $(this).data('sort') === 'asc' || $(this).data('sort') === 'desc';
             }));
-            console.log('sortIndex: ',sortIndex);
             $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected').filter(':even').addClass('colSelectedEven');
         },
 
-        //绑定排序功能
-        bindSort: function($th){
+        bindSorter: function(colIndex, $th){
             var thisObject = this;
             var opts = this.opts;
+            var $thead = this.$thead;
+            $th.find('.content').append($('<div class="sort"></div>').hide());
+            $th.find('.title').css({
+                'cursor':'pointer',
+                'text-decoration': 'underline'
+            }).on('click',function(e){
+                e.preventDefault();
+                $('.title', $thead).each(function(index, item){
+                    if(index != colIndex){
+                        $(item).data('sort',null);
+                    }
+                });
+                $('.sort', $thead).hide();
 
-            $th.append($('<div class="sort"></div>'));
-            $th.on('click', function(){
-                thisObject.clearSortStatus($('th',$th.parent()).index($th));
-                var $this = $(this);
-                if(!$this.data('sort') || $this.data('sort') === 'desc'){
-                    $this.data('sort','asc');
-                }else if($this.data('sort') === 'asc'){
-                    $this.data('sort','desc');
-                }
-                $this.mouseenter();
-                //thisObject.populate(opts.items);
-                thisObject.processSort($('th',$th.parent()).index($th), $this.data('sort'));
+                var $title = $(this);
+                var $sort = $('.sort', $th).removeClass('asc').removeClass('desc');
 
-            }).on('mouseenter', function(){
-                var $this = $(this);
-                $('.sort', $this).removeClass('up').removeClass('dn');
-                if(!$this.data('sort') || $this.data('sort') === 'desc'){
-                    $('.sort', $this).addClass('up').css('left',($this.width()-7)/2);
-                }else if($this.data('sort') === 'asc'){
-                    $('.sort', $this).addClass('dn').css('left',($this.width()-7)/2);
+                var status = $title.data('sort')==='asc' ? 'desc' : 'asc';
+                $title.data('sort',status);
+                $sort.addClass(status).show();
+
+                if(opts.remoteSort){
+
+                }else{
+                    thisObject.nativeSort(colIndex,status)
                 }
-            }).on('mouseleave', function(){
-                var $this = $(this);
-                $('.sort', $this).removeClass('up').removeClass('dn');
-                if($this.data('sort') === 'asc'){
-                    $('.sort', $this).addClass('up').css('left',($this.width()-7)/2);
-                }else if($this.data('sort') === 'desc'){
-                    $('.sort', $this).addClass('dn').css('left',($this.width()-7)/2);
-                }
+
             });
+
         },
-        //处理排序
-        processSort: function(index, status){
+
+        nativeSort: function(index, status){
             var opts = this.opts;
             console.log('name: ',opts.cols[index].name);
             console.log('status: ', status);
-
 
             var col = opts.cols[index];
             this.$tbody.find('td').filter(function(){
@@ -204,6 +238,7 @@
             }).sortElements(function(a, b){
                 var av = $(a).text();
                 var bv = $(b).text();
+                //排序前转换
                 if(col.type === 'float'){
                     av = parseFloat(av);
                     bv = parseFloat(bv);
@@ -216,19 +251,29 @@
             }, function(){
                 return this.parentNode;
             });
+            this.adjustColumn();
+            this.setRowStyle();
+        },
 
-            this.setupStyle();
+        remoteSort: function(index, status){
 
         },
-        //清除排序状态
-        clearSortStatus: function(colIndex){
-            $('.sort', this.$thead).removeClass('up').removeClass('dn').each(function(index,item){
-                if(colIndex != index){
-                    $(item).parent().data('sort',null);
+
+        adjustColumn: function(){
+            var thArr = $('th', this.$thead);
+            var tdArr = $('tr:first > td', this.$tbody);
+            $.each(thArr, function(index, th){
+                var $th = $(th);
+                if($th.width() > tdArr.eq(index).width()){
+                    tdArr.eq(index).width($th.width());
+                }else{
+                    $th.width(tdArr.eq(index).width());
                 }
             });
         }
     };
+
+
 
     $.fn.fastGrid = function(option){
         return this.each(function(){
@@ -240,17 +285,19 @@
     };
 
     $.fn.fastGrid.defaults = {
-        width: 'auto',
-        height: '256px',
+        width: '100%',
+        height: '100%',
         url: false,
-        params: false, //可以是object也可以是function
+        params: {}, //可以是object也可以是function
+        method: 'POST',
         items: [],
+        noRecord: '没有数据',
         cols: [],
-        sort: true,
         sortName: false,
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true
+
     };
 
     $.fn.fastGrid.Constructor = FastGrid;

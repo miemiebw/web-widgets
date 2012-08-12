@@ -5,6 +5,7 @@ block append link
   style
     .wrapper{
       width: 500px;
+      height: 300px;
       margin:0px auto;
       padding: 80px 0px;
     }
@@ -51,7 +52,7 @@ block append script
         width: '500px',
         height: 256,
         cols: [
-          {title:'行情', name:'', width: 40, renderer: function(val,item,items,$row,rowIndex){
+          {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
               $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
             });
@@ -68,8 +69,8 @@ block append script
             }
             return val;
           }},
-          {title:'买入价', name:'inPrice',type: 'float', width: 80, align: 'right'},
-          {title:'涨跌幅%', name:'range', width: 80, align: 'right', renderer: function(val,item){
+          {title:'买入价', name:'inPrice',type: 'float', width: 80, sortable: true, align: 'right'},
+          {title:'涨跌幅%', name:'range', width: 80, sortable: true, align: 'right', renderer: function(val,item){
             if(item.range > 0){
               return '<span style="color: #b00">' + val + '</span>';
             }else if(item.range < 0){
@@ -78,13 +79,13 @@ block append script
             return val;
           }},
           {title:'市值', name:'marketValue', width: 80, align: 'right'},
-          {title:'深度', name:'', width: 50, renderer: function(val,item,items,$row,rowIndex){
+          {title:'深度', name:'', width: 50, align: 'center', renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnDeep"></a>').hover(function (e) {
               $(this).toggleClass('btnDeepSelected', e.type === 'mouseenter');
             });
             return $a;
           }},
-          {title:'日历', name:'', width: 50, renderer: function(val,item,items,$row,rowIndex){
+          {title:'日历', name:'', width: 50, align: 'center', renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnCal"></a>').hover(function (e) {
               $(this).toggleClass('btnCalSelected', e.type === 'mouseenter');
             });

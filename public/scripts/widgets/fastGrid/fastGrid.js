@@ -102,16 +102,20 @@
 
         },
 
-        load: function(){
+        load: function(newParams){
             var thisObject = this;
             var opts = this.opts;
-            var params = {};
+            var params = {
+                sortName: opts.sortName,
+                sortStatus: opts.sortStatus
+            };
             //参数可以是个函数
             if(typeof opts.params === 'function'){
-                params = opts.params();
+                params = $.extend(params, opts.params());
             }else{
-                params = opts.params;
+                params = $.extend(params, opts.params);
             }
+            params = $.extend(params, newParams);
             if(opts.url){
                 $.ajax({
                     type: opts.method,
@@ -124,6 +128,13 @@
                 });
             }else{
                 thisObject.populate(opts.items);
+                //开始时排序
+                $('.title', thisObject.$thead).each(function(index, item){
+                    if(opts.cols[index].sortable && opts.cols[index].name === opts.sortName){
+                        var status = opts.sortStatus === 'desc' ? 'asc' : 'desc';
+                        $(item).data('sort',status).click();
+                    }
+                });
             }
         },
 
@@ -247,7 +258,7 @@
                     bv = parseInt(bv, 10)
                 }
 
-                return av > bv ? (status === 'asc' ? -1 : 1) : (status === 'asc' ? 1 : -1);
+                return av > bv ? (status === 'desc' ? -1 : 1) : (status === 'desc' ? 1 : -1);
             }, function(){
                 return this.parentNode;
             });
@@ -256,7 +267,12 @@
         },
 
         remoteSort: function(index, status){
-
+            var opts = this.opts;
+            var params = {
+                sortName: opts.cols[index].name,
+                sortStatus: status
+            };
+            this.load(params);
         },
 
         adjustColumn: function(){
@@ -302,6 +318,9 @@
 
     $.fn.fastGrid.Constructor = FastGrid;
 
+
+// Thanks for James Padolsey
+// see: http://james.padolsey.com/javascript/sorting-elements-with-jquery/
     $.fn.sortElements = (function(){
 
         var sort = [].sort;

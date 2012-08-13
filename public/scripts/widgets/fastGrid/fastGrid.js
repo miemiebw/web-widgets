@@ -38,8 +38,11 @@
             //option
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
+            var opts = this.opts;
+            var $noRecord = this.$noRecord;
             this.$optButton = $('<a class="optDnButton"></a>').on('click', function(e){
                 e.preventDefault();
+                $noRecord.hide();
                 $(this).slideUp('fast');
                 $optWrapper.css({
                     width:$bodyWrapper.outerWidth(true),
@@ -48,7 +51,12 @@
             }).appendTo(this.$fastGrid);
             var $optUpButton = $('<a class="optUpButton"></a>').on('click', function(e){
                 e.preventDefault();
-                $optWrapper.slideUp();
+                $optWrapper.slideUp().queue(function(next){
+                    if(!$noRecord.data('hasData')){
+                        $noRecord.show();
+                    }
+                    next();
+                });
             }).appendTo(this.$optWrapper);
         },
 
@@ -173,6 +181,7 @@
 
             if(items && items.length != 0){
                 this.$noRecord.hide();
+                this.$noRecord.data('hasData',true);
                 var $thArr = $('th', $thead);
                 $.each(items, function(rowIndex, item){
                     var $tr = $('<tr></tr>').hover(function (e) {
@@ -210,7 +219,7 @@
                     'background': 'none'
                 }).html('&nbsp;').appendTo($tr);
                 $tbody.append($tr);
-                this.$noRecord.show();
+                this.$noRecord.show().data('hasData',false);
             }
             $tbodyParent.append($tbody);
         },

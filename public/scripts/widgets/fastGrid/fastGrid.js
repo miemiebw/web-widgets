@@ -278,7 +278,7 @@
             var $noRecord = this.$noRecord;
 
             $headWrapper.width(9999);
-            $headWrapper.width(9999);
+            $bodyWrapper.detach().width(9999);
 
             var thArr = $('th', this.$thead);
             var tdArr = $('tr:first > td', this.$tbody);
@@ -300,14 +300,18 @@
                 }
 
             });
-
+            $tbody.parent().width($thead.parent().width());
             $headWrapper.width($thead.parent().outerWidth(true));//收缩包装器
             $bodyWrapper.width($fastGrid.width())
-                .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            $tbody.parent().width($thead.parent().width());
+                .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
+
         },
 
         bindAdjustColumn: function(){
+
+        },
+
+        bindDragColumn: function(){
 
         }
     };

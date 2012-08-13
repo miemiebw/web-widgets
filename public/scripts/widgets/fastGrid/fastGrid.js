@@ -25,6 +25,7 @@
             this.$headWrapper = $('<div class="headWrapper"></div>').appendTo(this.$fastGrid);
             this.$thead = $('<thead></thead>').wrap('<table class="tableHead"></table>');
             this.$thead.parent().appendTo(this.$headWrapper);
+            this.$optWrapper = $('<div class="optWrapper"></div>').appendTo(this.$fastGrid);
             this.$bodyWrapper = $('<div class="bodyWrapper"></div>').appendTo(this.$fastGrid);
             this.$tbody = $('<tbody></tbody>').appendTo($el);
             $el.addClass('tableBody').appendTo(this.$bodyWrapper);
@@ -32,8 +33,23 @@
 
             //设置高宽
             this.$fastGrid.width(this.opts.width).height(this.opts.height);
-
+            //noRecord
             this.$noRecord = $('<span></span>').html(this.opts.noRecord).addClass('noRecord').appendTo(this.$fastGrid);
+            //option
+            var $optWrapper = this.$optWrapper;
+            var $bodyWrapper = this.$bodyWrapper;
+            this.$optButton = $('<a class="optDnButton"></a>').on('click', function(e){
+                e.preventDefault();
+                $(this).slideUp('fast');
+                $optWrapper.css({
+                    width:$bodyWrapper.outerWidth(true),
+                    height:$bodyWrapper.outerHeight(true)
+                }).slideDown();
+            }).appendTo(this.$fastGrid);
+            var $optUpButton = $('<a class="optUpButton"></a>').on('click', function(e){
+                e.preventDefault();
+                $optWrapper.slideUp();
+            }).appendTo(this.$optWrapper);
         },
 
         initHeader: function(){
@@ -90,6 +106,23 @@
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
             });
 
+            var $optButton = this.$optButton;
+            var $optWrapper = this.$optWrapper;
+            $optButton.on('mouseleave', function(){
+                $optButton.slideUp('fast');
+            });
+            $bodyWrapper.on('mouseenter', function(){
+                $optButton.slideUp('fast');
+            });
+            $fastGrid.on('mouseleave', function(){
+                $optButton.slideUp('fast');
+            });
+            $headWrapper.on('mouseenter',function(){
+                if($optWrapper.is(':hidden')){
+                    $optButton.slideDown('fast');
+                }
+            });
+
         },
 
         load: function(newParams){
@@ -134,7 +167,9 @@
             var $headWrapper = this.$headWrapper;
             var $thead = this.$thead;
             var $bodyWrapper = this.$bodyWrapper;
-            var $tbody = this.$tbody.empty();//这里最好是先detach,以提高性能
+            var $tbody = this.$tbody;
+            var $tbodyParent = $tbody.parent();
+            $tbody.detach().empty();//这里最好是先detach,以提高性能
 
             if(items && items.length != 0){
                 this.$noRecord.hide();
@@ -167,6 +202,7 @@
                     $tbody.append($tr);
                 });
                 this.setRowStyle();
+                this.adjustLayout();
             }else{
                 var $tr = $('<tr></tr>');
                 var $td = $('<td></td>').css({
@@ -176,13 +212,17 @@
                 $tbody.append($tr);
                 this.$noRecord.show();
             }
+            $tbodyParent.append($tbody);
         },
 
         setRowStyle: function(){
             var $tbody = this.$tbody;
             var $thead = this.$thead;
 
-            $('tr,td', this.$tbody).removeClass();
+            var $tbodyParent = $tbody.parent();
+            $tbody.detach();
+
+            $('tr,td', $tbody).removeClass();
 
             $('tr:odd', $tbody).addClass('even');
             $('tr > td:first-child', $tbody).addClass('first');
@@ -194,7 +234,7 @@
             }));
             $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected')
                 .filter(':even').addClass('colSelectedEven');
-
+            $tbodyParent.append($tbody);
         },
 
         bindSorter: function(colIndex, $th){
@@ -255,8 +295,9 @@
             }, function(){
                 return this.parentNode;
             });
-            this.adjustColumn();
             this.setRowStyle();
+            this.adjustLayout();
+
         },
 
         remoteSort: function(index, status){
@@ -268,7 +309,7 @@
             this.load(params);
         },
 
-        adjustColumn: function(){
+        adjustLayout: function(){
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
             var $headWrapper = this.$headWrapper;
@@ -305,6 +346,11 @@
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
 
+            var $optButton = this.$optButton;
+            $optButton.css({
+                'top': $headWrapper.outerHeight(true),
+                'left': $bodyWrapper.width() - $optButton.width() - 10
+            });
         },
 
         bindAdjustColumn: function(){

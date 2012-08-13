@@ -32,7 +32,17 @@
             $elParent.append(this.$fastGrid);
 
             //设置高宽
-            this.$fastGrid.width(this.opts.width).height(this.opts.height);
+            if(this.opts.width === '100%'){
+                this.$fastGrid.css('width' , '100%');
+            }else{
+                this.$fastGrid.width(this.opts.width)
+            }
+            if(this.opts.height === '100%'){
+                this.$fastGrid.css('height' , '100%');
+            }else{
+                this.$fastGrid.height(this.opts.height)
+            }
+
             //noRecord
             this.$noRecord = $('<span></span>').html(this.opts.noRecord).addClass('noRecord').appendTo(this.$fastGrid);
             //option
@@ -351,7 +361,9 @@
 
             });
             $tbody.parent().width($thead.parent().width());
-            $headWrapper.width($thead.parent().outerWidth(true));//收缩包装器
+
+            var hwWidth = $thead.parent().outerWidth(true) > $fastGrid.width() ? $thead.parent().outerWidth(true) : $fastGrid.width();
+            $headWrapper.width(hwWidth);//收缩包装器
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
 

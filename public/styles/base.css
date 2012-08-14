@@ -28,14 +28,14 @@ a:hover {
     text-decoration: underline;
     cursor: pointer;
 }
-
+/*
 input, textarea {
     border: 1px solid #ccc;
     height: 1.4em;
     *height: 1.2em;
     padding: 2px;
 }
-
+*/
 .controller-group {
     line-height: 1.4em;
 }

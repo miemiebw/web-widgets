@@ -18,9 +18,14 @@
 }
 
 .fastGrid .optWrapper{
-    background: #ededed;
+    background: #efefef;
     display: none;
     position: relative;
+    -webkit-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -moz-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -o-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -ms-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    box-shadow: inset 0px 0px 2px 1px #d9d9d9;
 }
 
 .fastGrid .bodyWrapper{

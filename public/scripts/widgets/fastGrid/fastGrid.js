@@ -88,8 +88,9 @@
                             $headWrapper.width(9999);
                             $bodyWrapper.detach().width(9999);
                             if(this.checked){
-                                $('tr > th:nth-child('+(index+1)+')', $thead).width(col.width).show();
+                                var $th = $('tr > th:nth-child('+(index+1)+')', $thead).width(col.width).show();
                                 $('tr > td:nth-child('+(index+1)+')', $tbody).width(col.width).show();
+                                $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
                             }else{
                                 $('tr > th:nth-child('+(index+1)+')', $thead).hide();
                                 $('tr > td:nth-child('+(index+1)+')', $tbody).hide();
@@ -422,7 +423,6 @@
             if(colIndex >= 0){
                 $('tr > td:nth-child('+(colIndex+1)+')', $tbody).width(thArr.eq(colIndex).width());
                 $('tr > td:nth-child('+(colIndex+1)+') .content', $tbody).width(thArr.eq(colIndex).find('.content').width());
-
             }else{
                 $.each(thArr, function(index, th){
                     var $th = $(th);

@@ -46,7 +46,8 @@
 
             //noRecord
             this.$noRecord = $('<span></span>').html(this.opts.noRecord).addClass('noRecord').appendTo(this.$fastGrid);
-
+            //
+            this.$resizePosition = $('<div class="resizePosition"></div>').appendTo(this.$headWrapper);
         },
 
         initOptBoard: function(){
@@ -120,7 +121,7 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $tbody = this.$tbody;
             var $noRecord = this.$noRecord;
-
+            var $resizePosition = this.$resizePosition;
             var $tr = $('<tr></tr>');
             if(opts.cols){
                 $.each(opts.cols, function(index, col){
@@ -138,6 +139,40 @@
                         $th.width(col.width);
                     }
 
+                    var $resize = $('<div class="resize"></div>').on('mousedown', function(e){
+                        var start = 0;
+                        $headWrapper.on('mousedown', function(e){
+                            $resizePosition.show();
+                            $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
+
+                            start = e.pageX;
+                            document.body.onselectstart = function(){
+                                return false;
+                            }
+                        }).on('mouseup', function(e){
+                            $headWrapper.width(9999);
+                            $bodyWrapper.width(9999);
+                            $resize.parent().width($resize.parent().width() + e.pageX - start);
+
+                            thisObject.adjustLayout(index);
+                            $headWrapper.off('mousedown').off('mouseup').off('mouseleave').off('mousemove');
+                            $resizePosition.hide();
+                            document.body.onselectstart = function(){
+                                return true;
+                            }
+                        }).on('mouseleave',function(e){
+                            $headWrapper.off('mousedown').off('mouseup').off('mouseleave').off('mousemove');
+                            $resizePosition.hide();
+                            document.body.onselectstart = function(){
+                                return true;
+                            }
+                        }).on('mousemove', function(e){
+                            console.dir(e.pageX - $headWrapper.offset().left);
+                            $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
+                        });
+                    });
+
+                    $th.append($resize);
 
                     //设置一个文字包装器
                     var $content = $('<div class="content"></div>').appendTo($th);
@@ -373,7 +408,7 @@
             this.load(params);
         },
 
-        adjustLayout: function(){
+        adjustLayout: function(colIndex){
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
             var $headWrapper = this.$headWrapper;
@@ -387,23 +422,27 @@
 
             var thArr = $('th', this.$thead);
             var tdArr = $('tr:first > td', this.$tbody);
-            $.each(thArr, function(index, th){
-                var $th = $(th);
-                if(opts.textEllipsis){
-                    if($th.width() > tdArr.eq(index).width()){
-                        tdArr.eq(index).width($th.width());
-                    }
+            if(colIndex >= 0){
+                $('tr > td:nth-child('+(colIndex+1)+')', $tbody).width(thArr.eq(colIndex).width());
+                $('tr > td:nth-child('+(colIndex+1)+') .content', $tbody).width(thArr.eq(colIndex).find('.content').width());
 
-                    $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
-                }else{
-                    if($th.width() > tdArr.eq(index).width()){
+            }else{
+                $.each(thArr, function(index, th){
+                    var $th = $(th);
+                    if(opts.textEllipsis){
                         tdArr.eq(index).width($th.width());
+                        $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
                     }else{
-                        $th.width(tdArr.eq(index).width());
+                        if($th.width() > tdArr.eq(index).width()){
+                            tdArr.eq(index).width($th.width());
+                        }else{
+                            $th.width(tdArr.eq(index).width());
+                        }
                     }
-                }
 
-            });
+                });
+            }
+
 
 
             var hwWidth = $thead.parent().outerWidth(true) > $fastGrid.width() ? $thead.parent().outerWidth(true) : $fastGrid.width();

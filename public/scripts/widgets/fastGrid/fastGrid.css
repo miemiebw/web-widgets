@@ -32,6 +32,17 @@
 
 }
 
+.fastGrid .headWrapper .resizePosition{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 2px;
+    height: 27px;
+    background: #999;
+    cursor: col-resize;
+    display: none;
+}
+
 /*tableHead*/
 
 .fastGrid .tableHead th{
@@ -101,6 +112,15 @@
 
 .fastGrid .tableHead th.last,.fastGrid .tableBody td.last{
 
+}
+
+.fastGrid .tableHead th .resize{
+    position: absolute;;
+    right: 0px;
+    top:0px;
+    width: 4px;
+    height: 27px;
+    cursor: col-resize;
 }
 
 /*如果宽度不够了就显示省略号*/

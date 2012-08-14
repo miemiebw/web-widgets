@@ -167,7 +167,6 @@
                                 return true;
                             }
                         }).on('mousemove', function(e){
-                            console.dir(e.pageX - $headWrapper.offset().left);
                             $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
                         });
                     });
@@ -372,8 +371,6 @@
 
         nativeSort: function(index, status){
             var opts = this.opts;
-            console.log('name: ',opts.cols[index].name);
-            console.log('status: ', status);
 
             var col = opts.cols[index];
             this.$tbody.find('td').filter(function(){

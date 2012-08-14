@@ -367,7 +367,7 @@
             $bodyWrapper.find('table').width($thead.parent().width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
-
+            $bodyWrapper.scrollLeft(-parseInt($thead.parent().css('left'),10));
             var $optButton = this.$optButton;
             $optButton.css({
                 'top': $headWrapper.outerHeight(true),

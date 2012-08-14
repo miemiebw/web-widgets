@@ -81,6 +81,7 @@ block append script
             return val;
           }},
           {title:'市值', name:'marketValue', width: 80, align: 'right'},
+          {title:'盈亏', name:'marketValue', width: 80, hidden: true, align: 'right'},
           {title:'深度', name:'', width: 50, align: 'center', renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnDeep"></a>').hover(function (e) {
               $(this).toggleClass('btnDeepSelected', e.type === 'mouseenter');

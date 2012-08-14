@@ -10,6 +10,7 @@
         this.opts = options;
 
         this.init($el);
+        this.initOptBoard();
         this.initHeader();
         if(this.opts.autoLoad){
             this.load();
@@ -45,9 +46,17 @@
 
             //noRecord
             this.$noRecord = $('<span></span>').html(this.opts.noRecord).addClass('noRecord').appendTo(this.$fastGrid);
-            //option
+
+        },
+
+        initOptBoard: function(){
+            var thisObject = this;
+            var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
+            var $thead = this.$thead;
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
+            var $tbody = this.$tbody;
             var opts = this.opts;
             var $noRecord = this.$noRecord;
             this.$optButton = $('<a class="optDnButton"></a>').on('click', function(e){
@@ -68,6 +77,38 @@
                     next();
                 });
             }).appendTo(this.$optWrapper);
+
+            if(opts.cols){
+                var $h1 = $('<h1></h1>').text('显示列').appendTo($optWrapper);
+                $.each(opts.cols, function(index, col){
+                    var $label = $('<label></label>')
+                    var $checkBox = $('<input type="checkbox" />')
+                        .on('click', function(){
+                            $headWrapper.width(9999);
+                            $bodyWrapper.detach().width(9999);
+                            if(this.checked){
+                                $('tr > th:nth-child('+(index+1)+')', $thead).width(col.width).show();
+                                $('tr > td:nth-child('+(index+1)+')', $tbody).width(col.width).show();
+                            }else{
+                                $('tr > th:nth-child('+(index+1)+')', $thead).hide();
+                                $('tr > td:nth-child('+(index+1)+')', $tbody).hide();
+                            }
+                            var hwWidth = $thead.parent().outerWidth(true) > $fastGrid.width() ? $thead.parent().outerWidth(true) : $fastGrid.width();
+                            $headWrapper.width(hwWidth);//收缩包装器
+                            $bodyWrapper.find('table').width($thead.parent().width());
+                            $bodyWrapper.width($fastGrid.width())
+                                .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
+                            $bodyWrapper.scrollLeft(-parseInt($thead.parent().css('left'),10));
+                            $bodyWrapper.scroll();//Fix in IE6
+                            thisObject.setRowStyle();
+                        });
+                    if(!col.hidden || col.hidden === false){
+                        $checkBox.prop("checked", true);
+                    }
+                    var $span = $('<span></span>').text(col.title);
+                    $optWrapper.append($label.append($checkBox).append($span));
+                });
+            }
         },
 
         initHeader: function(){
@@ -90,10 +131,13 @@
                     if(index === opts.cols.length-1){
                         $th.addClass('last');
                     }
-
+                    if(col.hidden === true){
+                        $th.hide();
+                    }
                     if(col.width){
                         $th.width(col.width);
                     }
+
 
                     //设置一个文字包装器
                     var $content = $('<div class="content"></div>').appendTo($th);
@@ -109,7 +153,6 @@
                     if(col.sortable){
                         thisObject.bindSorter(index, $th);
                     }
-
                     $tr.append($th);
                 });
             }
@@ -199,7 +242,9 @@
                     });
                     $.each(opts.cols, function(colIndex, col){
                         var $td = $('<td></td>').width($thArr.eq(colIndex).width());
-
+                        if(col.hidden === true){
+                            $td.hide();
+                        }
                         var $content = $('<div class="content"></div>');
                         if(col.align){
                             $content.css('text-align', col.align);
@@ -239,7 +284,7 @@
             var $thead = this.$thead;
 
             var $tbodyParent = $tbody.parent();
-            $tbody.detach();
+            //$tbody.detach();
 
             $('tr,td', $tbody).removeClass();
 
@@ -253,7 +298,7 @@
             }));
             $('tr > td:nth-child('+(sortIndex+1)+')', $tbody).addClass('colSelected')
                 .filter(':even').addClass('colSelectedEven');
-            $tbodyParent.append($tbody);
+            //$tbodyParent.append($tbody);
         },
 
         bindSorter: function(colIndex, $th){
@@ -344,7 +389,6 @@
             var tdArr = $('tr:first > td', this.$tbody);
             $.each(thArr, function(index, th){
                 var $th = $(th);
-
                 if(opts.textEllipsis){
                     if($th.width() > tdArr.eq(index).width()){
                         tdArr.eq(index).width($th.width());

@@ -153,3 +153,34 @@
     background: url(images/arrow_up.png) no-repeat center center;
     background-color: #fff;
 }
+
+.fastGrid .optWrapper h1{
+    margin: 0 10px;
+    padding: 10px 0 5px 0;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.fastGrid .optWrapper label{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 100px;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fastGrid .optWrapper label input{
+    padding: 0px;
+    margin: 0 5px 0 10px;
+    border: 0px;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+}
+
+.fastGrid .optWrapper label span{
+    vertical-align: middle;
+}

@@ -10,6 +10,7 @@
     background: url(images/header_bg.gif) repeat-x;
     position: relative;
     overflow: hidden;
+    height: 27px;
 }
 
 .fastGrid .headWrapper .tableHead{
@@ -41,9 +42,8 @@
 }
 
 .fastGrid .tableHead th .title{
-    vertical-align: middle;
-    line-height: .9em;
     color: #000;
+    vertical-align: middle;
 }
 
 .fastGrid .tableHead th .sort{
@@ -52,16 +52,20 @@
     height: 4px;
     overflow: hidden;
     vertical-align: middle;
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
+    display: none;
 }
 
 .fastGrid .tableHead th .asc{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
     background: url(images/up.png);
 }
 
 .fastGrid .tableHead th .desc{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
     background: url(images/dn.png);
 }
 
@@ -100,7 +104,11 @@
 }
 
 /*如果宽度不够了就显示省略号*/
-.fastGrid .tableHead th .content,
+.fastGrid .tableHead th .content{
+    margin: 0 5px;
+    text-align: left;
+    white-space: nowrap;
+}
 .fastGrid .tableBody td .content{
     margin: 0 5px;
     text-align: left;

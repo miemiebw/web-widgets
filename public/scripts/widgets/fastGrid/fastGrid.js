@@ -260,7 +260,7 @@
             var thisObject = this;
             var opts = this.opts;
             var $thead = this.$thead;
-            $th.find('.content').append($('<div class="sort"></div>').hide());
+            $th.find('.content').append($('<div class="sort"></div>'));
             $th.find('.title').css({
                 'cursor':'pointer',
                 'text-decoration': 'underline'
@@ -271,14 +271,14 @@
                         $(item).data('sort',null);
                     }
                 });
-                $('.sort', $thead).hide();
+                $('.sort', $thead).removeClass('asc').removeClass('desc');
 
                 var $title = $(this);
                 var $sort = $('.sort', $th).removeClass('asc').removeClass('desc');
 
                 var status = $title.data('sort')==='asc' ? 'desc' : 'asc';
                 $title.data('sort',status);
-                $sort.addClass(status).show();
+                $sort.addClass(status);
 
                 if(opts.remoteSort){
 
@@ -360,17 +360,18 @@
                 }
 
             });
-            $tbody.parent().width($thead.parent().width());
+
 
             var hwWidth = $thead.parent().outerWidth(true) > $fastGrid.width() ? $thead.parent().outerWidth(true) : $fastGrid.width();
             $headWrapper.width(hwWidth);//收缩包装器
+            $bodyWrapper.find('table').width($thead.parent().width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true)).appendTo($fastGrid);
 
             var $optButton = this.$optButton;
             $optButton.css({
                 'top': $headWrapper.outerHeight(true),
-                'left': $bodyWrapper.width() - $optButton.width() - 10
+                'left': $bodyWrapper.width() - $optButton.width() - 20
             });
         },
 
@@ -407,7 +408,7 @@
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
-        textEllipsis: true
+        textEllipsis: false
 
     };
 

@@ -89,8 +89,9 @@
                             $bodyWrapper.detach().width(9999);
                             if(this.checked){
                                 var $th = $('tr > th:nth-child('+(index+1)+')', $thead).width(col.width).show();
-                                $('tr > td:nth-child('+(index+1)+')', $tbody).width(col.width).show();
-                                $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
+                                var contentWidth =  $th.find('.content').width();
+                                $('tr > td:nth-child('+(index+1)+')', $tbody).width(col.width).show().find('.content').width(contentWidth);
+
                             }else{
                                 $('tr > th:nth-child('+(index+1)+')', $thead).hide();
                                 $('tr > td:nth-child('+(index+1)+')', $tbody).hide();
@@ -421,14 +422,14 @@
             var thArr = $('th', this.$thead);
             var tdArr = $('tr:first > td', this.$tbody);
             if(colIndex >= 0){
-                $('tr > td:nth-child('+(colIndex+1)+')', $tbody).width(thArr.eq(colIndex).width());
-                $('tr > td:nth-child('+(colIndex+1)+') .content', $tbody).width(thArr.eq(colIndex).find('.content').width());
+                $('tr > td:nth-child('+(colIndex+1)+')', $tbody).width(thArr.eq(colIndex).width())
+                    .find('.content').width(thArr.eq(colIndex).find('.content').width());
             }else{
                 $.each(thArr, function(index, th){
                     var $th = $(th);
                     if(opts.textEllipsis){
                         tdArr.eq(index).width($th.width());
-                        $('tr > td:nth-child('+(index+1)+') .content', $tbody).width($th.find('.content').width());
+                        $('tr > td:nth-child('+(index+1)+')', $tbody).find('.content').width($th.find('.content').width());
                     }else{
                         if($th.width() > tdArr.eq(index).width()){
                             tdArr.eq(index).width($th.width());

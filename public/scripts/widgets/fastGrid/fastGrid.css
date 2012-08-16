@@ -111,6 +111,10 @@
     background: #FFEDAC;
 }
 
+.fastGrid .tableBody tr:hover td{
+    background: #FFEDAC;
+}
+
 .fastGrid .tableHead th.first,.fastGrid .tableBody td.first{
     border-left: 0px;
 }

@@ -338,10 +338,14 @@
                     });
                     $tbody.append($tr);
                 });
-                //其实只有IE6不支持，这里需要改一下
-                $tbody.on('hover','tr', function (e) {
-                    $('td',this).toggleClass('hover', e.type === 'mouseenter');
-                });
+                //其实只有IE6不支持hover，这里需要改一下
+                if ($.browser.msie) {
+                    if ($.browser.version == "6.0"){
+                        $tbody.on('hover','tr', function (e) {
+                            $('td',this).toggleClass('hover', e.type === 'mouseenter');
+                        });
+                    };
+                }
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 

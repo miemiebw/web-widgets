@@ -62,7 +62,7 @@
     vertical-align: middle;
 }
 
-.fastGrid .tableHead th .sort{
+.fastGrid .tableHead th .sortStatus{
     margin-left: 2px;
     width: 7px;
     height: 4px;

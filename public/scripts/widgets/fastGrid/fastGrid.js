@@ -298,6 +298,24 @@
                 });
             }else{
                 $thisObject.populate(opts.items);
+                //排序滞后目的是刷新数据的时候保留之前的排序状态
+                var $ths = this.$ths;
+                var sortColIndex = 0;
+                var sortStatus = opts.sortStatus;
+                $.each(opts.cols, function(index, col){
+                    if(col.name === opts.sortName){
+                        sortColIndex = index;
+                    }
+                });
+                $ths.find('.title').each(function(index, item){
+                    var status = $.data(item, 'sortStatus');
+                    if(status){
+                        sortColIndex = index;
+                        sortStatus = status;
+                    }
+                });
+                var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
+                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
             }
 
         },

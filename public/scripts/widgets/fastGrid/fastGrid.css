@@ -5,6 +5,27 @@
     overflow: hidden;
 }
 
+.fastGrid .mask{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: #ddd;
+    display: none;
+}
+
+.fastGrid .loadingWrapper{
+    position: absolute;
+    text-align: center;
+    display: none;
+}
+
+.fastGrid .loadingWrapper .loading{
+    margin: 5px auto;
+    width: 32px;
+    height: 32px;
+    background: url(images/loading.gif);
+}
+
 .fastGrid .headWrapper{
     width: 9999px;
     background: url(images/header_bg.gif) repeat-x;
@@ -213,3 +234,17 @@
 .fastGrid .optWrapper label span{
     vertical-align: middle;
 }
+
+.fastGrid .transparent {
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 5-7 */
+    filter: alpha(opacity=50);
+    /* Netscape */
+    -moz-opacity: 0.5;
+    /* Safari 1.x */
+    -khtml-opacity: 0.5;
+    /* Good browsers */
+    opacity: 0.5;
+}
+

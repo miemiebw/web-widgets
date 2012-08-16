@@ -33,6 +33,12 @@
                     '<div class="bodyWrapper">',
 
                     '</div>',
+                    '<div class="mask transparent">',
+                    '</div>',
+                    '<div class="loadingWrapper">',
+                        '<div class="loading"></div>',
+                        '<p>'+ this.opts.loadingText +'</p>',
+                    '</div>',
                     '<span class="noRecord"></span>',
                 '</div>'
             ];
@@ -58,11 +64,23 @@
                 this.$fastGrid.height(this.opts.height)
             }
 
+
+
             //
             $elParent.append(this.$fastGrid);
 
+            //loading
+            $fastGrid.find('.mask').width($fastGrid.width())
+                .height($fastGrid.height());
+
+            var $loadingWrapper = $fastGrid.find('.loadingWrapper');
+            $loadingWrapper.css({
+                'left': ($fastGrid.width() - $loadingWrapper.width()) / 2,
+                'top': ($fastGrid.height() - $loadingWrapper.height()) / 2
+            });
+
             //没数据
-            var $noRecord = $fastGrid.find('.noRecord').html(this.opts.noRecord)
+            var $noRecord = $fastGrid.find('.noRecord').html(this.opts.noRecordText)
             $noRecord.css({
                 'left': ($fastGrid.width() - $noRecord.width()) / 2,
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
@@ -144,7 +162,11 @@
                     $thisObject.remoteSorter(colIndex, sortStatus);
                 }else{
                     //本地排序
+                    $fastGrid.find('.mask').show();
+                    $fastGrid.find('.loadingWrapper').show();
                     $thisObject.nativeSorter(colIndex, sortStatus);
+                    $fastGrid.find('.mask').hide();
+                    $fastGrid.find('.loadingWrapper').hide();
                 }
 
 
@@ -271,6 +293,11 @@
         load: function(newParams){
             var $thisObject = this;
             var opts = this.opts;
+
+            var $fastGrid = this.$fastGrid;
+            $fastGrid.find('.mask').show();
+            $fastGrid.find('.loadingWrapper').show();
+
             var params = {
                 sortName: opts.sortName,
                 sortStatus: opts.sortStatus
@@ -318,6 +345,8 @@
                 $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
             }
 
+            $fastGrid.find('.mask').hide();
+            $fastGrid.find('.loadingWrapper').hide();
         },
 
         populate: function(items){
@@ -531,7 +560,8 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
-        noRecord: '没有数据',
+        loadingText: '正在载入',
+        noRecordText: '没有数据',
         cols: [],
         sortName: false,
         sortStatus: 'asc',

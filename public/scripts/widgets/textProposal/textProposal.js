@@ -56,13 +56,11 @@
         },
 
         showProposals:function (text) {
-            console.dir(text);
             var $list = this.$list;
             var $input = this.$element;
             var opts = this.options;
             var $this = this;
 
-            console.dir($input.css('margin-left'));
             //设置下拉位置
             $list.width($input.outerWidth(false)-2)
                 .css('top', $input.outerHeight(true))
@@ -70,29 +68,33 @@
             if (opts.items) {
                 $this._prcessProposals(opts.items);
             } else if (opts.url) {
-                var params = {
-                    t: new Date()
-                };
+                var params = {};
                 params[opts.paramName] = $input.val();
                 $.ajax({
                     url: opts.url,
                     data:params,
                     dataType: 'json',
-                    type: 'post'
+                    type: 'post',
+                    cache: false
                 }).done(function (items) {
                         $this._prcessProposals(items);
                     });
             }
         },
         _prcessProposals:function (items) {
+            var $thisObject = this;
             var $list = this.$list;
             var $input = this.$element;
             var opts = this.options;
             $list.empty();
             $.each(items, function (index, item) {
                 var $li = $('<li></li>');
+                var text = opts.process(item);
+                if(!$thisObject.filter($input.val(), text)){
+                    return;
+                }
                 var $a = $('<a></a>').data('item', item)
-                    .html(opts.process(item))
+                    .html(text)
                     .on('click', function (e) {
                         e.preventDefault();
                         var $this = $(this);
@@ -118,6 +120,10 @@
             }
 
 
+        },
+
+        filter : function(exp, val){
+            return val.search(exp) >= 0 ;
         },
         //键盘操作列表
         _keyboardAction: function(key){

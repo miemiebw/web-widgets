@@ -118,16 +118,21 @@
             //绑定排序事件
             $tr.on('click','span.title', function(e){
                 e.preventDefault();
-                $thisObject.startLayout(true);
-
                 var $this = $(this);
                 var $titles = $tr.find('span.title');
                 var colIndex = $titles.index($this);
+                if(!opts.cols[colIndex].sortable){
+                    return;
+                }
+
                 $.each($titles,function(index, item){
                     if(index != colIndex){
                         $.removeData(this,'sortStatus');
                     }
                 });
+
+                $thisObject.startLayout(true);
+
                 $tr.find('.sortStatus').removeClass('asc').removeClass('desc');
                 var $sorter = $this.siblings('.sortStatus');
                 var sortStatus = $.data(this, 'sortStatus') === 'asc' ? 'desc' : 'asc';

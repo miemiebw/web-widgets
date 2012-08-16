@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>textProposal</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../public/styles/reset.css">
+    <link rel="stylesheet" href="../public/styles/base.css">
+    <link rel="stylesheet" href="../public/scripts/widgets/textProposal/textProposal.css">
+    <style type="text/css">
+        #wrapper{
+            width: 300px;
+            margin:0px auto;
+            padding: 80px 0px;
+
+        }
+        input, textarea {
+            border: 1px solid #ccc;
+            height: 1.4em;
+            *height: 1.2em;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper" class="controller-group">
+        <label class="label">关键字:</label>
+        <input id="search" style="vertical-align: middle;margin-left:5px;width: 150px;">
+        <a class="button">搜索</a>
+
+    </div>
+
+<script src="../public/scripts/jquery/jquery-1.7.2.min.js"></script>
+<script src="../public/scripts/plugins.js"></script>
+<script src="../public/scripts/widgets/textProposal/textProposal.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#search').textProposal({
+            items:[
+                '中船股份(600072)',
+                '人福医药(600079)',
+                '东方金钰(600086)',
+                '禾嘉股份(600093)',
+                '同方股份(600100)',
+                '美尔雅(600107)',
+                '人福医药(600079)',
+                '东方金钰(600086)',
+                '禾嘉股份(600093)',
+                '同方股份(600100)',
+                '美尔雅(600107)',
+                '中船股份(600072)',
+                '人福医药(600079)',
+                '东方金钰(600086)',
+                '禾嘉股份(600093)',
+                '同方股份(600100)',
+                '美尔雅(600107)',
+                '人福医药(600079)',
+                '东方金钰(600086)',
+                '禾嘉股份(600093)',
+                '同方股份(600100)',
+                '美尔雅(600107)'
+            ],
+            pageCount: 10
+        });
+    });
+</script>
+</body>
+</html>

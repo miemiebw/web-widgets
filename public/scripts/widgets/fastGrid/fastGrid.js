@@ -560,7 +560,7 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
-        loadingText: '正在载入',
+        loadingText: '正在载入...',
         noRecordText: '没有数据',
         cols: [],
         sortName: false,

@@ -113,7 +113,11 @@
             var $body = this.$body;
             $body.on('click','tr',function(e){
                 var $this = $(this);
-                $thisObject.select($this.index());
+                if(!$this.hasClass('selected')){
+                    $thisObject.select($this.index());
+                }else{
+                    $thisObject.deselect($this.index());
+                }
             });
 
             //其实只有IE6不支持hover，这里需要改一下
@@ -382,29 +386,57 @@
             }
         },
 
-        //选中和获得选中
-        select: function(selectedIndex){
+        //选中
+        select: function(args){
             var opts = this.opts;
             var $body = this.$body;
 
-            if(selectedIndex){
-                var $tr = $body.find('tr').eq(selectedIndex);
+            if(typeof args === 'number'){
+                var $tr = $body.find('tr').eq(args);
                 if(!opts.multiSelect){
-                    $body.find('tr.selected').removeClass('selected')
+                    $body.find('tr.selected').removeClass('selected');
                 }
-
-                if($tr.hasClass('selected')){
-                    $tr.removeClass('selected');
-                }else{
+               if(!$tr.hasClass('selected')){
                     $tr.addClass('selected');
-                }
-            }else{
-                var selected = [];
-                $.each($body.find('tr.selected'), function(index ,item){
-                    selected.push($.data(this,'item'));
+               }
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        var $this = $(this);
+                        if(!$this.hasClass('selected')){
+                            $this.addClass('selected');
+                        }
+                    }
                 });
-                return selected;
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+                $body.find('tr').addClass('selected');
             }
+        },
+        //取消选中
+        deselect: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+            if(typeof args === 'number'){
+                $body.find('tr').eq(args).removeClass('selected');
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        $(this).removeClass('selected');
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+            }
+        },
+
+        selected: function(){
+            var $body = this.$body;
+            var selected = [];
+            $.each($body.find('tr.selected'), function(index ,item){
+                selected.push($.data(this,'item'));
+            });
+            return selected;
         },
 
         populate: function(items){

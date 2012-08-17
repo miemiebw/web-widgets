@@ -186,10 +186,10 @@
                     $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
                 }).on('mouseup', function(e){
                     //改变宽度
-                    $thisObject.startLayout(true);
+                    $thisObject.startLayout();
                     $resize.parent().width($resize.parent().width() + e.pageX - start);
                     $thisObject.fixLayout($resize.parent().index());
-                    $thisObject.endLayout(true);
+                    $thisObject.endLayout();
 
                     $headWrapper.mouseleave();
                 }).on('mouseleave',function(e){
@@ -409,10 +409,10 @@
             }
             $body.append($tbody);
 
-            this.startLayout(true);
+            this.startLayout();
             this.fixLayout();
             this.setStyle();
-            this.endLayout(true);
+            this.endLayout();
 
         },
 
@@ -493,13 +493,14 @@
 
             if(colIndex >= 0){
                 var $th = $ths.eq(colIndex);
+                $th.width($th.width());
                 $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width())
                     .find('div.content').width($th.find('div.content').width());
             }else{
                 //尽量不要用全部调整,这里的实现现在只满足刚执行populate之后
                 var $firstRowTds = $tbody.find('tr:first > td');
                 $.each($ths, function(index){
-                    var $th = $ths.eq(colIndex);
+                    var $th = $ths.eq(index);
                     if(opts.textEllipsis){
                         //与head对齐
                         $firstRowTds.eq(index).width($th.width());
@@ -527,6 +528,7 @@
             var $ths = this.$ths;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
+
 
             var hwWidth = $head.outerWidth(true) > $fastGrid.width()
                 ? $head.outerWidth(true) : $fastGrid.width();

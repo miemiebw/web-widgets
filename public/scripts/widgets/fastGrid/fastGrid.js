@@ -68,8 +68,15 @@
                 this.$fastGrid.height(this.opts.height);
             }
 
+
+
             //放回原位置
-            $elParent.children().eq(itemIndex).before(this.$fastGrid);
+            if(itemIndex === 0 && $elParent.children().length == 0){
+                $elParent.append(this.$fastGrid);
+            }else{
+                $elParent.children().eq(itemIndex).before(this.$fastGrid);
+            }
+
 
 
             if(!opts.frame){
@@ -102,22 +109,23 @@
             $noRecord.css({
                 'left': ($fastGrid.width() - $noRecord.width()) / 2,
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
-            });
+            }).hide();
 
             //滚动条事件
             var $head = this.$head;
             this.$bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
-            //选中行事件
+            //选中事件
             var $body = this.$body;
-            $body.on('click','tr',function(e){
+            $body.on('click','td',function(e){
                 var $this = $(this);
-                if(!$this.hasClass('selected')){
-                    $thisObject.select($this.index());
+                if(!$this.parent().hasClass('selected')){
+                    $thisObject.select($this.parent().index());
                 }else{
-                    $thisObject.deselect($this.index());
+                    $thisObject.deselect($this.parent().index());
                 }
+                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
 
             //其实只有IE6不支持hover，这里需要改一下
@@ -141,7 +149,7 @@
             if(opts.cols){
                 $.each(opts.cols, function(colIndex, col){
 
-                    var $th = $('<th><div class="resize"></div><div class="content"><span class="title"></span></div></th>').width(col.width);
+                    var $th = $('<th><div class="content"><span class="title"></span><div class="resize"></div></div></th>').width(col.width);
                     if(col.hidden === true){
                         $th.hide();
                     }
@@ -161,8 +169,6 @@
                             'text-decoration': 'underline'
                         });
                     }
-                    //调整列宽
-                    $th.append($('<div class="resize"></div>'));
 
                     $tr.append($th);
                 });
@@ -186,7 +192,7 @@
                     }
                 });
 
-                $thisObject.startLayout(true);
+                $thisObject.startLayout();
 
                 $tr.find('.sortStatus').removeClass('asc').removeClass('desc');
                 var $sorter = $this.siblings('.sortStatus');
@@ -205,7 +211,7 @@
 
                 $thisObject.fixLayout(colIndex);
                 $thisObject.setStyle();
-                $thisObject.endLayout(true);
+                $thisObject.endLayout();
             }).on('mousedown', 'div.resize', function(e){
                 //绑定调整列宽事件
                 var $resize = $(this);
@@ -215,13 +221,14 @@
                 document.body.onselectstart = function(){
                     return false;//取消文字选择
                 }
+                $headWrapper.css('-moz-user-select','none');
                 $headWrapper.on('mousemove', function(e){
                     $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
                 }).on('mouseup', function(e){
                     //改变宽度
                     $thisObject.startLayout();
-                    $resize.parent().width($resize.parent().width() + e.pageX - start);
-                    $thisObject.fixLayout($resize.parent().index());
+                    $resize.parent().parent().width($resize.parent().width() + e.pageX - start);
+                    $thisObject.fixLayout($resize.parent().parent().index());
                     $thisObject.endLayout();
 
                     $headWrapper.mouseleave();
@@ -231,9 +238,9 @@
                     document.body.onselectstart = function(){
                         return true;//开启文字选择
                     }
+                    $headWrapper.css('-moz-user-select','text');
                 });
             });
-
         },
 
         initOptBoard: function(){
@@ -303,19 +310,17 @@
             }
 
             $optWrapper.on('click', ':checkbox', function(e){
-                $thisObject.startLayout(true);
+                $thisObject.startLayout();
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
-                    var $th = $ths.eq(index).width(opts.cols[index].width).show();
-                    var contentWidth =  $th.find('.content').width();
-                    $body.find('tr > td:nth-child('+(index+1)+')')
-                        .width(opts.cols[index].width).show()
-                        .find('.content').width(contentWidth);
+                    var $th = $ths.eq(index).show();
+                    $body.find('tr > td:nth-child('+(index+1)+')').show();
+                    $thisObject.fixLayout(index);
                 }else{
                     $ths.eq(index).hide();
                     $body.find('tr > td:nth-child('+(index+1)+')').hide();
                 }
-                $thisObject.endLayout(true);
+                $thisObject.endLayout();
             });
             //放到headWrapper之后
             $headWrapper.after($optWrapper);
@@ -461,23 +466,22 @@
                     $.data($tr[0], 'item',item);
                     $.each(opts.cols, function(colIndex, col){
 
-                        var $td = $('<td><div class="content"></div></td>').width($ths.eq(colIndex).width());
+                        var $td = $('<td></td>').width($ths.eq(colIndex).width());
                         if($ths.eq(colIndex).is(':hidden')){
                             $td.hide();
                         }
-                        var $content = $td.find('div.content');
                         if(col.align){
-                            $content.css('text-align', col.align);
+                            $td.css('text-align', col.align);
                         }
                         if(col.renderer){
                             var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
                             if(result instanceof jQuery){
-                                $content.append(result);
+                                $td.append(result);
                             }else{
-                                $content[0].innerHTML = result;
+                                $td[0].innerHTML = result;
                             }
                         }else{
-                            $content[0].innerHTML = item[col.name];
+                            $td[0].innerHTML = item[col.name];
                         }
                         $tr.append($td);
 
@@ -497,8 +501,8 @@
             $body.append($tbody);
 
             this.startLayout();
-            this.fixLayout();
             this.setStyle();
+            this.fixLayout();
             this.endLayout();
 
             $fastGrid.find('.mask').hide();
@@ -564,13 +568,15 @@
             var $headWrapper = this.$headWrapper;
             var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
 
             $headWrapper.width(9999);
-            $head.width('auto');
+            $bodyWrapper.width(9999);
+            $head.width('auto');//使其可以自由伸展
+            $body.width('auto');
             if(detach){
                 $bodyWrapper.detach();
             }
-            $bodyWrapper.width(9999);
 
 
         },
@@ -585,8 +591,7 @@
             if(colIndex >= 0){
                 var $th = $ths.eq(colIndex);
                 $th.width($th.width());
-                $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width())
-                    .find('div.content').width($th.find('div.content').width());
+                $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width()).css('max-width',$th.width());
             }else{
                 //尽量不要用全部调整,这里的实现现在只满足刚执行populate之后
                 var $firstRowTds = $tbody.find('tr:first > td');
@@ -594,16 +599,15 @@
                     var $th = $ths.eq(index);
                     if(opts.textEllipsis){
                         //与head对齐
-                        $firstRowTds.eq(index).width($th.width());
-                        $tbody.find('tr > td:nth-child('+(index+1)+')').find('div.content')
-                            .width($th.find('div.content').width());
+                        $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
                     }else{
                         //谁宽和谁对齐
                         var $td = $firstRowTds.eq(index);
                         if($th.width() > $td.width()){
-                            $td.width($th.width);
+                            $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
                         }else{
                             $th.width($td.width());
+                            $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
                         }
                     }
                 });
@@ -630,7 +634,6 @@
             }
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
-            console.log($bodyWrapper.scrollLeft());
             if($bodyWrapper.scrollLeft() === 0){
                 $head.css('left', 0);
             }
@@ -670,7 +673,8 @@
         autoLoad: true,
         textEllipsis: false,
         onSuccess: function(){},
-        onError: function(){}
+        onError: function(){},
+        onSelected: function(item, rowIndex, colIndex){}
 
     };
 

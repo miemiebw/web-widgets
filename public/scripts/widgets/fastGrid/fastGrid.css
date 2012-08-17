@@ -60,7 +60,7 @@
 }
 
 .fastGrid .bodyWrapper .tableBody{
-
+    table-layout: fixed;
 }
 
 .fastGrid .headWrapper .resizePosition{
@@ -81,6 +81,7 @@
     line-height: 27px;
     font-weight: bold;
     position: relative;
+    padding: 0 5px;
 }
 
 .fastGrid .tableHead th .title{
@@ -123,6 +124,13 @@
 .fastGrid .tableBody td{
     border: 1px solid #ddd;
     line-height: 24px;
+    padding: 0 5px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
 }
 
 .fastGrid .tableBody td.colSelected{
@@ -159,7 +167,7 @@
 
 .fastGrid .tableHead th .resize{
     position: absolute;;
-    right: 0px;
+    right: -6px;
     top:0px;
     width: 4px;
     height: 27px;
@@ -168,17 +176,11 @@
 
 /*如果宽度不够了就显示省略号*/
 .fastGrid .tableHead th .content{
-    margin: 0 5px;
+    position: relative;
     text-align: left;
     white-space: nowrap;
 }
-.fastGrid .tableBody td .content{
-    margin: 0 5px;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+
 
 .fastGrid .noRecord{
     text-align: center;

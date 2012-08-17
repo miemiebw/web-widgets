@@ -1,0 +1,14 @@
+[
+    {"stockCode":"600000","stockAbbr":"浦发银行","newPrice":7.55,"udLimit":0.02,"udRange":0.27,"swingRange":0.93,"tradeVol":333226,"tradeLimit":25155,"ystdClosePrice":7.53,"openPrice":7.52,"topPrice":7.58,"btmPrice":7.51},
+    {"stockCode":"600004","stockAbbr":"白云机场","newPrice":6.35,"udLimit":0.02,"udRange":0.32,"swingRange":1.11,"tradeVol":8469,"tradeLimit":539,"ystdClosePrice":6.33,"openPrice":6.36,"topPrice":6.40,"btmPrice":6.33},
+    {"stockCode":"600005","stockAbbr":"武钢股份","newPrice":2.59,"udLimit":0.00,"udRange":0.00,"swingRange":0.77,"tradeVol":60243,"tradeLimit":1560,"ystdClosePrice":2.59,"openPrice":2.58,"topPrice":2.60,"btmPrice":2.58},
+    {"stockCode":"600006","stockAbbr":"东风汽车","newPrice":2.91,"udLimit":0.00,"udRange":0.00,"swingRange":1.03,"tradeVol":11690,"tradeLimit":339,"ystdClosePrice":2.91,"openPrice":2.90,"topPrice":2.92,"btmPrice":2.89},
+    {"stockCode":"600007","stockAbbr":"中国国贸","newPrice":10.16,"udLimit":0.14,"udRange":1.40,"swingRange":2.20,"tradeVol":2622,"tradeLimit":265,"ystdClosePrice":10.02,"openPrice":10.00,"topPrice":10.19,"btmPrice":9.97},
+    {"stockCode":"600008","stockAbbr":"首创股份","newPrice":4.44,"udLimit":0.00,"udRange":0.00,"swingRange":1.13,"tradeVol":15345,"tradeLimit":678,"ystdClosePrice":4.44,"openPrice":4.44,"topPrice":4.45,"btmPrice":4.40},
+    {"stockCode":"600009","stockAbbr":"上海机场","newPrice":12.16,"udLimit":-0.10,"udRange":-0.82,"swingRange":1.55,"tradeVol":23929,"tradeLimit":2915,"ystdClosePrice":12.26,"openPrice":12.29,"topPrice":12.30,"btmPrice":12.11},
+    {"stockCode":"6000010","stockAbbr":"包钢股份","newPrice":6.04,"udLimit":0.21,"udRange":3.60,"swingRange":5.32,"tradeVol":934268,"tradeLimit":56068,"ystdClosePrice":5.83,"openPrice":5.80,"topPrice":6.11,"btmPrice":5.80},
+    {"stockCode":"6000011","stockAbbr":"华能集团","newPrice":6.68,"udLimit":0.09,"udRange":1.37,"swingRange":2.12,"tradeVol":100608,"tradeLimit":6676,"ystdClosePrice":6.59,"openPrice":6.57,"topPrice":6.71,"btmPrice":6.57},
+    {"stockCode":"6000012","stockAbbr":"皖通高速","newPrice":3.92,"udLimit":0.00,"udRange":0.00,"swingRange":1.53,"tradeVol":7370,"tradeLimit":287,"ystdClosePrice":3.92,"openPrice":3.92,"topPrice":3.94,"btmPrice":3.88}
+
+
+]

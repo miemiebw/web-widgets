@@ -53,6 +53,7 @@
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('tableBody').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
+
             //设置高宽
             if(this.opts.width === '100%'){
                 this.$fastGrid.css('width' , '100%');
@@ -62,13 +63,27 @@
             if(this.opts.height === '100%'){
                 this.$fastGrid.css('height' , '100%');
             }else{
-                this.$fastGrid.height(this.opts.height)
+                this.$fastGrid.height(this.opts.height);
             }
 
-
-
-            //
+            //放回原位置
             $elParent.children().eq(itemIndex).before(this.$fastGrid);
+
+
+            if(!this.opts.frame){
+                //计算边距
+                var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
+                    + parseInt($fastGrid.css('border-right-width'),10)
+                    + parseInt($fastGrid.css('padding-left'),10)
+                    + parseInt($fastGrid.css('padding-right'),10);
+                $fastGrid.width($fastGrid.width() - fgWBP);
+
+                var fgHBP = parseInt($fastGrid.css('border-top-width'),10)
+                    + parseInt($fastGrid.css('border-bottom-width'),10)
+                    + parseInt($fastGrid.css('padding-top'),10)
+                    + parseInt($fastGrid.css('padding-bottom'),10);
+                $fastGrid.height($fastGrid.height() - fgHBP);
+            }
 
             //loading
             $fastGrid.find('.mask').width($fastGrid.width())
@@ -543,8 +558,9 @@
 
             var hwWidth = $head.outerWidth(true) > $fastGrid.width()
                 ? $head.outerWidth(true) : $fastGrid.width();
-            $headWrapper.width(hwWidth);
+            $head.width($head.width());
             $body.width($head.width());
+            $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
             if(detach){
@@ -570,6 +586,7 @@
     };
 
     $.fn.fastGrid.defaults = {
+        frame: false,
         width: '100%',
         height: '100%',
         url: false,

@@ -173,11 +173,7 @@
                     $thisObject.remoteSorter(colIndex, sortStatus);
                 }else{
                     //本地排序
-                    $fastGrid.find('.mask').show();
-                    $fastGrid.find('.loadingWrapper').show();
                     $thisObject.nativeSorter(colIndex, sortStatus);
-                    $fastGrid.find('.mask').hide();
-                    $fastGrid.find('.loadingWrapper').hide();
                 }
 
 
@@ -305,12 +301,10 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            var $fastGrid = this.$fastGrid;
-            $fastGrid.find('.mask').show();
-            $fastGrid.find('.loadingWrapper').show();
-
-
             if(opts.url && !$.isArray(args)){
+                var $fastGrid = this.$fastGrid;
+                $fastGrid.find('.mask').show();
+                $fastGrid.find('.loadingWrapper').show();
                 var params = {
                     sortName: opts.sortName,
                     sortStatus: opts.sortStatus
@@ -334,6 +328,8 @@
                     if(opts.onError){
                         opts.onError();
                     }
+                    $fastGrid.find('.mask').hide();
+                    $fastGrid.find('.loadingWrapper').hide();
                 });
             }else{
                 if(args){
@@ -342,10 +338,10 @@
                 $thisObject.populate(opts.items);
                 //排序滞后目的是刷新数据的时候保留之前的排序状态
                 var $ths = this.$ths;
-                var sortColIndex = 0;
+                var sortColIndex = -1;
                 var sortStatus = opts.sortStatus;
                 $.each(opts.cols, function(index, col){
-                    if(col.name === opts.sortName){
+                    if(col.name === opts.sortName && typeof opts.sortName === 'string'){
                         sortColIndex = index;
                     }
                 });
@@ -357,11 +353,13 @@
                     }
                 });
                 var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
-                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
+                if(sortColIndex >=0){
+                    $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
+                }
+
             }
 
-            $fastGrid.find('.mask').hide();
-            $fastGrid.find('.loadingWrapper').hide();
+
         },
 
         populate: function(items){
@@ -374,6 +372,9 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
             var $tbody = $body.find('tbody').detach().empty();
+
+            $fastGrid.find('.mask').show();
+            $fastGrid.find('.loadingWrapper').show();
 
             if(items && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
@@ -422,6 +423,8 @@
             this.setStyle();
             this.endLayout();
 
+            $fastGrid.find('.mask').hide();
+            $fastGrid.find('.loadingWrapper').hide();
         },
 
         nativeSorter: function(colIndex, sortStatus){

@@ -141,6 +141,14 @@
     background: #FFEDAC;
 }
 
+.fastGrid .tableBody tr.selected{
+    border: 1px solid #ffd437;
+}
+
+.fastGrid .tableBody tr.selected td{
+    background: #ffe587;
+}
+
 .fastGrid .tableHead th.first,.fastGrid .tableBody td.first{
     border-left: 0px;
 }
@@ -220,7 +228,7 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    width: 100px;
+    width: 95px;
     line-height: 25px;
     white-space: nowrap;
     overflow: hidden;

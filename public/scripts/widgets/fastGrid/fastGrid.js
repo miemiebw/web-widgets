@@ -499,9 +499,11 @@
 
         startLayout: function(detach){
             var $headWrapper = this.$headWrapper;
+            var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
 
             $headWrapper.width(9999);
+            $head.width('auto');
             if(detach){
                 $bodyWrapper.detach();
             }
@@ -555,9 +557,6 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
-
-            var hwWidth = $head.outerWidth(true) > $fastGrid.width()
-                ? $head.outerWidth(true) : $fastGrid.width();
             $head.width($head.width());
             $body.width($head.width());
             $headWrapper.width($fastGrid.width());
@@ -567,7 +566,12 @@
                 $fastGrid.append($bodyWrapper);
             }
             //调整滚动条
-            $bodyWrapper.scroll();
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            console.log($bodyWrapper.scrollLeft());
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
+            }
+
         }
     };
 

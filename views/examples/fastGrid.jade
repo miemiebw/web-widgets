@@ -54,6 +54,7 @@ block content
       a#btnDisplay.button 显示数据
       a#btnGetSelected.button 获取选中数据
       a#btnSelect5.button 获取选中第5行
+      a#btnDeselectAll.button 清除选中
     div.message
 
 
@@ -114,11 +115,11 @@ block append script
       });
 
       var items = [
-        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.23, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.25, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
         {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
         {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+        {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.21, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
         {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
         {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
         {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
@@ -230,5 +231,10 @@ block append script
             e.preventDefault();
             $('#hotTable').fastGrid('select', 4);
         });
+        $('#btnDeselectAll').on('click', function(e){
+            e.preventDefault();
+            $('#hotTable').fastGrid('deselect', 'all');
+        });
+
 
     });

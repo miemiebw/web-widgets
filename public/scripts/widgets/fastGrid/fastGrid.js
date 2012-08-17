@@ -367,7 +367,7 @@
                 var sortColIndex = -1;
                 var sortStatus = opts.sortStatus;
                 $.each(opts.cols, function(index, col){
-                    if(col.name === opts.sortName && typeof opts.sortName === 'string'){
+                    if(col.sortable && col.name === opts.sortName && typeof opts.sortName === 'string'){
                         sortColIndex = index;
                     }
                 });

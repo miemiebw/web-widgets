@@ -13,6 +13,15 @@
             margin:0px auto;
             padding: 80px 0px;
         }
+
+        .fields{
+            margin: 5px 0px;
+        }
+
+        .fields .button{
+            margin: 0px 5px 0px 0px;
+        }
+
         .btnPrice{
             display: block;
             width: 16px;
@@ -48,19 +57,28 @@
 <body>
     <div class="wrapper">
         <table id="hotTable"></table>
+        <div class="fields">
+            <a id="btnDisplay" class="button">显示数据</a>
+            <a id="btnGetSelected" class="button">获取选中数据</a>
+            <a id="btnSelect5" class="button">获取选中第5行</a>
+            <a id="btnDeselectAll" class="button">清除选中</a>
+        </div>
+        <div class="message"></div>
     </div>
 
 
 <script src="../public/scripts/jquery/jquery-1.7.2.min.js"></script>
 <script src="../public/scripts/plugins.js"></script>
 <script src="../public/scripts/widgets/fastGrid/fastGrid.js"></script>
+<script src="../public/scripts/json2.js"></script>
 <script>
     $(document).ready(function(){
         $('#hotTable').fastGrid({
             width: '100%',
             height: '100%',
-            sortName: 'inPrice',
-            sortStatus: 'asc',
+            multiSelect: true,
+            sortName: 'range',
+            sortStatus: 'desc',
             cols: [
                 {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,$row,rowIndex){
                     var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
@@ -102,112 +120,131 @@
                     });
                     return $a;
                 }}
-            ],
-            items: [
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
-                {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'}
-
             ]
         });
+
+        var items = [
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.23, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.25, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.21, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:19.92, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:12.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:17.22, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:22.52, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.45, range:-0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:3.44, range:0.21 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:7.23, range:-0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:23.77, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:45.21, range:0.215 ,marketValue: '5.38万'},
+            {secuCode:'600000', secuAbbr:'浦发银行', newPrice:12.22, inPrice:13.30, range:0.215 ,marketValue: '5.38万'}
+
+        ];
+
+        $('#btnDisplay').on('click', function(e){
+            e.preventDefault();
+            $('#hotTable').fastGrid('load', items);
+        });
+        $('#btnGetSelected').on('click', function(e){
+            e.preventDefault();
+            $('.message').text(JSON.stringify($('#hotTable').fastGrid('selected')));
+        });
+        $('#btnSelect5').on('click', function(e){
+            e.preventDefault();
+            $('#hotTable').fastGrid('select', 4);
+        });
+        $('#btnDeselectAll').on('click', function(e){
+            e.preventDefault();
+            $('#hotTable').fastGrid('deselect', 'all');
+        });
+
     });
 </script>
 </body>

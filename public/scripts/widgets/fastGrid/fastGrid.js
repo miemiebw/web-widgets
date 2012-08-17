@@ -45,6 +45,8 @@
             ];
 
             //cached object
+            var $thisObject = this;
+            var opts = this.opts;
             var $fastGrid = $(fastGrid.join(''));
             this.$fastGrid = $fastGrid;
             this.$headWrapper = $fastGrid.find('.headWrapper');
@@ -70,7 +72,7 @@
             $elParent.children().eq(itemIndex).before(this.$fastGrid);
 
 
-            if(!this.opts.frame){
+            if(!opts.frame){
                 //计算边距
                 var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
                     + parseInt($fastGrid.css('border-right-width'),10)
@@ -107,9 +109,14 @@
             this.$bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
+            //选中行事件
+            var $body = this.$body;
+            $body.on('click','tr',function(e){
+                var $this = $(this);
+                $thisObject.select($this.index());
+            });
 
             //其实只有IE6不支持hover，这里需要改一下
-            var $body = this.$body;
             if ($.browser.msie) {
                 if ($.browser.version == "6.0"){
                     $body.find('tbody').on('hover','tr', function (e) {
@@ -373,8 +380,31 @@
                 }
 
             }
+        },
 
+        //选中和获得选中
+        select: function(selectedIndex){
+            var opts = this.opts;
+            var $body = this.$body;
 
+            if(selectedIndex){
+                var $tr = $body.find('tr').eq(selectedIndex);
+                if(!opts.multiSelect){
+                    $body.find('tr.selected').removeClass('selected')
+                }
+
+                if($tr.hasClass('selected')){
+                    $tr.removeClass('selected');
+                }else{
+                    $tr.addClass('selected');
+                }
+            }else{
+                var selected = [];
+                $.each($body.find('tr.selected'), function(index ,item){
+                    selected.push($.data(this,'item'));
+                });
+                return selected;
+            }
         },
 
         populate: function(items){
@@ -396,6 +426,7 @@
                 $.each(items, function(rowIndex, item){
 
                     var $tr = $('<tr></tr>');
+                    $.data($tr[0], 'item',item);
                     $.each(opts.cols, function(colIndex, col){
 
                         var $td = $('<td><div class="content"></div></td>').width($ths.eq(colIndex).width());
@@ -578,14 +609,14 @@
 
 
     $.fn.fastGrid = function(option , val){
+        if(typeof option === 'string'){
+            return $(this).data('fastGrid')[option](val);
+        }
         return this.each(function(){
             var $this = $(this)
                 , data = $this.data('fastGrid')
                 , options = $.extend({}, $.fn.fastGrid.defaults, typeof option == 'object' && option);
             if (!data) $this.data('fastGrid', (data = new FastGrid(this, options)))
-            if(typeof option === 'string'){
-                data[option](val);
-            }
         });
     };
 
@@ -597,6 +628,7 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        multiSelect: false,
         loadingText: '正在载入...',
         noRecordText: '没有数据',
         cols: [],

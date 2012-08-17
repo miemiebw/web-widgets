@@ -12,6 +12,11 @@ block append link
     .fields{
       margin: 5px 0px;
     }
+
+    .fields .button{
+      margin: 0px 5px 0px 0px;
+    }
+
     .btnPrice{
       display: block;
       width: 16px;
@@ -47,11 +52,14 @@ block content
     table#hotTable
     div.fields
       a#btnDisplay.button 显示数据
-
+      a#btnGetSelected.button 获取选中数据
+    div.message
 
 
 block append script
   script(src='/scripts/widgets/fastGrid/fastGrid.js')
+  script(src='/scripts/json2.js')
+
   script
     $(document).ready(function(){
       $('#hotTable').fastGrid({
@@ -209,6 +217,11 @@ block append script
         $('#btnDisplay').on('click', function(e){
             e.preventDefault();
             $('#hotTable').fastGrid('load', items);
+        });
+        $('#btnGetSelected').on('click', function(e){
+            e.preventDefault();
+            console.dir($('#hotTable').fastGrid('select'));
+            $('.message').text(JSON.stringify($('#hotTable').fastGrid('select')));
         });
 
     });

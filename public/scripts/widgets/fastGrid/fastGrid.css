@@ -142,11 +142,11 @@
 }
 
 .fastGrid .tableBody tr.selected{
-    border: 1px solid #ffd437;
+
 }
 
 .fastGrid .tableBody tr.selected td{
-    background: #ffe587;
+    background: #ffdaa0;
 }
 
 .fastGrid .tableHead th.first,.fastGrid .tableBody td.first{

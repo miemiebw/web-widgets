@@ -21,6 +21,7 @@
 
         init: function($el){
             var $elParent = $el.parent();
+            var itemIndex = $el.index();
             $el.detach();
             var fastGrid = [
                 '<div class="fastGrid">',
@@ -44,6 +45,8 @@
             ];
 
             //cached object
+            var $thisObject = this;
+            var opts = this.opts;
             var $fastGrid = $(fastGrid.join(''));
             this.$fastGrid = $fastGrid;
             this.$headWrapper = $fastGrid.find('.headWrapper');
@@ -51,6 +54,7 @@
             this.$optWrapper = $fastGrid.find('.optWrapper');
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('tableBody').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
+
 
             //设置高宽
             if(this.opts.width === '100%'){
@@ -61,13 +65,27 @@
             if(this.opts.height === '100%'){
                 this.$fastGrid.css('height' , '100%');
             }else{
-                this.$fastGrid.height(this.opts.height)
+                this.$fastGrid.height(this.opts.height);
             }
 
+            //放回原位置
+            $elParent.children().eq(itemIndex).before(this.$fastGrid);
 
 
-            //
-            $elParent.append(this.$fastGrid);
+            if(!opts.frame){
+                //计算边距
+                var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
+                    + parseInt($fastGrid.css('border-right-width'),10)
+                    + parseInt($fastGrid.css('padding-left'),10)
+                    + parseInt($fastGrid.css('padding-right'),10);
+                $fastGrid.width($fastGrid.width() - fgWBP);
+
+                var fgHBP = parseInt($fastGrid.css('border-top-width'),10)
+                    + parseInt($fastGrid.css('border-bottom-width'),10)
+                    + parseInt($fastGrid.css('padding-top'),10)
+                    + parseInt($fastGrid.css('padding-bottom'),10);
+                $fastGrid.height($fastGrid.height() - fgHBP);
+            }
 
             //loading
             $fastGrid.find('.mask').width($fastGrid.width())
@@ -91,6 +109,25 @@
             this.$bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
+            //选中行事件
+            var $body = this.$body;
+            $body.on('click','tr',function(e){
+                var $this = $(this);
+                if(!$this.hasClass('selected')){
+                    $thisObject.select($this.index());
+                }else{
+                    $thisObject.deselect($this.index());
+                }
+            });
+
+            //其实只有IE6不支持hover，这里需要改一下
+            if ($.browser.msie) {
+                if ($.browser.version == "6.0"){
+                    $body.find('tbody').on('hover','tr', function (e) {
+                        $(this).toggleClass('hover', e.type === 'mouseenter');
+                    });
+                };
+            }
         },
 
         initHead: function(){
@@ -162,11 +199,7 @@
                     $thisObject.remoteSorter(colIndex, sortStatus);
                 }else{
                     //本地排序
-                    $fastGrid.find('.mask').show();
-                    $fastGrid.find('.loadingWrapper').show();
                     $thisObject.nativeSorter(colIndex, sortStatus);
-                    $fastGrid.find('.mask').hide();
-                    $fastGrid.find('.loadingWrapper').hide();
                 }
 
 
@@ -186,10 +219,10 @@
                     $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
                 }).on('mouseup', function(e){
                     //改变宽度
-                    $thisObject.startLayout(true);
+                    $thisObject.startLayout();
                     $resize.parent().width($resize.parent().width() + e.pageX - start);
                     $thisObject.fixLayout($resize.parent().index());
-                    $thisObject.endLayout(true);
+                    $thisObject.endLayout();
 
                     $headWrapper.mouseleave();
                 }).on('mouseleave',function(e){
@@ -213,7 +246,7 @@
             var $ths = this.$ths;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
-            var $noRecord = $fastGrid.find('div.noRecord');
+            var $noRecord = $fastGrid.find('.noRecord');
 
             $optWrapper.detach();
             //向下按钮
@@ -290,26 +323,25 @@
 
         },
 
-        load: function(newParams){
+        load: function(args){
             var $thisObject = this;
             var opts = this.opts;
 
-            var $fastGrid = this.$fastGrid;
-            $fastGrid.find('.mask').show();
-            $fastGrid.find('.loadingWrapper').show();
-
-            var params = {
-                sortName: opts.sortName,
-                sortStatus: opts.sortStatus
-            };
-            //
-            if($.isFunction(opts.params)){
-                params = $.extend(params, opts.params());
-            }else if($.isPlainObject()){
-                params = $.extend(params, opts.params);
-            }
-            params = $.extend(params, newParams);
-            if(opts.url){
+            if(opts.url && !$.isArray(args)){
+                var $fastGrid = this.$fastGrid;
+                $fastGrid.find('.mask').show();
+                $fastGrid.find('.loadingWrapper').show();
+                var params = {
+                    sortName: opts.sortName,
+                    sortStatus: opts.sortStatus
+                };
+                //
+                if($.isFunction(opts.params)){
+                    params = $.extend(params, opts.params());
+                }else if($.isPlainObject()){
+                    params = $.extend(params, opts.params);
+                }
+                params = $.extend(params, args);
                 $.ajax({
                     type: opts.method,
                     url: opts.url,
@@ -322,15 +354,20 @@
                     if(opts.onError){
                         opts.onError();
                     }
+                    $fastGrid.find('.mask').hide();
+                    $fastGrid.find('.loadingWrapper').hide();
                 });
             }else{
+                if(args){
+                    opts.items = args;
+                }
                 $thisObject.populate(opts.items);
                 //排序滞后目的是刷新数据的时候保留之前的排序状态
                 var $ths = this.$ths;
-                var sortColIndex = 0;
+                var sortColIndex = -1;
                 var sortStatus = opts.sortStatus;
                 $.each(opts.cols, function(index, col){
-                    if(col.name === opts.sortName){
+                    if(col.sortable && col.name === opts.sortName && typeof opts.sortName === 'string'){
                         sortColIndex = index;
                     }
                 });
@@ -342,11 +379,64 @@
                     }
                 });
                 var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
-                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
-            }
+                if(sortColIndex >=0){
+                    $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
+                }
 
-            $fastGrid.find('.mask').hide();
-            $fastGrid.find('.loadingWrapper').hide();
+            }
+        },
+
+        //选中
+        select: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+
+            if(typeof args === 'number'){
+                var $tr = $body.find('tr').eq(args);
+                if(!opts.multiSelect){
+                    $body.find('tr.selected').removeClass('selected');
+                }
+               if(!$tr.hasClass('selected')){
+                    $tr.addClass('selected');
+               }
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        var $this = $(this);
+                        if(!$this.hasClass('selected')){
+                            $this.addClass('selected');
+                        }
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+                $body.find('tr').addClass('selected');
+            }
+        },
+        //取消选中
+        deselect: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+            if(typeof args === 'number'){
+                $body.find('tr').eq(args).removeClass('selected');
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        $(this).removeClass('selected');
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+            }
+        },
+
+        selected: function(){
+            var $body = this.$body;
+            var selected = [];
+            $.each($body.find('tr.selected'), function(index ,item){
+                selected.push($.data(this,'item'));
+            });
+            return selected;
         },
 
         populate: function(items){
@@ -360,15 +450,19 @@
             var $body = this.$body;
             var $tbody = $body.find('tbody').detach().empty();
 
+            $fastGrid.find('.mask').show();
+            $fastGrid.find('.loadingWrapper').show();
+
             if(items && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
                     var $tr = $('<tr></tr>');
+                    $.data($tr[0], 'item',item);
                     $.each(opts.cols, function(colIndex, col){
 
                         var $td = $('<td><div class="content"></div></td>').width($ths.eq(colIndex).width());
-                        if(col.hidden){
+                        if($ths.eq(colIndex).is(':hidden')){
                             $td.hide();
                         }
                         var $content = $td.find('div.content');
@@ -390,14 +484,7 @@
                     });
                     $tbody.append($tr);
                 });
-                //其实只有IE6不支持hover，这里需要改一下
-                if ($.browser.msie) {
-                    if ($.browser.version == "6.0"){
-                        $tbody.on('hover','tr', function (e) {
-                            $('td',this).toggleClass('hover', e.type === 'mouseenter');
-                        });
-                    };
-                }
+
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 
@@ -409,11 +496,13 @@
             }
             $body.append($tbody);
 
-            this.startLayout(true);
+            this.startLayout();
             this.fixLayout();
             this.setStyle();
-            this.endLayout(true);
+            this.endLayout();
 
+            $fastGrid.find('.mask').hide();
+            $fastGrid.find('.loadingWrapper').hide();
         },
 
         nativeSorter: function(colIndex, sortStatus){
@@ -473,9 +562,11 @@
 
         startLayout: function(detach){
             var $headWrapper = this.$headWrapper;
+            var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
 
             $headWrapper.width(9999);
+            $head.width('auto');
             if(detach){
                 $bodyWrapper.detach();
             }
@@ -493,13 +584,14 @@
 
             if(colIndex >= 0){
                 var $th = $ths.eq(colIndex);
+                $th.width($th.width());
                 $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width())
                     .find('div.content').width($th.find('div.content').width());
             }else{
                 //尽量不要用全部调整,这里的实现现在只满足刚执行populate之后
                 var $firstRowTds = $tbody.find('tr:first > td');
                 $.each($ths, function(index){
-                    var $th = $ths.eq(colIndex);
+                    var $th = $ths.eq(index);
                     if(opts.textEllipsis){
                         //与head对齐
                         $firstRowTds.eq(index).width($th.width());
@@ -528,23 +620,30 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
-            var hwWidth = $head.outerWidth(true) > $fastGrid.width()
-                ? $head.outerWidth(true) : $fastGrid.width();
-            $headWrapper.width(hwWidth);
+            $head.width($head.width());
             $body.width($head.width());
+            $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
             if(detach){
                 $fastGrid.append($bodyWrapper);
             }
             //调整滚动条
-            $bodyWrapper.scroll();
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            console.log($bodyWrapper.scrollLeft());
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
+            }
+
         }
     };
 
 
 
-    $.fn.fastGrid = function(option){
+    $.fn.fastGrid = function(option , val){
+        if(typeof option === 'string'){
+            return $(this).data('fastGrid')[option](val);
+        }
         return this.each(function(){
             var $this = $(this)
                 , data = $this.data('fastGrid')
@@ -554,12 +653,14 @@
     };
 
     $.fn.fastGrid.defaults = {
+        frame: false,
         width: '100%',
         height: '100%',
         url: false,
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        multiSelect: false,
         loadingText: '正在载入...',
         noRecordText: '没有数据',
         cols: [],

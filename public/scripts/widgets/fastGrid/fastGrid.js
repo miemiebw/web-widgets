@@ -21,6 +21,7 @@
 
         init: function($el){
             var $elParent = $el.parent();
+            var itemIndex = $el.index();
             $el.detach();
             var fastGrid = [
                 '<div class="fastGrid">',
@@ -67,7 +68,7 @@
 
 
             //
-            $elParent.append(this.$fastGrid);
+            $elParent.children().eq(itemIndex).before(this.$fastGrid);
 
             //loading
             $fastGrid.find('.mask').width($fastGrid.width())
@@ -213,7 +214,7 @@
             var $ths = this.$ths;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
-            var $noRecord = $fastGrid.find('div.noRecord');
+            var $noRecord = $fastGrid.find('.noRecord');
 
             $optWrapper.detach();
             //向下按钮
@@ -290,7 +291,7 @@
 
         },
 
-        load: function(newParams){
+        load: function(args){
             var $thisObject = this;
             var opts = this.opts;
 
@@ -298,18 +299,19 @@
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
 
-            var params = {
-                sortName: opts.sortName,
-                sortStatus: opts.sortStatus
-            };
-            //
-            if($.isFunction(opts.params)){
-                params = $.extend(params, opts.params());
-            }else if($.isPlainObject()){
-                params = $.extend(params, opts.params);
-            }
-            params = $.extend(params, newParams);
-            if(opts.url){
+
+            if(opts.url && !$.isArray(args)){
+                var params = {
+                    sortName: opts.sortName,
+                    sortStatus: opts.sortStatus
+                };
+                //
+                if($.isFunction(opts.params)){
+                    params = $.extend(params, opts.params());
+                }else if($.isPlainObject()){
+                    params = $.extend(params, opts.params);
+                }
+                params = $.extend(params, args);
                 $.ajax({
                     type: opts.method,
                     url: opts.url,
@@ -324,6 +326,9 @@
                     }
                 });
             }else{
+                if(args){
+                    opts.items = args;
+                }
                 $thisObject.populate(opts.items);
                 //排序滞后目的是刷新数据的时候保留之前的排序状态
                 var $ths = this.$ths;
@@ -368,7 +373,7 @@
                     $.each(opts.cols, function(colIndex, col){
 
                         var $td = $('<td><div class="content"></div></td>').width($ths.eq(colIndex).width());
-                        if(col.hidden){
+                        if($ths.eq(colIndex).is(':hidden')){
                             $td.hide();
                         }
                         var $content = $td.find('div.content');
@@ -546,12 +551,15 @@
 
 
 
-    $.fn.fastGrid = function(option){
+    $.fn.fastGrid = function(option , val){
         return this.each(function(){
             var $this = $(this)
                 , data = $this.data('fastGrid')
                 , options = $.extend({}, $.fn.fastGrid.defaults, typeof option == 'object' && option);
             if (!data) $this.data('fastGrid', (data = new FastGrid(this, options)))
+            if(typeof option === 'string'){
+                data[option](val);
+            }
         });
     };
 

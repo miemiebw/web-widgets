@@ -92,6 +92,16 @@
             this.$bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
+
+            //其实只有IE6不支持hover，这里需要改一下
+            var $body = this.$body;
+            if ($.browser.msie) {
+                if ($.browser.version == "6.0"){
+                    $body.find('tbody').on('hover','tr', function (e) {
+                        $(this).toggleClass('hover', e.type === 'mouseenter');
+                    });
+                };
+            }
         },
 
         initHead: function(){
@@ -395,14 +405,7 @@
                     });
                     $tbody.append($tr);
                 });
-                //其实只有IE6不支持hover，这里需要改一下
-                if ($.browser.msie) {
-                    if ($.browser.version == "6.0"){
-                        $tbody.on('hover','tr', function (e) {
-                            $('td',this).toggleClass('hover', e.type === 'mouseenter');
-                        });
-                    };
-                }
+
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 

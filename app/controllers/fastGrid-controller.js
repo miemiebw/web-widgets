@@ -7,9 +7,14 @@
  */
 
 module.exports = function(app){
-  app.get('/examples/fastGrid', function(req, res){
-      res.render('examples/fastGrid',{
-          title: 'fastGrid'
-      });
-  });
+    app.get('/examples/fastGrid', function(req, res){
+        res.render('examples/fastGrid',{
+            title: 'fastGrid'
+        });
+    });
+    app.get('/examples/fastGrid-options', function(req, res){
+        res.render('examples/fastGrid-options',{
+            title: 'fastGrid-options'
+        });
+    });
 };

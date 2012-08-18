@@ -473,17 +473,18 @@
                         if(col.align){
                             $td.css('text-align', col.align);
                         }
+                        var $textWrap = $('<span></span>');
                         if(col.renderer){
                             var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
                             if(result instanceof jQuery){
-                                $td.append(result);
+                                $textWrap.append(result);
                             }else{
-                                $td[0].innerHTML = result;
+                                $textWrap[0].innerHTML = result;
                             }
                         }else{
-                            $td[0].innerHTML = item[col.name];
+                            $textWrap[0].innerHTML = item[col.name];
                         }
-                        $tr.append($td);
+                        $tr.append($td.append($textWrap));
 
                     });
                     $tbody.append($tr);
@@ -540,6 +541,7 @@
 
 
         setStyle: function(){
+            var opts = this.opts;
             var $head = this.$head;
             var $ths = this.$ths;
             var $body = this.$body;
@@ -550,6 +552,9 @@
             $ths.eq(-1).addClass('last');
             //body
             $tbody.find('tr,td').removeClass();
+            if(opts.nowrap){
+                $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
+            }
             $tbody.find('tr:odd').addClass('even');
             $tbody.find('tr > td:first-child').addClass('first');
             $tbody.find('tr > td:last-child').addClass('last');
@@ -574,7 +579,7 @@
             $bodyWrapper.width(9999);
             $head.width('auto');//使其可以自由伸展
             $body.width('auto');
-            if(detach){
+            if(true){
                 $bodyWrapper.detach();
             }
 
@@ -593,23 +598,9 @@
                 $th.width($th.width());
                 $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width()).css('max-width',$th.width());
             }else{
-                //尽量不要用全部调整,这里的实现现在只满足刚执行populate之后
-                var $firstRowTds = $tbody.find('tr:first > td');
                 $.each($ths, function(index){
                     var $th = $ths.eq(index);
-                    if(opts.textEllipsis){
-                        //与head对齐
-                        $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
-                    }else{
-                        //谁宽和谁对齐
-                        var $td = $firstRowTds.eq(index);
-                        if($th.width() > $td.width()){
-                            $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
-                        }else{
-                            $th.width($td.width());
-                            $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
-                        }
-                    }
+                    $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
                 });
             }
         },
@@ -629,7 +620,7 @@
             $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            if(detach){
+            if(true){
                 $fastGrid.append($bodyWrapper);
             }
             //调整滚动条
@@ -663,6 +654,7 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
         noRecordText: '没有数据',
@@ -671,7 +663,6 @@
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
-        textEllipsis: false,
         onSuccess: function(){},
         onError: function(){},
         onSelected: function(item, rowIndex, colIndex){}

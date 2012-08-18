@@ -12,6 +12,11 @@ module.exports = function(app){
             title: 'fastGrid'
         });
     });
+    app.get('/examples/fastGrid-nowrap', function(req, res){
+        res.render('examples/fastGrid-nowrap',{
+            title: 'fastGrid-nowrap'
+        });
+    });
     app.get('/examples/fastGrid-options', function(req, res){
         res.render('examples/fastGrid-options',{
             title: 'fastGrid-options'

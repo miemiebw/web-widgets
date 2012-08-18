@@ -7,9 +7,14 @@
  */
 
 module.exports = function(app){
-    app.get('/examples/fastGrid', function(req, res){
-        res.render('examples/fastGrid',{
-            title: 'fastGrid'
+    app.get('/examples/fastGrid-native-multiSelect', function(req, res){
+        res.render('examples/fastGrid-native-multiSelect',{
+            title: 'fastGrid-native-multiSelect'
+        });
+    });
+    app.get('/examples/fastGrid-ajax-nowrap', function(req, res){
+        res.render('examples/fastGrid-ajax-nowrap',{
+            title: 'fastGrid-ajax-nowrap'
         });
     });
     app.get('/examples/fastGrid-options', function(req, res){

@@ -497,7 +497,7 @@
                         }
                         var $textWrap = $('<span></span>');
                         if(col.renderer){
-                            var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
+                            var result = col.renderer(item[col.name], item, items, rowIndex, $tr[0]);
                             if(result instanceof jQuery){
                                 $textWrap.append(result);
                             }else{
@@ -530,6 +530,7 @@
 
             $fastGrid.find('.mask').hide();
             $fastGrid.find('.loadingWrapper').hide();
+            opts.onSuccess();
         },
 
         nativeSorter: function(colIndex, sortStatus){

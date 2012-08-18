@@ -69,7 +69,7 @@ block append script
             return $a;
         }},
         {title:'名称', name:'', width: 50, sortable: true, align: 'center', renderer: function(val,item){
-            return '<span>'+ item.stockAbbr + '(' + item.stockCode + ')' +'</span>';
+            return item.stockAbbr + '(' + item.stockCode + ')';
         }},
         {title:'最新价', name:'newPrice', width: 50, align: 'right', renderer: function(val){
             return val.toFixed(2)+'%';
@@ -109,7 +109,7 @@ block append script
         height: '100%',
         url: '/stockQuote.json',
         method: 'get',
-        textEllipsis: true,
+        nowrap: true,
         cols: cols
       });
 
@@ -118,7 +118,7 @@ block append script
         height: '100%',
         url: '/stockQuote.json',
         method: 'get',
-        textEllipsis: false,
+        nowrap: false,
         cols: cols
       });
 

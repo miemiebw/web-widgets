@@ -110,6 +110,8 @@ block append script
         url: '/stockQuote.json',
         method: 'get',
         nowrap: true,
+        sortName: 'udRange',
+        sortStatus: 'desc',
         cols: cols
       });
 
@@ -119,6 +121,9 @@ block append script
         url: '/stockQuote.json',
         method: 'get',
         nowrap: false,
+        sortName: 'udRange',
+        sortStatus: 'desc',
+        remoteSort: false,
         cols: cols
       });
 

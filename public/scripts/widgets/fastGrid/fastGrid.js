@@ -168,6 +168,11 @@
                             'cursor':'pointer',
                             'text-decoration': 'underline'
                         });
+                        //设置初始化排序状态
+                        if(opts.sortName && col.name === opts.sortName){
+                            $th.find('span.title').data('sortStatus',opts.sortStatus);
+                            $th.find('div.sortStatus').addClass(opts.sortStatus);
+                        }
                     }
 
                     $tr.append($th);
@@ -333,61 +338,78 @@
             var opts = this.opts;
 
             if(opts.url && !$.isArray(args)){
-                var $fastGrid = this.$fastGrid;
-                $fastGrid.find('.mask').show();
-                $fastGrid.find('.loadingWrapper').show();
-                var params = {
+                $thisObject.loadAjax(args);
+            }else{
+                $thisObject.loadNative(args);
+
+            }
+        },
+        loadAjax: function(args){
+            var $thisObject = this;
+            var opts = this.opts;
+
+            var $fastGrid = this.$fastGrid;
+            $fastGrid.find('.mask').show();
+            $fastGrid.find('.loadingWrapper').show();
+            var params = {};
+            if(opts.remoteSort){
+                params = {
                     sortName: opts.sortName,
                     sortStatus: opts.sortStatus
                 };
-                //
-                if($.isFunction(opts.params)){
-                    params = $.extend(params, opts.params());
-                }else if($.isPlainObject()){
-                    params = $.extend(params, opts.params);
-                }
-                params = $.extend(params, args);
-                $.ajax({
-                    type: opts.method,
-                    url: opts.url,
-                    data: params,
-                    dataType: 'json',
-                    cache: false
-                }).done(function(data){
-                    $thisObject.populate(data);
-                }).fail(function(data){
-                    if(opts.onError){
-                        opts.onError();
+            }
+            //
+            if($.isFunction(opts.params)){
+                params = $.extend(params, opts.params());
+            }else if($.isPlainObject()){
+                params = $.extend(params, opts.params);
+            }
+            params = $.extend(params, args);
+            $.ajax({
+                type: opts.method,
+                url: opts.url,
+                data: params,
+                dataType: 'json',
+                cache: false
+            }).done(function(data){
+                    if(opts.remoteSort){
+                        $thisObject.populate(data);
+                    }else{
+                        $thisObject.loadNative(data);
                     }
-                    $fastGrid.find('.mask').hide();
-                    $fastGrid.find('.loadingWrapper').hide();
-                });
-            }else{
-                if(args){
-                    opts.items = args;
-                }
-                $thisObject.populate(opts.items);
-                //排序滞后目的是刷新数据的时候保留之前的排序状态
-                var $ths = this.$ths;
-                var sortColIndex = -1;
-                var sortStatus = opts.sortStatus;
-                $.each(opts.cols, function(index, col){
-                    if(col.sortable && col.name === opts.sortName && typeof opts.sortName === 'string'){
-                        sortColIndex = index;
-                    }
-                });
-                $ths.find('.title').each(function(index, item){
-                    var status = $.data(item, 'sortStatus');
-                    if(status){
-                        sortColIndex = index;
-                        sortStatus = status;
-                    }
-                });
-                var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
-                if(sortColIndex >=0){
-                    $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
-                }
 
+            }).fail(function(data){
+                if(opts.onError){
+                    opts.onError();
+                }
+                $fastGrid.find('.mask').hide();
+                $fastGrid.find('.loadingWrapper').hide();
+            });
+        },
+
+        loadNative: function(args){
+            var $thisObject = this;
+            var opts = this.opts;
+
+            var items = opts.items
+            if(args){
+                items = args;
+            }
+            $thisObject.populate(items);
+            //排序滞后目的是刷新数据的时候保留之前的排序状态
+            var $ths = this.$ths;
+            var sortColIndex = -1;
+            var sortStatus = '';
+            $ths.find('.title').each(function(index, item){
+                var status = $.data(item, 'sortStatus');
+                if(status){
+                    sortColIndex = index;
+                    sortStatus = status;
+                }
+            });
+            var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
+            if(sortColIndex >=0){
+                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
             }
         },
 
@@ -533,8 +555,8 @@
         remoteSorter: function(colIndex, sortStatus){
             var opts = this.opts;
             var params = {
-                sortName: opts.cols[index].name,
-                sortStatus: status
+                sortName: opts.cols[colIndex].name,
+                sortStatus: sortStatus
             };
             this.load(params);
         },
@@ -659,7 +681,7 @@
         loadingText: '正在载入...',
         noRecordText: '没有数据',
         cols: [],
-        sortName: false,
+        sortName: '',
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,

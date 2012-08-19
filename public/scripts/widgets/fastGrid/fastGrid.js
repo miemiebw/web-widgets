@@ -553,7 +553,6 @@
 
             $fastGrid.find('.mask').hide();
             $fastGrid.find('.loadingWrapper').hide();
-            opts.onSuccess();
         },
 
         nativeSorter: function(colIndex, sortStatus){

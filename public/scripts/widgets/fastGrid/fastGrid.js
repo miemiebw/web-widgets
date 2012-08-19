@@ -337,17 +337,14 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            if(opts.url && !$.isArray(args) && !$.isArray(args[opts.root])){
+            var items = args;
+            if($.isPlainObject(args) && $.isArray(args[opts.root])){
+                items = args[opts.root];
+            }
+            if(opts.url && !$.isArray(items)){
                 $thisObject.loadAjax(args);
             }else{
-
-                var items = opts.items
-                if($.isArray(args)){
-                    items = args;
-                }else if($.isArray(args[opts.root])){
-                    items = args[opts.root];
-                }
-                $thisObject.loadNative(args);
+                $thisObject.loadNative(items);
                 if(opts.onSuccess){
                     opts.onSuccess($thisObject, args);
                 }
@@ -410,7 +407,7 @@
             });
         },
 
-        loadNative: function(args){
+        loadNative: function(items){
             var $thisObject = this;
             var opts = this.opts;
 

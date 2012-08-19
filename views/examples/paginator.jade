@@ -2,7 +2,7 @@ extends ../layout
 
 block append link
   link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
-  link(rel='stylesheet', href='/scripts/widgets/pagingBar/pagingBar.css')
+  link(rel='stylesheet', href='/scripts/widgets/paginator/paginator.css')
   style
     .wrapper{
       width: 500px;
@@ -23,7 +23,7 @@ block content
   div.wrapper
     table#quoteTable
     div(style='text-align:right;')
-        div.pagingBar
+        div.paginator
           span.recordText 共37493条记录
           ul
             li: a.head
@@ -43,7 +43,7 @@ block content
   div.wrapper(style='padding-top:0px;')
     table#quoteTable2
     div(style='text-align:right;')
-        div.pagingBar
+        div.paginator
           span.recordText 共37493条记录
           ul
             li: a.prev
@@ -66,7 +66,7 @@ block content
 
 block append script
   script(src='/scripts/widgets/fastGrid/fastGrid.js')
-  script(src='/scripts/widgets/pagingBar/pagingBar.js');
+  script(src='/scripts/widgets/paginator/paginator.js');
   script
     $(document).ready(function(){
       var cols = [

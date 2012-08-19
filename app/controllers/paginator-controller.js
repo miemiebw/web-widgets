@@ -6,9 +6,9 @@
  */
 
 module.exports = function(app){
-  app.get('/examples/pagingBar', function(req, res){
-      res.render('examples/pagingBar',{
-          title: 'pagingBar'
+  app.get('/examples/paginator', function(req, res){
+      res.render('examples/paginator',{
+          title: 'paginator'
       });
   });
 };

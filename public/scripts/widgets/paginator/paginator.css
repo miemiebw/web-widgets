@@ -1,18 +1,18 @@
 
-.pagingBar{
+.paginator{
     margin: 5px 0;
     display: inline-block;
     *display: inline;
     *zoom: 1;
 }
 
-.pagingBar ul{
+.paginator ul{
     display: inline-block;
     *display: inline;
     *zoom: 1;
 }
 
-.pagingBar ul li{
+.paginator ul li{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -20,7 +20,7 @@
     vertical-align: middle;
 }
 
-.pagingBar ul li div.pageNo{
+.paginator ul li div.pageNo{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -31,7 +31,7 @@
     *top: -3px;
 }
 
-.pagingBar ul li a{
+.paginator ul li a{
     display: block;
     border: 1px solid #ccc;
     padding: 0 2px;
@@ -41,37 +41,37 @@
     line-height: 20px;
 }
 
-.pagingBar ul li a.head{
+.paginator ul li a.head{
     background: url(images/arrow_state_red_head.png) no-repeat center center;
 }
 
-.pagingBar ul li a.prev{
+.paginator ul li a.prev{
     background: url(images/arrow_state_red_left.png) no-repeat center center;
 }
 
-.pagingBar ul li a.next{
+.paginator ul li a.next{
     background: url(images/arrow_state_red_right.png) no-repeat center center;
 }
 
-.pagingBar ul li a.tail{
+.paginator ul li a.tail{
     background: url(images/arrow_state_red_tail.png) no-repeat center center;
 }
 
-.pagingBar ul li a.current{
+.paginator ul li a.current{
     border: 0px;
     font-weight: bold;
 }
 
-.pagingBar ul li a.skip{
+.paginator ul li a.skip{
     border: 0px;
     color: #333;
 }
 
-.pagingBar .recordText {
+.paginator .recordText {
     vertical-align: middle;
 }
 
-.pagingBar .pageSize{
+.paginator .pageSize{
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -79,12 +79,12 @@
     vertical-align: middle;
 }
 
-.pagingBar select{
+.paginator select{
     border: 1px solid #ccc;
     padding: 2px;
 }
 
-.pagingBar input{
+.paginator input{
     border: 1px solid #ccc;
     padding: 2px;
     height: 16px;

@@ -598,7 +598,7 @@
             }));
 
             $tbody.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
-                .filter(':even').addClass('colSelectedEven');
+                .filter(':odd').addClass('colSelectedEven');
 
         },
 

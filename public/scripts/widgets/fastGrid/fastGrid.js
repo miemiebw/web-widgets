@@ -578,7 +578,6 @@
             $ths.eq(-1).addClass('last');
             //body
             $tbody.find('tr,td').removeClass('even')
-                .removeClass('first').removeClass('last')
                 .removeClass('colSelected').removeClass('colSelectedEven');
 
             $tbody.find('tr:odd').addClass('even');

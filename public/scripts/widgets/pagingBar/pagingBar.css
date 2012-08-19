@@ -20,6 +20,17 @@
     vertical-align: middle;
 }
 
+.pagingBar ul li div.pageNo{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    line-height: 20px;
+    *line-height: 14px;
+    vertical-align: middle;
+    *position: relative;
+    *top: -3px;
+}
+
 .pagingBar ul li a{
     display: block;
     border: 1px solid #ccc;
@@ -30,11 +41,11 @@
     line-height: 20px;
 }
 
-.pagingBar ul li a.first{
+.pagingBar ul li a.prev{
     background: url(images/arrow_state_red_left.png) no-repeat center center;
 }
 
-.pagingBar ul li a.last{
+.pagingBar ul li a.next{
     background: url(images/arrow_state_red_right.png) no-repeat center center;
 }
 
@@ -60,7 +71,13 @@
     vertical-align: middle;
 }
 
-.pagingBar .pageSize select{
+.pagingBar select{
     border: 1px solid #ccc;
     padding: 2px;
+}
+
+.pagingBar input{
+    border: 1px solid #ccc;
+    padding: 2px;
+    height: 16px;
 }

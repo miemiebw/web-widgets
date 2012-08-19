@@ -8,7 +8,6 @@ block append link
       width: 500px;
       margin:0px auto;
       padding: 80px 0px;
-
     }
     .btnPrice{
       display: block;
@@ -22,22 +21,32 @@ block append link
     }
 block content
   div.wrapper
-    div.pagingBar
-      ul
-        li: a.first
-        li: a 1
-        li: a 2
-        li: a.current 3
-        li: a 4
-        li: a 5
-        li: a.last
-  div.wrapper
     table#quoteTable
     div(style='text-align:right;')
         div.pagingBar
           span.recordText 共37493条记录
           ul
-            li: a.first
+            li: a.prev
+            li: a.prev
+            li
+              div.pageNo 第
+              input(type='text',style='width:20px;margin:0 3px;text-align:center;',value='3')
+              div.pageNo 页/共25页
+            li: a.next
+            li: a.next
+
+          div.pageSize
+            select
+              option 每页15条
+              option 每页30条
+              option 每页50条
+  div.wrapper(style='padding-top:0px;')
+    table#quoteTable2
+    div(style='text-align:right;')
+        div.pagingBar
+          span.recordText 共37493条记录
+          ul
+            li: a.prev
             li: a 1
             li: a.skip ...
             li: a 4
@@ -47,7 +56,7 @@ block content
             li: a 8
             li: a.skip ...
             li: a 256333
-            li: a.last
+            li: a.next
 
           div.pageSize
             select
@@ -113,5 +122,15 @@ block append script
         sortStatus: 'desc',
         cols: cols
       });
+      $('#quoteTable2').fastGrid({
+          width: '100%',
+          height: '250px',
+          url: '/stockQuote.json',
+          method: 'get',
+          nowrap: true,
+          sortName: 'udRange',
+          sortStatus: 'desc',
+          cols: cols
+        });
 
     });

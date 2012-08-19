@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/widgets/pagingBar/images/arrow_state_red_head.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/scripts/widgets/pagingBar/images/arrow_state_red_tail.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/pagingBar.jade" afterPath="$PROJECT_DIR$/views/examples/pagingBar.jade" />
     </list>
     <ignored path="widgets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,19 +28,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="fastGrid.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
+      <file leaf-file-name="fastGrid-ajax-nowrap.jade" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="591" column="10" selection-start="21919" selection-end="21919" vertical-scroll-proportion="0.6831683">
+            <state line="84" column="13" selection-start="2505" selection-end="2505" vertical-scroll-proportion="0.24418604">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fastGrid.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css">
+      <file leaf-file-name="pagingBar.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="30" selection-start="1981" selection-end="1981" vertical-scroll-proportion="0.0">
+            <state line="44" column="41" selection-start="767" selection-end="767" vertical-scroll-proportion="-12.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pagingBar.jade" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/examples/pagingBar.jade">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="22" selection-start="940" selection-end="944" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -82,22 +94,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/public/styles/index.css" />
-        <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid.css" />
-        <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid.js" />
-        <option value="$PROJECT_DIR$/ttt.html" />
-        <option value="$PROJECT_DIR$/views/layout.jade" />
         <option value="$PROJECT_DIR$/public/stockQuote.json" />
         <option value="$PROJECT_DIR$/views/examples/fastGrid-nowrap.jade" />
         <option value="$PROJECT_DIR$/views/examples/fastGrid.jade" />
         <option value="$PROJECT_DIR$/app/controllers/fastGrid-controller.js" />
-        <option value="$PROJECT_DIR$/views/index.jade" />
         <option value="$PROJECT_DIR$/views/examples/fastGrid-options.jade" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-options.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
+        <option value="$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.js" />
+        <option value="$PROJECT_DIR$/app/controllers/pagingBar-controller.js" />
+        <option value="$PROJECT_DIR$/views/index.jade" />
+        <option value="$PROJECT_DIR$/public/styles/base.css" />
+        <option value="$PROJECT_DIR$/views/examples/pagingBar.jade" />
+        <option value="$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.css" />
       </list>
     </option>
   </component>
@@ -275,7 +287,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fastGrid" />
+              <option name="myItemId" value="pagingBar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pagingBar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -334,13 +376,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/scripts/widgets/pagingBar/images" />
+      <recent name="$PROJECT_DIR$/app/controllers" />
+      <recent name="$PROJECT_DIR$/public/scripts/widgets/fastGrid/images" />
       <recent name="$PROJECT_DIR$/examples" />
       <recent name="D:\dev\javascript\web-widgets\public\scripts" />
-      <recent name="D:\dev\javascript\web-widgets\app\controllers" />
-      <recent name="D:\dev\javascript\widgets\public\scripts" />
-      <recent name="D:\dev\javascript\widgets\public\styles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/scripts/widgets/pagingBar/images" />
       <recent name="D:\dev\javascript\web-widgets\public\scripts" />
       <recent name="D:\dev\javascript\widgets\views\examples" />
     </key>
@@ -554,7 +597,23 @@
       <created>1345346985220</created>
       <updated>1345346985220</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="modify style">
+      <created>1345347161928</created>
+      <updated>1345347161928</updated>
+    </task>
+    <task id="LOCAL-00043" summary="modify sort">
+      <created>1345358845702</created>
+      <updated>1345358845702</updated>
+    </task>
+    <task id="LOCAL-00044" summary="add pagingBar init">
+      <created>1345366394316</created>
+      <updated>1345366394317</updated>
+    </task>
+    <task id="LOCAL-00045" summary="define style">
+      <created>1345369573461</created>
+      <updated>1345369573461</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -597,11 +656,11 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4494382" sideWeight="0.49752998" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17925194" sideWeight="0.79026216" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24700071" sideWeight="0.79026216" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39976826" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4494382" sideWeight="0.49752998" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20973782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20973782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833958" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -650,7 +709,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify style" />
+    <option name="LAST_COMMIT_MESSAGE" value="define style" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -663,9 +722,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="modify fastGrid2" />
-    <MESSAGE value="modify fastGrid3" />
-    <MESSAGE value="add fasGrid.js" />
     <MESSAGE value="add fastGrid.js" />
     <MESSAGE value="add fastGrid files" />
     <MESSAGE value="enhan performence" />
@@ -688,31 +744,14 @@
     <MESSAGE value="modify example" />
     <MESSAGE value="modify" />
     <MESSAGE value="modify style" />
+    <MESSAGE value="modify sort" />
+    <MESSAGE value="add pagingBar init" />
+    <MESSAGE value="define style" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/scripts/json2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="17" selection-start="6663" selection-end="6663" vertical-scroll-proportion="0.4778443" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/jquery/jquery-1.7.2.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="25772" selection-start="25825" selection-end="25825" vertical-scroll-proportion="0.023114355" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/layout.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="39" selection-start="300" selection-end="300" vertical-scroll-proportion="0.21317829" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/stockQuote.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="214" selection-start="2181" selection-end="2181" vertical-scroll-proportion="0.0">
@@ -732,30 +771,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/fastGrid-controller.js">
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/images/header_bg.gif">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="3" selection-start="329" selection-end="329" vertical-scroll-proportion="0.21317829">
+        <state line="362" column="25" selection-start="13579" selection-end="13579" vertical-scroll-proportion="0.44519392">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.jade">
+    <entry file="file://$PROJECT_DIR$/views/examples/textProposal.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="1" selection-start="285" selection-end="285" vertical-scroll-proportion="0.1744186">
+        <state line="0" column="0" selection-start="0" selection-end="1383" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="30" selection-start="1981" selection-end="1981" vertical-scroll-proportion="0.0">
+        <state line="133" column="21" selection-start="2410" selection-end="2410" vertical-scroll-proportion="0.95049506">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
+    <entry file="file://$PROJECT_DIR$/app/controllers/textProposal-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="591" column="10" selection-start="21919" selection-end="21919" vertical-scroll-proportion="0.6831683">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/fastGrid-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="25" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/pagingBar-controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="16" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0990099">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="47" selection-start="415" selection-end="415" vertical-scroll-proportion="0.24752475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/styles/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="154" selection-end="185" vertical-scroll-proportion="0.18048128">
+          <folding>
+            <marker date="1345366015000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/examples/pagingBar.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="22" selection-start="940" selection-end="944" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/pagingBar/pagingBar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="41" selection-start="767" selection-end="767" vertical-scroll-proportion="-12.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="13" selection-start="2505" selection-end="2505" vertical-scroll-proportion="0.24418604">
           <folding />
         </state>
       </provider>

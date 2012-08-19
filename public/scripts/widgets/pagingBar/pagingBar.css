@@ -41,12 +41,20 @@
     line-height: 20px;
 }
 
+.pagingBar ul li a.head{
+    background: url(images/arrow_state_red_head.png) no-repeat center center;
+}
+
 .pagingBar ul li a.prev{
     background: url(images/arrow_state_red_left.png) no-repeat center center;
 }
 
 .pagingBar ul li a.next{
     background: url(images/arrow_state_red_right.png) no-repeat center center;
+}
+
+.pagingBar ul li a.tail{
+    background: url(images/arrow_state_red_tail.png) no-repeat center center;
 }
 
 .pagingBar ul li a.current{

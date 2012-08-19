@@ -353,9 +353,21 @@
             $fastGrid.find('.loadingWrapper').show();
             var params = {};
             if(opts.remoteSort){
+                //获得当前排序状态
+                var $ths = this.$ths;
+                var sortName = '';
+                var sortStatus = '';
+                $ths.find('.title').each(function(index, item){
+                    var status = $.data(item, 'sortStatus');
+                    if(status){
+                        sortName = opts.cols[index].name;
+                        sortStatus = status;
+                    }
+                });
+
                 params = {
-                    sortName: opts.sortName,
-                    sortStatus: opts.sortStatus
+                    sortName: sortName,
+                    sortStatus: sortStatus
                 };
             }
             //
@@ -396,7 +408,7 @@
                 items = args;
             }
             $thisObject.populate(items);
-            //排序滞后目的是刷新数据的时候保留之前的排序状态
+            //排序滞后是因为排序的是显示值
             var $ths = this.$ths;
             var sortColIndex = -1;
             var sortStatus = '';
@@ -557,12 +569,7 @@
         },
 
         remoteSorter: function(colIndex, sortStatus){
-            var opts = this.opts;
-            var params = {
-                sortName: opts.cols[colIndex].name,
-                sortStatus: sortStatus
-            };
-            this.load(params);
+            this.load();
         },
 
 

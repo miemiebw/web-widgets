@@ -337,11 +337,20 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            if(opts.url && !$.isArray(args)){
+            if(opts.url && !$.isArray(args) && !$.isArray(args[opts.root])){
                 $thisObject.loadAjax(args);
             }else{
-                $thisObject.loadNative(args);
 
+                var items = opts.items
+                if($.isArray(args)){
+                    items = args;
+                }else if($.isArray(args[opts.root])){
+                    items = args[opts.root];
+                }
+                $thisObject.loadNative(args);
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
+                }
             }
         },
         loadAjax: function(args){
@@ -384,15 +393,17 @@
                 dataType: 'json',
                 cache: false
             }).done(function(data){
-                    if(opts.remoteSort){
-                        $thisObject.populate(data);
-                    }else{
-                        $thisObject.loadNative(data);
-                    }
-
+                if(opts.remoteSort){
+                    $thisObject.populate(data);
+                }else{
+                    $thisObject.loadNative(data);
+                }
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
+                }
             }).fail(function(data){
                 if(opts.onError){
-                    opts.onError();
+                    opts.onError($thisObject, data);
                 }
                 $fastGrid.find('.mask').hide();
                 $fastGrid.find('.loadingWrapper').hide();
@@ -403,10 +414,7 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            var items = opts.items
-            if(args){
-                items = args;
-            }
+
             $thisObject.populate(items);
             //排序滞后是因为排序的是显示值
             var $ths = this.$ths;
@@ -492,7 +500,7 @@
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
 
-            if(items && items.length != 0 && opts.cols){
+            if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
@@ -683,6 +691,7 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        root: '',
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
@@ -692,8 +701,8 @@
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
-        onSuccess: function(){},
-        onError: function(){},
+        onSuccess: function(fastGrid, data){},
+        onError: function(fastGrid, data){},
         onSelected: function(item, rowIndex, colIndex){}
 
     };

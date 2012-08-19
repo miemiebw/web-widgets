@@ -506,12 +506,15 @@
                         }else{
                             $textWrap[0].innerHTML = item[col.name];
                         }
+
                         $tr.append($td.append($textWrap));
 
                     });
                     $tbody.append($tr);
                 });
-
+                if(opts.nowrap){
+                    $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
+                }
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 
@@ -574,13 +577,11 @@
             $ths.eq(0).addClass('first');
             $ths.eq(-1).addClass('last');
             //body
-            $tbody.find('tr,td').removeClass();
-            if(opts.nowrap){
-                $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
-            }
+            $tbody.find('tr,td').removeClass('even')
+                .removeClass('first').removeClass('last')
+                .removeClass('colSelected').removeClass('colSelectedEven');
+
             $tbody.find('tr:odd').addClass('even');
-            $tbody.find('tr > td:first-child').addClass('first');
-            $tbody.find('tr > td:last-child').addClass('last');
 
             var sortIndex = $head.find('span.title').index($head.find('span.title').filter(function(){
                 return $.data(this,'sortStatus') === 'asc' || $(this).data('sortStatus') === 'desc';

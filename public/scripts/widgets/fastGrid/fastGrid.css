@@ -122,7 +122,8 @@
 }
 
 .fastGrid .tableBody td{
-    border: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     line-height: 24px;
     padding: 0 5px;
     text-align: left;
@@ -160,13 +161,6 @@
     background: #ffdaa0;
 }
 
-.fastGrid .tableHead th.first,.fastGrid .tableBody td.first{
-    border-left: 0px;
-}
-
-.fastGrid .tableHead th.last,.fastGrid .tableBody td.last{
-
-}
 
 .fastGrid .tableHead th .resize{
     position: absolute;;

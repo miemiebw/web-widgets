@@ -571,7 +571,7 @@
             var $head = this.$head;
             var $ths = this.$ths;
             var $body = this.$body;
-            var $tbody = $body.find('tbody').detach();
+            var $tbody = $body.find('tbody');
 
             //head
             $ths.eq(0).addClass('first');
@@ -589,7 +589,6 @@
             $tbody.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
                 .filter(':even').addClass('colSelectedEven');
 
-            $body.append($tbody);
         },
 
         startLayout: function(detach){

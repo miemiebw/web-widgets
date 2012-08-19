@@ -337,11 +337,17 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            if(opts.url && !$.isArray(args)){
+            var items = args;
+            if($.isPlainObject(args) && $.isArray(args[opts.root])){
+                items = args[opts.root];
+            }
+            if(opts.url && !$.isArray(items)){
                 $thisObject.loadAjax(args);
             }else{
-                $thisObject.loadNative(args);
-
+                $thisObject.loadNative(items);
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
+                }
             }
         },
         loadAjax: function(args){
@@ -353,9 +359,21 @@
             $fastGrid.find('.loadingWrapper').show();
             var params = {};
             if(opts.remoteSort){
+                //获得当前排序状态
+                var $ths = this.$ths;
+                var sortName = '';
+                var sortStatus = '';
+                $ths.find('.title').each(function(index, item){
+                    var status = $.data(item, 'sortStatus');
+                    if(status){
+                        sortName = opts.cols[index].name;
+                        sortStatus = status;
+                    }
+                });
+
                 params = {
-                    sortName: opts.sortName,
-                    sortStatus: opts.sortStatus
+                    sortName: sortName,
+                    sortStatus: sortStatus
                 };
             }
             //
@@ -372,31 +390,30 @@
                 dataType: 'json',
                 cache: false
             }).done(function(data){
-                    if(opts.remoteSort){
-                        $thisObject.populate(data);
-                    }else{
-                        $thisObject.loadNative(data);
-                    }
-
+                if(opts.remoteSort){
+                    $thisObject.populate(data);
+                }else{
+                    $thisObject.loadNative(data);
+                }
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
+                }
             }).fail(function(data){
                 if(opts.onError){
-                    opts.onError();
+                    opts.onError($thisObject, data);
                 }
                 $fastGrid.find('.mask').hide();
                 $fastGrid.find('.loadingWrapper').hide();
             });
         },
 
-        loadNative: function(args){
+        loadNative: function(items){
             var $thisObject = this;
             var opts = this.opts;
 
-            var items = opts.items
-            if(args){
-                items = args;
-            }
+
             $thisObject.populate(items);
-            //排序滞后目的是刷新数据的时候保留之前的排序状态
+            //排序滞后是因为排序的是显示值
             var $ths = this.$ths;
             var sortColIndex = -1;
             var sortStatus = '';
@@ -480,7 +497,7 @@
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
 
-            if(items && items.length != 0 && opts.cols){
+            if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
@@ -506,12 +523,15 @@
                         }else{
                             $textWrap[0].innerHTML = item[col.name];
                         }
+
                         $tr.append($td.append($textWrap));
 
                     });
                     $tbody.append($tr);
                 });
-
+                if(opts.nowrap){
+                    $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
+                }
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 
@@ -530,7 +550,6 @@
 
             $fastGrid.find('.mask').hide();
             $fastGrid.find('.loadingWrapper').hide();
-            opts.onSuccess();
         },
 
         nativeSorter: function(colIndex, sortStatus){
@@ -554,12 +573,7 @@
         },
 
         remoteSorter: function(colIndex, sortStatus){
-            var opts = this.opts;
-            var params = {
-                sortName: opts.cols[colIndex].name,
-                sortStatus: sortStatus
-            };
-            this.load(params);
+            this.load();
         },
 
 
@@ -568,28 +582,24 @@
             var $head = this.$head;
             var $ths = this.$ths;
             var $body = this.$body;
-            var $tbody = $body.find('tbody').detach();
+            var $tbody = $body.find('tbody');
 
             //head
             $ths.eq(0).addClass('first');
             $ths.eq(-1).addClass('last');
             //body
-            $tbody.find('tr,td').removeClass();
-            if(opts.nowrap){
-                $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
-            }
+            $tbody.find('tr,td').removeClass('even')
+                .removeClass('colSelected').removeClass('colSelectedEven');
+
             $tbody.find('tr:odd').addClass('even');
-            $tbody.find('tr > td:first-child').addClass('first');
-            $tbody.find('tr > td:last-child').addClass('last');
 
             var sortIndex = $head.find('span.title').index($head.find('span.title').filter(function(){
                 return $.data(this,'sortStatus') === 'asc' || $(this).data('sortStatus') === 'desc';
             }));
 
             $tbody.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
-                .filter(':even').addClass('colSelectedEven');
+                .filter(':odd').addClass('colSelectedEven');
 
-            $body.append($tbody);
         },
 
         startLayout: function(detach){
@@ -677,6 +687,7 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        root: '',
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
@@ -686,8 +697,8 @@
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
-        onSuccess: function(){},
-        onError: function(){},
+        onSuccess: function(fastGrid, data){},
+        onError: function(fastGrid, data){},
         onSelected: function(item, rowIndex, colIndex){}
 
     };

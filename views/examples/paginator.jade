@@ -78,36 +78,73 @@ block append script
         }}
       ];
 
+      $('#plain').paginator({
+          style: 'plain',
+          pageNo: 8,
+          totalCount: 1362,
+          pageSize: 15,
+          onLoad: function(pageNo, pageSize){
+              $('#quoteTable').fastGrid('load',{
+                  pageNo: pageNo,
+                  pageSize: pageSize
+              });
+          }
+      });
+
       $('#quoteTable').fastGrid({
         width: '100%',
         height: '250px',
-        url: '/stockQuote.json',
+        url: '/stockQuotePage.json',
         method: 'get',
+        root: 'items',
         nowrap: true,
         sortName: 'udRange',
         sortStatus: 'desc',
-        cols: cols
+        remoteSort: true,
+        cols: cols,
+        onSuccess: function($fg, data){
+            console.log(data);
+            $('#plain').paginator('render', {
+                pageNo: data.pageNo,
+                totalCount: data.totalCount,
+                pageSize: data.pageSize
+            });
+        }
       });
-      $('#quoteTable2').fastGrid({
-          width: '100%',
-          height: '250px',
-          url: '/stockQuote.json',
-          method: 'get',
-          nowrap: true,
-          sortName: 'udRange',
-          sortStatus: 'desc',
-          cols: cols
-        });
-      $('#plain').paginator({
-            style: 'plain',
-            pageNo: 8,
-            totalCount: 1362,
-            size: 15
-      });
+
+
+
+
       $('#search').paginator({
             style: 'search',
             pageNo: 6,
             totalCount: 456742,
-            size: 50
+            pageSize: 50,
+            onLoad: function(pageNo, pageSize){
+                $('#quoteTable2').fastGrid('load',{
+                    pageNo: pageNo,
+                    pageSize: pageSize
+                });
+            }
       });
+      $('#quoteTable2').fastGrid({
+        width: '100%',
+        height: '250px',
+        url: '/stockQuotePage.json',
+        method: 'get',
+        root: 'items',
+        nowrap: true,
+        sortName: 'udRange',
+        sortStatus: 'desc',
+        cols: cols,
+        onSuccess: function($fg, data){
+            $('#search').paginator('render', {
+                pageNo: data.pageNo,
+                totalCount: data.totalCount,
+                pageSize: data.pageSize
+            });
+        }
+      });
+
+
     });

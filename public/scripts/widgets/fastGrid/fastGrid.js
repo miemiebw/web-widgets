@@ -390,13 +390,17 @@
                 dataType: 'json',
                 cache: false
             }).done(function(data){
+                var items = data;
+                if($.isArray(data[opts.root])){
+                    items = data[opts.root];
+                }
                 if(opts.remoteSort){
-                    $thisObject.populate(data);
+                    $thisObject.populate(items);
                 }else{
-                    $thisObject.loadNative(data);
+                    $thisObject.loadNative(items);
                 }
                 if(opts.onSuccess){
-                    opts.onSuccess($thisObject, args);
+                    opts.onSuccess($thisObject, data);
                 }
             }).fail(function(data){
                 if(opts.onError){

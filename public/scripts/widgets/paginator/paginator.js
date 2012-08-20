@@ -15,7 +15,7 @@
         this.render({
             pageNo: options.pageNo,
             totalCount: options.totalCount,
-            size: options.size
+            pageSize: options.pageSize
         });
     };
 
@@ -44,7 +44,7 @@
                     .prop('value',item)
                     .text($thisObject.formatString(opts.sizeText,[item]));
 
-                if(item === opts.size){
+                if(item === opts.pageSize){
                     $option.prop('selected','selected');
                 }
 
@@ -61,7 +61,7 @@
 
             $totalCountText.text($thisObject.formatString(opts.totalCountText,[params.totalCount]));
             $sizeList.val(params.size);
-            if( params.pageNo && params.totalCount &&  params.size){
+            if( params.pageNo && params.totalCount &&  params.pageSize){
                 $sizeList.one('change',function(){
                     opts.onLoad(params.pageNo,$sizeList.val());
                 });
@@ -74,12 +74,12 @@
             }
         },
 
-        search: function(pageNo, totalCount, size){
+        search: function(pageNo, totalCount, pageSize){
             var $thisObject = this;
             var opts = this.opts;
             var $numList = this.$numList;
 
-            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
+            var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
             totalPage = totalPage ? totalPage : 0;
             if(totalPage === 0){
                 pageNo = 0;
@@ -94,7 +94,7 @@
             }else{
                 $head.find('a').addClass('head').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(1,size);
+                    opts.onLoad(1,pageSize);
                 });
             }
             $numList.append($head);
@@ -105,7 +105,7 @@
             }else{
                 $prev.find('a').addClass('prev').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo-1,size);
+                    opts.onLoad(pageNo-1,pageSize);
                 });
             }
             $numList.append($prev);
@@ -117,7 +117,7 @@
                     if(/^[0-9]*[1-9][0-9]*$/.exec($(this).val())){
                         var val = parseInt($(this).val(),10);
                         if(val<= totalPage ){
-                            opts.onLoad(val,size);
+                            opts.onLoad(val,pageSize);
                         }
                     }
                 }
@@ -132,7 +132,7 @@
             }else{
                 $next.find('a').addClass('next').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo+1,size);
+                    opts.onLoad(pageNo+1,pageSize);
                 });
             }
             $numList.append($next);
@@ -143,18 +143,18 @@
             }else{
                 $tail.find('a').addClass('tail').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(totalPage,size);
+                    opts.onLoad(totalPage,pageSize);
                 });;
             }
             $numList.append($tail);
         },
 
-        plain: function(pageNo, totalCount, size){
+        plain: function(pageNo, totalCount, pageSize){
             var $thisObject = this;
             var opts = this.opts;
             var $numList = this.$numList;
 
-            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
+            var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
             totalPage = totalPage ? totalPage : 0;
             if(totalPage === 0){
                 pageNo = 0;
@@ -170,7 +170,7 @@
             }else{
                 $prev.find('a').addClass('prev').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo-1,size);
+                    opts.onLoad(pageNo-1,pageSize);
                 });
             }
             $numList.append($prev);
@@ -204,7 +204,7 @@
                 }else{
                     $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
                         e.preventDefault();
-                        opts.onLoad(item, size);
+                        opts.onLoad(item, pageSize);
                     });
                 }
                 $numList.append($li);
@@ -216,7 +216,7 @@
             }else{
                 $next.find('a').addClass('next').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo+1,size);
+                    opts.onLoad(pageNo+1,pageSize);
                 });
             }
             $numList.append($next);
@@ -232,7 +232,10 @@
         }
     };
 
-    $.fn.paginator = function (option) {
+    $.fn.paginator = function (option, val) {
+        if(typeof option === 'string'){
+            return $(this).data('paginator')[option](val);
+        }
         return this.each(function () {
             var $this = $(this)
                 , data = $this.data('paginator')
@@ -244,13 +247,13 @@
         sizeText: '每页{0}条',
         totalCountText: '共{0}条记录',
         style: 'plain',// and search
-        size: 15,
+        pageSize: 15,
         totalCount: 0,
         pageNo: 0,
         sizeList: [15, 30, 50],
-        onLoad: function(pageNo, size){
+        onLoad: function(pageNo, pageSize){
             console.log('pageNo: %s', pageNo);
-            console.log('size: %s', size);
+            console.log('size: %s', pageSize);
         }
 
     };

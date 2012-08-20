@@ -84,6 +84,24 @@
     padding: 0 5px;
 }
 
+
+.fastGrid .tableHead th .content{
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    height: 27px;
+}
+
+.fastGrid .tableHead th .resize{
+    position: absolute;;
+    right: -6px;
+    _right: -4px;
+    top:0px;
+    width: 4px;
+    height: 27px;
+    cursor: col-resize;
+}
+
 .fastGrid .tableHead th .title{
     color: #000;
     vertical-align: middle;
@@ -92,7 +110,7 @@
 .fastGrid .tableHead th .sortStatus{
     margin-left: 2px;
     width: 7px;
-    height: 4px;
+    height: 27px;
     overflow: hidden;
     vertical-align: middle;
     display: none;
@@ -102,14 +120,14 @@
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    background: url(images/up.png);
+    background: url(images/up.png) no-repeat center center;
 }
 
 .fastGrid .tableHead th .desc{
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    background: url(images/dn.png);
+    background: url(images/dn.png) no-repeat center center;
 }
 
 /*tableBody。*/
@@ -162,21 +180,7 @@
 }
 
 
-.fastGrid .tableHead th .resize{
-    position: absolute;;
-    right: -6px;
-    top:0px;
-    width: 4px;
-    height: 27px;
-    cursor: col-resize;
-}
 
-/*如果宽度不够了就显示省略号*/
-.fastGrid .tableHead th .content{
-    position: relative;
-    text-align: left;
-    white-space: nowrap;
-}
 
 
 .fastGrid .noRecord{

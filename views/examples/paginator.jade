@@ -1,0 +1,136 @@
+extends ../layout
+
+block append link
+  link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
+  link(rel='stylesheet', href='/scripts/widgets/paginator/paginator.css')
+  style
+    .wrapper{
+      width: 500px;
+      margin:0px auto;
+      padding: 80px 0px;
+    }
+    .btnPrice{
+      display: block;
+      width: 16px;
+      height: 16px;
+      margin: 0px auto;
+      background: url(../images/botton_g1.gif) no-repeat;
+    }
+    .btnPriceSelected{
+      background: url(../images/botton_g2.gif) no-repeat;
+    }
+block content
+  div.wrapper
+    table#quoteTable
+    div(style='text-align:right;')
+        div.paginator
+          span.recordText 共37493条记录
+          ul
+            li: a.head
+            li: a.prev
+            li
+              div.pageNo 第
+              input(type='text',style='width:20px;margin:0 3px;text-align:center;',value='3')
+              div.pageNo 页/共25页
+            li: a.next
+            li: a.tail
+
+          div.pageSize
+            select
+              option 每页15条
+              option 每页30条
+              option 每页50条
+  div.wrapper(style='padding-top:0px;')
+    table#quoteTable2
+    div(style='text-align:right;')
+        div.paginator
+          span.recordText 共37493条记录
+          ul
+            li: a.prev
+            li: a 1
+            li: a.skip ...
+            li: a 4
+            li: a 5
+            li: a.current 6
+            li: a 7
+            li: a 8
+            li: a.skip ...
+            li: a 256333
+            li: a.next
+
+          div.pageSize
+            select
+              option 每页15条
+              option 每页30条
+              option 每页50条
+
+block append script
+  script(src='/scripts/widgets/fastGrid/fastGrid.js')
+  script(src='/scripts/widgets/paginator/paginator.js');
+  script
+    $(document).ready(function(){
+      var cols = [
+        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,$row,rowIndex){
+            var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
+            $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
+            });
+            return $a;
+        }},
+        {title:'名称', name:'', width: 50, sortable: true, align: 'center', renderer: function(val,item){
+            return item.stockAbbr + '(' + item.stockCode + ')';
+        }},
+        {title:'最新价', name:'newPrice', width: 50, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        {title:'涨跌额', name:'udLimit',type: 'float', width: 50, sortable: true, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        {title:'涨跌幅', name:'udRange', width: 50, sortable: true, align: 'right', renderer: function(val,item){
+            if(item.udRange > 0){
+            return '<span style="color: #b00">' + val.toFixed(2) + '%</span>';
+            }else if(item.udRange < 0){
+            return '<span style="color: #0b0">' + val.toFixed(2) + '%</span>';
+            }
+         return val.toFixed(2)+'%';
+        }},
+        {title:'振幅', name:'swingRange', width: 50, align: 'right', renderer: function(val, item){
+            return val + '%';
+        }},
+        {title:'成交量(手)', name:'tradeVol', width: 50, hidden: false, align: 'right'},
+        {title:'成交额(万)', name:'tradeLimit', width: 50, align: 'right'},
+        {title:'昨收', name:'ystdClosePrice', width: 50, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        {title:'今开', name:'openPrice', width: 50, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        {title:'最高', name:'topPrice', width: 50, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        {title:'最低', name:'btmPrice', width: 50, align: 'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }}
+      ];
+
+      $('#quoteTable').fastGrid({
+        width: '100%',
+        height: '250px',
+        url: '/stockQuote.json',
+        method: 'get',
+        nowrap: true,
+        sortName: 'udRange',
+        sortStatus: 'desc',
+        cols: cols
+      });
+      $('#quoteTable2').fastGrid({
+          width: '100%',
+          height: '250px',
+          url: '/stockQuote.json',
+          method: 'get',
+          nowrap: true,
+          sortName: 'udRange',
+          sortStatus: 'desc',
+          cols: cols
+        });
+
+    });

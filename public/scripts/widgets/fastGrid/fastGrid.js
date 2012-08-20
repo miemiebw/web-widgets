@@ -68,8 +68,15 @@
                 this.$fastGrid.height(this.opts.height);
             }
 
+
+
             //放回原位置
-            $elParent.children().eq(itemIndex).before(this.$fastGrid);
+            if(itemIndex === 0 && $elParent.children().length == 0){
+                $elParent.append(this.$fastGrid);
+            }else{
+                $elParent.children().eq(itemIndex).before(this.$fastGrid);
+            }
+
 
 
             if(!opts.frame){
@@ -102,22 +109,23 @@
             $noRecord.css({
                 'left': ($fastGrid.width() - $noRecord.width()) / 2,
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
-            });
+            }).hide();
 
             //滚动条事件
             var $head = this.$head;
             this.$bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
-            //选中行事件
+            //选中事件
             var $body = this.$body;
-            $body.on('click','tr',function(e){
+            $body.on('click','td',function(e){
                 var $this = $(this);
-                if(!$this.hasClass('selected')){
-                    $thisObject.select($this.index());
+                if(!$this.parent().hasClass('selected')){
+                    $thisObject.select($this.parent().index());
                 }else{
-                    $thisObject.deselect($this.index());
+                    $thisObject.deselect($this.parent().index());
                 }
+                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
 
             //其实只有IE6不支持hover，这里需要改一下
@@ -141,7 +149,7 @@
             if(opts.cols){
                 $.each(opts.cols, function(colIndex, col){
 
-                    var $th = $('<th><div class="resize"></div><div class="content"><span class="title"></span></div></th>').width(col.width);
+                    var $th = $('<th><div class="content"><span class="title"></span><div class="resize"></div></div></th>').width(col.width);
                     if(col.hidden === true){
                         $th.hide();
                     }
@@ -160,9 +168,12 @@
                             'cursor':'pointer',
                             'text-decoration': 'underline'
                         });
+                        //设置初始化排序状态
+                        if(opts.sortName && col.name === opts.sortName){
+                            $th.find('span.title').data('sortStatus',opts.sortStatus);
+                            $th.find('div.sortStatus').addClass(opts.sortStatus);
+                        }
                     }
-                    //调整列宽
-                    $th.append($('<div class="resize"></div>'));
 
                     $tr.append($th);
                 });
@@ -186,7 +197,7 @@
                     }
                 });
 
-                $thisObject.startLayout(true);
+                $thisObject.startLayout();
 
                 $tr.find('.sortStatus').removeClass('asc').removeClass('desc');
                 var $sorter = $this.siblings('.sortStatus');
@@ -205,7 +216,7 @@
 
                 $thisObject.fixLayout(colIndex);
                 $thisObject.setStyle();
-                $thisObject.endLayout(true);
+                $thisObject.endLayout();
             }).on('mousedown', 'div.resize', function(e){
                 //绑定调整列宽事件
                 var $resize = $(this);
@@ -215,13 +226,14 @@
                 document.body.onselectstart = function(){
                     return false;//取消文字选择
                 }
+                $headWrapper.css('-moz-user-select','none');
                 $headWrapper.on('mousemove', function(e){
                     $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
                 }).on('mouseup', function(e){
                     //改变宽度
                     $thisObject.startLayout();
-                    $resize.parent().width($resize.parent().width() + e.pageX - start);
-                    $thisObject.fixLayout($resize.parent().index());
+                    $resize.parent().parent().width($resize.parent().width() + e.pageX - start);
+                    $thisObject.fixLayout($resize.parent().parent().index());
                     $thisObject.endLayout();
 
                     $headWrapper.mouseleave();
@@ -231,9 +243,9 @@
                     document.body.onselectstart = function(){
                         return true;//开启文字选择
                     }
+                    $headWrapper.css('-moz-user-select','text');
                 });
             });
-
         },
 
         initOptBoard: function(){
@@ -303,19 +315,17 @@
             }
 
             $optWrapper.on('click', ':checkbox', function(e){
-                $thisObject.startLayout(true);
+                $thisObject.startLayout();
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
-                    var $th = $ths.eq(index).width(opts.cols[index].width).show();
-                    var contentWidth =  $th.find('.content').width();
-                    $body.find('tr > td:nth-child('+(index+1)+')')
-                        .width(opts.cols[index].width).show()
-                        .find('.content').width(contentWidth);
+                    var $th = $ths.eq(index).show();
+                    $body.find('tr > td:nth-child('+(index+1)+')').show();
+                    $thisObject.fixLayout(index);
                 }else{
                     $ths.eq(index).hide();
                     $body.find('tr > td:nth-child('+(index+1)+')').hide();
                 }
-                $thisObject.endLayout(true);
+                $thisObject.endLayout();
             });
             //放到headWrapper之后
             $headWrapper.after($optWrapper);
@@ -327,62 +337,96 @@
             var $thisObject = this;
             var opts = this.opts;
 
-            if(opts.url && !$.isArray(args)){
-                var $fastGrid = this.$fastGrid;
-                $fastGrid.find('.mask').show();
-                $fastGrid.find('.loadingWrapper').show();
-                var params = {
-                    sortName: opts.sortName,
-                    sortStatus: opts.sortStatus
-                };
-                //
-                if($.isFunction(opts.params)){
-                    params = $.extend(params, opts.params());
-                }else if($.isPlainObject()){
-                    params = $.extend(params, opts.params);
-                }
-                params = $.extend(params, args);
-                $.ajax({
-                    type: opts.method,
-                    url: opts.url,
-                    data: params,
-                    dataType: 'json',
-                    cache: false
-                }).done(function(data){
-                    $thisObject.populate(data);
-                }).fail(function(data){
-                    if(opts.onError){
-                        opts.onError();
-                    }
-                    $fastGrid.find('.mask').hide();
-                    $fastGrid.find('.loadingWrapper').hide();
-                });
+            var items = args;
+            if($.isPlainObject(args) && $.isArray(args[opts.root])){
+                items = args[opts.root];
+            }
+            if(opts.url && !$.isArray(items)){
+                $thisObject.loadAjax(args);
             }else{
-                if(args){
-                    opts.items = args;
+                $thisObject.loadNative(items);
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
                 }
-                $thisObject.populate(opts.items);
-                //排序滞后目的是刷新数据的时候保留之前的排序状态
+            }
+        },
+        loadAjax: function(args){
+            var $thisObject = this;
+            var opts = this.opts;
+
+            var $fastGrid = this.$fastGrid;
+            $fastGrid.find('.mask').show();
+            $fastGrid.find('.loadingWrapper').show();
+            var params = {};
+            if(opts.remoteSort){
+                //获得当前排序状态
                 var $ths = this.$ths;
-                var sortColIndex = -1;
-                var sortStatus = opts.sortStatus;
-                $.each(opts.cols, function(index, col){
-                    if(col.sortable && col.name === opts.sortName && typeof opts.sortName === 'string'){
-                        sortColIndex = index;
-                    }
-                });
+                var sortName = '';
+                var sortStatus = '';
                 $ths.find('.title').each(function(index, item){
                     var status = $.data(item, 'sortStatus');
                     if(status){
-                        sortColIndex = index;
+                        sortName = opts.cols[index].name;
                         sortStatus = status;
                     }
                 });
-                var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
-                if(sortColIndex >=0){
-                    $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
-                }
 
+                params = {
+                    sortName: sortName,
+                    sortStatus: sortStatus
+                };
+            }
+            //
+            if($.isFunction(opts.params)){
+                params = $.extend(params, opts.params());
+            }else if($.isPlainObject()){
+                params = $.extend(params, opts.params);
+            }
+            params = $.extend(params, args);
+            $.ajax({
+                type: opts.method,
+                url: opts.url,
+                data: params,
+                dataType: 'json',
+                cache: false
+            }).done(function(data){
+                if(opts.remoteSort){
+                    $thisObject.populate(data);
+                }else{
+                    $thisObject.loadNative(data);
+                }
+                if(opts.onSuccess){
+                    opts.onSuccess($thisObject, args);
+                }
+            }).fail(function(data){
+                if(opts.onError){
+                    opts.onError($thisObject, data);
+                }
+                $fastGrid.find('.mask').hide();
+                $fastGrid.find('.loadingWrapper').hide();
+            });
+        },
+
+        loadNative: function(items){
+            var $thisObject = this;
+            var opts = this.opts;
+
+
+            $thisObject.populate(items);
+            //排序滞后是因为排序的是显示值
+            var $ths = this.$ths;
+            var sortColIndex = -1;
+            var sortStatus = '';
+            $ths.find('.title').each(function(index, item){
+                var status = $.data(item, 'sortStatus');
+                if(status){
+                    sortColIndex = index;
+                    sortStatus = status;
+                }
+            });
+            var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
+            if(sortColIndex >=0){
+                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
             }
         },
 
@@ -453,7 +497,7 @@
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
 
-            if(items && items.length != 0 && opts.cols){
+            if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
@@ -461,30 +505,33 @@
                     $.data($tr[0], 'item',item);
                     $.each(opts.cols, function(colIndex, col){
 
-                        var $td = $('<td><div class="content"></div></td>').width($ths.eq(colIndex).width());
+                        var $td = $('<td></td>').width($ths.eq(colIndex).width());
                         if($ths.eq(colIndex).is(':hidden')){
                             $td.hide();
                         }
-                        var $content = $td.find('div.content');
                         if(col.align){
-                            $content.css('text-align', col.align);
+                            $td.css('text-align', col.align);
                         }
+                        var $textWrap = $('<span></span>');
                         if(col.renderer){
-                            var result = col.renderer(item[col.name], item, items, rowIndex, $tr);
+                            var result = col.renderer(item[col.name], item, items, rowIndex, $tr[0]);
                             if(result instanceof jQuery){
-                                $content.append(result);
+                                $textWrap.append(result);
                             }else{
-                                $content[0].innerHTML = result;
+                                $textWrap[0].innerHTML = result;
                             }
                         }else{
-                            $content[0].innerHTML = item[col.name];
+                            $textWrap[0].innerHTML = item[col.name];
                         }
-                        $tr.append($td);
+
+                        $tr.append($td.append($textWrap));
 
                     });
                     $tbody.append($tr);
                 });
-
+                if(opts.nowrap){
+                    $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
+                }
             }else{
                 $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
 
@@ -497,8 +544,8 @@
             $body.append($tbody);
 
             this.startLayout();
-            this.fixLayout();
             this.setStyle();
+            this.fixLayout();
             this.endLayout();
 
             $fastGrid.find('.mask').hide();
@@ -526,51 +573,48 @@
         },
 
         remoteSorter: function(colIndex, sortStatus){
-            var opts = this.opts;
-            var params = {
-                sortName: opts.cols[index].name,
-                sortStatus: status
-            };
-            this.load(params);
+            this.load();
         },
 
 
         setStyle: function(){
+            var opts = this.opts;
             var $head = this.$head;
             var $ths = this.$ths;
             var $body = this.$body;
-            var $tbody = $body.find('tbody').detach();
+            var $tbody = $body.find('tbody');
 
             //head
             $ths.eq(0).addClass('first');
             $ths.eq(-1).addClass('last');
             //body
-            $tbody.find('tr,td').removeClass();
+            $tbody.find('tr,td').removeClass('even')
+                .removeClass('colSelected').removeClass('colSelectedEven');
+
             $tbody.find('tr:odd').addClass('even');
-            $tbody.find('tr > td:first-child').addClass('first');
-            $tbody.find('tr > td:last-child').addClass('last');
 
             var sortIndex = $head.find('span.title').index($head.find('span.title').filter(function(){
                 return $.data(this,'sortStatus') === 'asc' || $(this).data('sortStatus') === 'desc';
             }));
 
             $tbody.find('tr > td:nth-child('+(sortIndex+1)+')').addClass('colSelected')
-                .filter(':even').addClass('colSelectedEven');
+                .filter(':odd').addClass('colSelectedEven');
 
-            $body.append($tbody);
         },
 
         startLayout: function(detach){
             var $headWrapper = this.$headWrapper;
             var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
 
             $headWrapper.width(9999);
-            $head.width('auto');
-            if(detach){
+            $bodyWrapper.width(9999);
+            $head.width('auto');//使其可以自由伸展
+            $body.width('auto');
+            if(true){
                 $bodyWrapper.detach();
             }
-            $bodyWrapper.width(9999);
 
 
         },
@@ -585,27 +629,11 @@
             if(colIndex >= 0){
                 var $th = $ths.eq(colIndex);
                 $th.width($th.width());
-                $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width())
-                    .find('div.content').width($th.find('div.content').width());
+                $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width()).css('max-width',$th.width());
             }else{
-                //尽量不要用全部调整,这里的实现现在只满足刚执行populate之后
-                var $firstRowTds = $tbody.find('tr:first > td');
                 $.each($ths, function(index){
                     var $th = $ths.eq(index);
-                    if(opts.textEllipsis){
-                        //与head对齐
-                        $firstRowTds.eq(index).width($th.width());
-                        $tbody.find('tr > td:nth-child('+(index+1)+')').find('div.content')
-                            .width($th.find('div.content').width());
-                    }else{
-                        //谁宽和谁对齐
-                        var $td = $firstRowTds.eq(index);
-                        if($th.width() > $td.width()){
-                            $td.width($th.width);
-                        }else{
-                            $th.width($td.width());
-                        }
-                    }
+                    $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
                 });
             }
         },
@@ -625,12 +653,11 @@
             $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            if(detach){
+            if(true){
                 $fastGrid.append($bodyWrapper);
             }
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
-            console.log($bodyWrapper.scrollLeft());
             if($bodyWrapper.scrollLeft() === 0){
                 $head.css('left', 0);
             }
@@ -660,17 +687,19 @@
         params: {}, //可以是object也可以是function
         method: 'POST',
         items: [],
+        root: '',
+        nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
         noRecordText: '没有数据',
         cols: [],
-        sortName: false,
+        sortName: '',
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
-        textEllipsis: false,
-        onSuccess: function(){},
-        onError: function(){}
+        onSuccess: function(fastGrid, data){},
+        onError: function(fastGrid, data){},
+        onSelected: function(item, rowIndex, colIndex){}
 
     };
 

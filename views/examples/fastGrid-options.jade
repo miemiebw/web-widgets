@@ -1,0 +1,269 @@
+extends ../layout
+
+block append link
+  link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
+  style
+    body {
+        font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    }
+    .mainWrapper{
+        margin-left: 300px;
+        padding-top: 20px;
+        padding-right: 20px;
+        padding-bottom: 40px;
+    }
+
+    .leftWrapper{
+        float: left;
+        width: 300px;
+    }
+
+    h1 {
+        font-size: 2em;
+        border-bottom: 1px solid #ccc;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    ul {
+        margin: 20px;
+        margin-left: 50px;
+        list-style: disc;
+
+    }
+
+    ul li a {
+        line-height: 25px;
+    }
+
+    table{
+        width: 100%;
+    }
+
+    table th{
+        font-weight: bold;
+    }
+    table th ,table td{
+        padding: 0 10px;
+        line-height: 25px;
+        border: 1px solid #ccc;
+    }
+
+    em{
+        color: #b00;
+    }
+
+
+
+
+block content
+  div.leftWrapper
+    ul
+      li: a(href='/examples/textProposal') textProposal
+      li: a(href='/examples/fastGrid-options') fastGrid-options
+      li: a(href='/examples/fastGrid-ajax-nowrap') fastGrid-ajax-nowrap
+      li: a(href='/examples/fastGrid-native-multiSelect') fastGrid-native-multiSelect
+
+  div.mainWrapper
+    h1 1.options
+
+    table
+        tr
+            th 名称
+            th 可选值
+            th 描述
+        tr
+            td frame
+            td
+               em true
+               |, false
+            td 设置width和height的值是否将边框计算在内。
+        tr
+            td width
+            td
+               em '100%'
+               |, 500, '500px'
+            td 表格宽度。
+        tr
+            td height
+            td
+               em '100%'
+               |, 500, '500px'
+            td 表格高度。
+        tr
+            td url
+            td
+              em false
+              |, string
+            td ajax请求数据的地址。
+        tr
+            td params
+            td
+               em {}
+               |, object, function(){ return {}; }
+            td ajax请求的参数。可以是普通对象或函数。
+              |函数返回一个参数对象，每次调用ajax时调用。
+
+        tr
+            td method
+            td
+               em 'post'
+               |, ‘get’
+            td ajax提交方式。
+
+        tr
+            td items
+            td
+               em []
+               |, Array
+            td 数据使用本地对象数组。
+        tr
+            td nowrap
+            td
+               em false
+               |, true
+            td 表格显示的数据超出列宽时是否换行。
+        tr
+            td multiSelect
+            td
+               em false
+               |, true
+            td 数据使用本地对象数组。
+        tr
+            td loadingText
+            td
+               em ‘正在载入...’
+               |, string
+            td 数据载入时的提示文字。
+        tr
+            td noRecordText
+            td
+               em ‘没有数据’
+               |, string
+            td 没有数据时的提示文字。
+        tr
+            td cols
+            td
+               em []
+               |, Array
+            td 数据模型。
+        tr
+            td sortName
+            td
+               em ''
+               |, string
+            td 排序的字段名。
+        tr
+            td sortStatus
+            td
+               em 'asc'
+               |, string
+            td 排序方向。
+        tr
+            td remoteSort
+            td
+               em false
+               |, true
+            td 是否使用服务器端排序。当值为true时，sortName和sortStatus会作为参数放入ajax请求中。
+        tr
+            td autoLoad
+            td
+               em true
+               |, false
+            td 是否表格准备好时加载数据。
+        tr
+            td onSuccess
+            td
+               em function(){}
+               |, function
+            td 数据加载成功后执行。
+        tr
+            td onError
+            td
+               em function(){}
+               |, function
+            td 数据加载失败后执行。
+        tr
+            td onSelected
+            td
+               em function(item, rowIndex, colIndex){}
+               |, function
+            td 表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。
+    h1 2.col
+
+    table
+        tr
+            th 名称
+            th 可选值
+            th 描述
+        tr
+            td title
+            td string
+            td 标题文字。
+        tr
+            td width
+            td int
+            td 标题宽度像素值。
+        tr
+            td name
+            td string
+            td 字段名。
+        tr
+            td type
+            td 'int','float'
+            td 字段类型。在本地排序时用于转换文字。
+        tr
+            td align
+            td
+                em 'left'
+                |, 'center', 'right'
+            td 文字位置。
+        tr
+            td hidden
+            td
+                em false
+                |, true
+            td 是否隐藏列。
+        tr
+            td sortable
+            td
+                em false
+                |, true
+            td 是否可排序。
+        tr
+            td renderer
+            td function(val,item,items,rowIndex, row){ return val;}
+            td 显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引, row 行element;
+              |返回值: 可以是文本，html文本和jQuery对象。
+
+    h1 2.operation option
+    table.btm
+        tr
+            th 名称
+            th 参数
+            th 描述
+        tr
+            td load
+            td []
+            td 如果配置过ajax选项，则这里是ajax参数，如果传入对象数组，则为加载本地数据。
+        tr
+            td selected
+            td 无参数
+            td 返回选择行的对象数组。
+        tr
+            td select
+            td int, function(item){ return true; }, 'all'
+            td 选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据; 'all': 选中所有行。
+        tr
+            td deselect
+            td int, function(item){ return true; }, 'all'
+            td 取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据; 'all': 取消选中所有行。
+block append script
+  script(src='/scripts/widgets/fastGrid/fastGrid.js')
+  script(src='/scripts/json2.js')
+
+  script
+    $(document).ready(function(){
+
+
+    });

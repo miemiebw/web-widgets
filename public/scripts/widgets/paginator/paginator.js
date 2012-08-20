@@ -60,14 +60,17 @@
             var $sizeList = this.$sizeList;
 
             $totalCountText.text($thisObject.formatString(opts.totalCountText,[params.totalCount]));
-            $sizeList.val(params.size).one('change',function(){
-                opts.onLoad(params.pageNo,$sizeList.val());
-            });
+            $sizeList.val(params.size);
+            if( params.pageNo && params.totalCount &&  params.size){
+                $sizeList.one('change',function(){
+                    opts.onLoad(params.pageNo,$sizeList.val());
+                });
+            }
             $numList.empty();
             if(opts.style === 'plain'){
-                this.plain(params.pageNo, params.totalCount, params.size);
+                this.plain(params.pageNo, params.totalCount, $sizeList.val());
             }else if(opts.style === 'search'){
-                this.search(params.pageNo, params.totalCount, params.size);
+                this.search(params.pageNo, params.totalCount, $sizeList.val());
             }
         },
 
@@ -75,6 +78,16 @@
             var $thisObject = this;
             var opts = this.opts;
             var $numList = this.$numList;
+
+            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
+            totalPage = totalPage ? totalPage : 0;
+            if(totalPage === 0){
+                pageNo = 0;
+            }else if(pageNo > totalPage){
+                pageNo = totalPage;
+            }
+
+
             var $head = $('<li><a title="首页">&nbsp</a></li>');
             if(pageNo<=1){
                 $head.find('a').addClass('grayhead');
@@ -97,7 +110,6 @@
             }
             $numList.append($prev);
             //计算总页数
-            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
 
             var $input = $('<li>第<input><div class="pageNo"></div></li>');
             $input.find('input').val(pageNo).on('keydown',function(e){

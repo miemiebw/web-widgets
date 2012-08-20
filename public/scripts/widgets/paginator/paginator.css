@@ -43,6 +43,7 @@
     height: 16px;
     text-align: center;
     line-height: 16px;
+    cursor: pointer;
 }
 
 .paginator ul li a.head{

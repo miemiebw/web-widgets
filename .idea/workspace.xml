@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/paginator.jade" afterPath="$PROJECT_DIR$/views/examples/paginator.jade" />
     </list>
@@ -31,7 +32,7 @@
           <file leaf-file-name="paginator.jade" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="22" column="13" selection-start="557" selection-end="557" vertical-scroll-proportion="0.3296837">
+                <state line="122" column="20" selection-start="4120" selection-end="4120" vertical-scroll-proportion="0.8150852">
                   <folding />
                 </state>
               </provider>
@@ -40,7 +41,7 @@
           <file leaf-file-name="paginator.css" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="23" column="26" selection-start="363" selection-end="363" vertical-scroll-proportion="-7.740741">
+                <state line="49" column="59" selection-start="818" selection-end="818" vertical-scroll-proportion="22.148148">
                   <folding />
                 </state>
               </provider>
@@ -53,7 +54,7 @@
           <file leaf-file-name="paginator.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="127" column="42" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.5144654">
+                <state line="99" column="31" selection-start="3261" selection-end="3261" vertical-scroll-proportion="0.681761">
                   <folding />
                 </state>
               </provider>
@@ -634,7 +635,11 @@
       <created>1345448965884</created>
       <updated>1345448965884</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="code search">
+      <created>1345449625521</created>
+      <updated>1345449625521</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -852,21 +857,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="26" selection-start="363" selection-end="363" vertical-scroll-proportion="-7.740741">
+        <state line="49" column="59" selection-start="818" selection-end="818" vertical-scroll-proportion="22.148148">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="557" selection-end="557" vertical-scroll-proportion="0.3296837">
+        <state line="122" column="20" selection-start="4120" selection-end="4120" vertical-scroll-proportion="0.8150852">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="42" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.5144654">
+        <state line="99" column="31" selection-start="3261" selection-end="3261" vertical-scroll-proportion="0.681761">
           <folding />
         </state>
       </provider>

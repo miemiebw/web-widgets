@@ -60,8 +60,10 @@
             var $sizeList = this.$sizeList;
 
             $totalCountText.text($thisObject.formatString(opts.totalCountText,[params.totalCount]));
-            $sizeList.val(params.size);
-
+            $sizeList.val(params.size).one('change',function(){
+                opts.onLoad(params.pageNo,$sizeList.val());
+            });
+            $numList.empty();
             if(opts.style === 'plain'){
                 this.plain(params.pageNo, params.totalCount, params.size);
             }else if(opts.style === 'search'){
@@ -73,7 +75,7 @@
             var $thisObject = this;
             var opts = this.opts;
             var $numList = this.$numList;
-            var $head = $('<li><a>&nbsp</a></li>');
+            var $head = $('<li><a title="首页">&nbsp</a></li>');
             if(pageNo<=1){
                 $head.find('a').addClass('grayhead');
             }else{
@@ -84,7 +86,7 @@
             }
             $numList.append($head);
 
-            var $prev = $('<li><a>&nbsp</a></li>');
+            var $prev = $('<li><a title="上一页">&nbsp</a></li>');
             if(pageNo<=1){
                 $prev.find('a').addClass('grayprev');
             }else{
@@ -112,7 +114,7 @@
             $input.find('.pageNo').html($thisObject.formatString('页/共{0}页',['<strong>'+totalPage+'</strong>']));
             $numList.append($input);
 
-            var $next = $('<li><a>&nbsp</a></li>');
+            var $next = $('<li><a title="下一页">&nbsp</a></li>');
             if(pageNo>=totalPage){
                 $next.find('a').addClass('graynext');
             }else{
@@ -123,7 +125,7 @@
             }
             $numList.append($next);
 
-            var $tail = $('<li><a>&nbsp</a></li>');
+            var $tail = $('<li><a title="尾页">&nbsp</a></li>');
             if(pageNo>=totalPage){
                 $tail.find('a').addClass('graytail');
             }else{

@@ -21,28 +21,9 @@ block append link
     }
 block content
   div.wrapper
-    div(style='text-align:right;')
-      div#plain
-  div.wrapper
     table#quoteTable
     div(style='text-align:right;')
-        div.paginator
-          span.totalCountText 共37493条记录
-          ul.numList
-            li: a.head &nbsp
-            li: a.prev &nbsp
-            li
-              div.pageNo 第
-              input(type='text',style='width:20px;margin:0 3px;text-align:center;',value='3')
-              div.pageNo 页/共25页
-            li: a.next &nbsp
-            li: a.tail &nbsp
-
-          div.pageSize
-            select
-              option 每页15条
-              option 每页30条
-              option 每页50条
+        div#plain
   div.wrapper(style='padding-top:0px;')
     table#quoteTable2
     div(style='text-align:right;')

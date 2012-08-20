@@ -115,7 +115,6 @@
         remoteSort:true,
         cols:cols,
         onSuccess:function ($fg, data) {
-            console.log(data);
             $('#plain').paginator('render', {
                 pageNo:data.pageNo,
                 totalCount:data.totalCount,

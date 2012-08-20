@@ -150,9 +150,76 @@
         },
 
         plain: function(pageNo, totalCount, size){
-            if(!pageNo || !totalCount || !size){
-                return;
+            var $thisObject = this;
+            var opts = this.opts;
+            var $numList = this.$numList;
+
+            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
+            totalPage = totalPage ? totalPage : 0;
+            if(totalPage === 0){
+                pageNo = 0;
+            }else if(pageNo > totalPage){
+                pageNo = totalPage;
+            }else if(pageNo < 1 && totalPage != 0){
+                pageNo = 1;
             }
+
+            var $prev = $('<li><a title="上一页">&nbsp</a></li>');
+            if(pageNo<=1){
+                $prev.find('a').addClass('grayprev');
+            }else{
+                $prev.find('a').addClass('prev').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(pageNo-1,size);
+                });
+            }
+            $numList.append($prev);
+
+            var list = [1];
+            var left = pageNo-2;
+            for(var i= 0; i < 5; i++){
+                var no = pageNo - 2 + i;
+
+                if(i==0 && no > 3){
+                    list.push('...');
+                }
+                if(no > 1 && no <= totalPage-1){
+                    list.push(no);
+                }
+            }
+
+            if(pageNo+2 < totalPage-1){
+                list.push('...');
+            }
+            if(totalPage>1){
+                list.push(totalPage);
+            }
+
+            $.each(list, function(index, item){
+                var $li = $('<li><a></a></li>');
+                if(item === '...'){
+                    $li.find('a').addClass('skip').text('...');
+                }else if(item === pageNo){
+                    $li.find('a').addClass('current').text(item);
+                }else{
+                    $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
+                        e.preventDefault();
+                        opts.onLoad(item, size);
+                    });
+                }
+                $numList.append($li);
+            });
+
+            var $next = $('<li><a title="下一页">&nbsp</a></li>');
+            if(pageNo>=totalPage){
+                $next.find('a').addClass('graynext');
+            }else{
+                $next.find('a').addClass('next').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(pageNo+1,size);
+                });
+            }
+            $numList.append($next);
         },
 
         formatString:function(text,args){

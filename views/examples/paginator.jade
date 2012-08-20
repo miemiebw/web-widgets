@@ -27,26 +27,8 @@ block content
   div.wrapper(style='padding-top:0px;')
     table#quoteTable2
     div(style='text-align:right;')
-        div.paginator
-          span.totalCountText 共37493条记录
-          ul.numList
-            li: a.prev &nbsp
-            li: a 1
-            li: a.skip ...
-            li: a 4
-            li: a 5
-            li: a.current 6
-            li: a 7
-            li: a 8
-            li: a.skip ...
-            li: a 256333
-            li: a.next &nbsp
+        div#search
 
-          div.pageSize
-            select
-              option 每页15条
-              option 每页30条
-              option 每页50条
 
 block append script
   script(src='/scripts/widgets/fastGrid/fastGrid.js')
@@ -116,8 +98,13 @@ block append script
           sortStatus: 'desc',
           cols: cols
         });
-
       $('#plain').paginator({
+            style: 'plain',
+            pageNo: 8,
+            totalCount: 1362,
+            size: 15
+      });
+      $('#search').paginator({
             style: 'search',
             pageNo: 6,
             totalCount: 456742,

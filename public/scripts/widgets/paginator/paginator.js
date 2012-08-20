@@ -60,7 +60,7 @@
             var $sizeList = this.$sizeList;
 
             $totalCountText.text($thisObject.formatString(opts.totalCountText,[params.totalCount]));
-            $sizeList.val(params.size);
+            $sizeList.val(params.pageSize);
             if( params.pageNo && params.totalCount &&  params.pageSize){
                 $sizeList.one('change',function(){
                     opts.onLoad(params.pageNo,$sizeList.val());

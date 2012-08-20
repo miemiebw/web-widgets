@@ -1,7 +1,7 @@
 {
     "pageNo": 8,
     "totalCount": 1328,
-    "pageSize": 30,
+    "pageSize": 50,
     "items": [
         {"stockCode":"600000","stockAbbr":"浦发银行","newPrice":7.55,"udLimit":0.02,"udRange":0.27,"swingRange":0.93,"tradeVol":333226,"tradeLimit":25155,"ystdClosePrice":7.53,"openPrice":7.52,"topPrice":7.58,"btmPrice":7.51},
         {"stockCode":"600004","stockAbbr":"白云机场","newPrice":6.35,"udLimit":0.02,"udRange":0.32,"swingRange":1.11,"tradeVol":8469,"tradeLimit":539,"ystdClosePrice":6.33,"openPrice":6.36,"topPrice":6.40,"btmPrice":6.33},

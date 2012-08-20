@@ -51,10 +51,10 @@
             });
             return $a;
         }},
-        {title:'名称', name:'', width:50, sortable:true, align:'center', renderer:function (val, item) {
+        {title:'名称', name:'', width:50, align:'center', renderer:function (val, item) {
             return item.stockAbbr + '(' + item.stockCode + ')';
         }},
-        {title:'最新价', name:'newPrice', width:50, align:'right', renderer:function (val) {
+        {title:'最新价', name:'newPrice',sortable:true, width:50, align:'right', renderer:function (val) {
             return val.toFixed(2);
         }},
         {title:'涨跌额', name:'udLimit', type:'float', width:50, sortable:true, align:'right', renderer:function (val, item) {

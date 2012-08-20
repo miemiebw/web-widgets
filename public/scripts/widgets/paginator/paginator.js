@@ -74,7 +74,7 @@
             }
         },
 
-        plain: function(pageNo, totalCount, size){
+        search: function(pageNo, totalCount, size){
             var $thisObject = this;
             var opts = this.opts;
             var $numList = this.$numList;
@@ -149,7 +149,7 @@
             $numList.append($tail);
         },
 
-        search: function(pageNo, totalCount, size){
+        plain: function(pageNo, totalCount, size){
             if(!pageNo || !totalCount || !size){
                 return;
             }

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/paginator.jade" afterPath="$PROJECT_DIR$/views/examples/paginator.jade" />
     </list>
@@ -32,7 +31,7 @@
           <file leaf-file-name="paginator.jade" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="122" column="20" selection-start="4120" selection-end="4120" vertical-scroll-proportion="0.8150852">
+                <state line="120" column="28" selection-start="4073" selection-end="4073" vertical-scroll-proportion="0.76885647">
                   <folding />
                 </state>
               </provider>
@@ -54,7 +53,7 @@
           <file leaf-file-name="paginator.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="99" column="31" selection-start="3261" selection-end="3261" vertical-scroll-proportion="0.681761">
+                <state line="76" column="14" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.20377359">
                   <folding />
                 </state>
               </provider>
@@ -639,7 +638,11 @@
       <created>1345449625521</created>
       <updated>1345449625521</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="code search">
+      <created>1345450889413</created>
+      <updated>1345450889413</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -864,14 +867,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="20" selection-start="4120" selection-end="4120" vertical-scroll-proportion="0.8150852">
+        <state line="120" column="28" selection-start="4073" selection-end="4073" vertical-scroll-proportion="0.76885647">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="31" selection-start="3261" selection-end="3261" vertical-scroll-proportion="0.681761">
+        <state line="76" column="14" selection-start="2409" selection-end="2409" vertical-scroll-proportion="0.20377359">
           <folding />
         </state>
       </provider>

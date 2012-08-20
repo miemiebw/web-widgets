@@ -21,11 +21,14 @@ block append link
     }
 block content
   div.wrapper
+    div(style='text-align:right;')
+      div#plain
+  div.wrapper
     table#quoteTable
     div(style='text-align:right;')
         div.paginator
-          span.recordText 共37493条记录
-          ul
+          span.totalCountText 共37493条记录
+          ul.numList
             li: a.head &nbsp
             li: a.prev &nbsp
             li
@@ -44,8 +47,8 @@ block content
     table#quoteTable2
     div(style='text-align:right;')
         div.paginator
-          span.recordText 共37493条记录
-          ul
+          span.totalCountText 共37493条记录
+          ul.numList
             li: a.prev &nbsp
             li: a 1
             li: a.skip ...
@@ -133,4 +136,9 @@ block append script
           cols: cols
         });
 
+      $('#plain').paginator({
+            pageNo: 1,
+            totalCount: 100,
+            size: 30
+      });
     });

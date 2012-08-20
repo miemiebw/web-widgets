@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/paginator.jade" afterPath="$PROJECT_DIR$/views/examples/paginator.jade" />
     </list>
@@ -29,10 +28,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.32729468">
       <split-first>
         <leaf>
-          <file leaf-file-name="paginator.jade" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="paginator.jade" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="141" column="20" selection-start="4655" selection-end="4655" vertical-scroll-proportion="0.8613139">
+                <state line="119" column="24" selection-start="4122" selection-end="4122" vertical-scroll-proportion="0.35279804">
                   <folding />
                 </state>
               </provider>
@@ -51,10 +50,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="paginator.js" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="paginator.js" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="105" column="32" selection-start="3505" selection-end="3505" vertical-scroll-proportion="0.5767327">
+                <state line="96" column="19" selection-start="3084" selection-end="3084" vertical-scroll-proportion="0.34158415">
                   <folding />
                 </state>
               </provider>
@@ -627,7 +626,11 @@
       <created>1345436328802</created>
       <updated>1345436328802</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="code search style">
+      <created>1345447221988</created>
+      <updated>1345447221988</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -723,7 +726,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="change style" />
+    <option name="LAST_COMMIT_MESSAGE" value="code search style" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -736,7 +739,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="add load api" />
     <MESSAGE value="fix hover" />
     <MESSAGE value="fix load mask" />
     <MESSAGE value="add frame option" />
@@ -761,6 +763,7 @@
     <MESSAGE value="change name" />
     <MESSAGE value="change size" />
     <MESSAGE value="change style" />
+    <MESSAGE value="code search style" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -850,16 +853,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="20" selection-start="4655" selection-end="4655" vertical-scroll-proportion="0.8613139">
+        <state line="96" column="19" selection-start="3084" selection-end="3084" vertical-scroll-proportion="0.34158415">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js">
+    <entry file="file://$PROJECT_DIR$/views/examples/paginator.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="32" selection-start="3505" selection-end="3505" vertical-scroll-proportion="0.5767327">
+        <state line="119" column="24" selection-start="4122" selection-end="4122" vertical-scroll-proportion="0.35279804">
           <folding />
         </state>
       </provider>

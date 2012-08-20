@@ -71,12 +71,16 @@
 
         plain: function(pageNo, totalCount, size){
             var $thisObject = this;
+            var opts = this.opts;
             var $numList = this.$numList;
             var $head = $('<li><a>&nbsp</a></li>');
             if(pageNo<=1){
                 $head.find('a').addClass('grayhead');
             }else{
-                $head.find('a').addClass('head');
+                $head.find('a').addClass('head').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(1,size);
+                });
             }
             $numList.append($head);
 
@@ -84,13 +88,27 @@
             if(pageNo<=1){
                 $prev.find('a').addClass('grayprev');
             }else{
-                $prev.find('a').addClass('prev');
+                $prev.find('a').addClass('prev').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(pageNo-1,size);
+                });
             }
             $numList.append($prev);
+            //计算总页数
+            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
 
             var $input = $('<li>第<input><div class="pageNo"></div></li>');
-            $input.find('input').val(pageNo);
-            var totalPage = totalCount % size === 0 ? parseInt(totalCount/size) : parseInt(totalCount/size) + 1;
+            $input.find('input').val(pageNo).on('keydown',function(e){
+                if(e.keyCode === 13){
+                    if(/^[0-9]*[1-9][0-9]*$/.exec($(this).val())){
+                        var val = parseInt($(this).val(),10);
+                        if(val<= totalPage ){
+                            opts.onLoad(val,size);
+                        }
+                    }
+                }
+            });
+
             $input.find('.pageNo').html($thisObject.formatString('页/共{0}页',['<strong>'+totalPage+'</strong>']));
             $numList.append($input);
 
@@ -98,7 +116,10 @@
             if(pageNo>=totalPage){
                 $next.find('a').addClass('graynext');
             }else{
-                $next.find('a').addClass('next');
+                $next.find('a').addClass('next').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(pageNo+1,size);
+                });
             }
             $numList.append($next);
 
@@ -106,7 +127,10 @@
             if(pageNo>=totalPage){
                 $tail.find('a').addClass('graytail');
             }else{
-                $tail.find('a').addClass('tail');
+                $tail.find('a').addClass('tail').on('click', function(e){
+                    e.preventDefault();
+                    opts.onLoad(totalPage,size);
+                });;
             }
             $numList.append($tail);
         },
@@ -143,7 +167,10 @@
         totalCount: 0,
         pageNo: 0,
         sizeList: [15, 30, 50],
-        onLoad: function(pageNo, size){}
+        onLoad: function(pageNo, size){
+            console.log('pageNo: %s', pageNo);
+            console.log('size: %s', size);
+        }
 
     };
 

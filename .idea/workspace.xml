@@ -39,7 +39,7 @@
           <file leaf-file-name="paginator-style-grid.html" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/examples/paginator-style-grid.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="57" column="33" selection-start="2097" selection-end="2097" vertical-scroll-proportion="0.37062937">
+                <state line="147" column="26" selection-start="5175" selection-end="5175" vertical-scroll-proportion="0.55944055">
                   <folding />
                 </state>
               </provider>
@@ -612,7 +612,15 @@
       <created>1345471091264</created>
       <updated>1345471091264</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="add examples">
+      <created>1345473021469</created>
+      <updated>1345473021470</updated>
+    </task>
+    <task id="LOCAL-00063" summary="add examples">
+      <created>1345473059068</created>
+      <updated>1345473059068</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -842,7 +850,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/paginator-style-grid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="33" selection-start="2097" selection-end="2097" vertical-scroll-proportion="0.37062937">
+        <state line="147" column="26" selection-start="5175" selection-end="5175" vertical-scroll-proportion="0.55944055">
           <folding />
         </state>
       </provider>

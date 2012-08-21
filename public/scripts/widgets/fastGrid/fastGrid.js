@@ -97,8 +97,8 @@
             var $bodyWrapper = this.$bodyWrapper;
             $(window).on('resize', function(){
                 $thisObject.initSize();
-                $thisObject.startLayout();
-                $thisObject.endLayout();
+                $thisObject.startLayout(true);
+                $thisObject.endLayout(true);
                 $optWrapper.css({
                     width:$bodyWrapper.outerWidth(true),
                     height:$bodyWrapper.outerHeight(true)

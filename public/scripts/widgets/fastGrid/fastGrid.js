@@ -56,20 +56,6 @@
             this.$body = $el.addClass('tableBody').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
 
-            //设置高宽
-            if(this.opts.width === '100%'){
-                this.$fastGrid.css('width' , '100%');
-            }else{
-                this.$fastGrid.width(this.opts.width)
-            }
-            if(this.opts.height === '100%'){
-                this.$fastGrid.css('height' , '100%');
-            }else{
-                this.$fastGrid.height(this.opts.height);
-            }
-
-
-
             //放回原位置
             if(itemIndex === 0 && $elParent.children().length == 0){
                 $elParent.append(this.$fastGrid);
@@ -77,39 +63,9 @@
                 $elParent.children().eq(itemIndex).before(this.$fastGrid);
             }
 
+            $fastGrid.find('.noRecord').html(this.opts.noRecordText).hide();
+            $thisObject.initSize();
 
-
-            if(!opts.frame){
-                //计算边距
-                var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
-                    + parseInt($fastGrid.css('border-right-width'),10)
-                    + parseInt($fastGrid.css('padding-left'),10)
-                    + parseInt($fastGrid.css('padding-right'),10);
-                $fastGrid.width($fastGrid.width() - fgWBP);
-
-                var fgHBP = parseInt($fastGrid.css('border-top-width'),10)
-                    + parseInt($fastGrid.css('border-bottom-width'),10)
-                    + parseInt($fastGrid.css('padding-top'),10)
-                    + parseInt($fastGrid.css('padding-bottom'),10);
-                $fastGrid.height($fastGrid.height() - fgHBP);
-            }
-
-            //loading
-            $fastGrid.find('.mask').width($fastGrid.width())
-                .height($fastGrid.height());
-
-            var $loadingWrapper = $fastGrid.find('.loadingWrapper');
-            $loadingWrapper.css({
-                'left': ($fastGrid.width() - $loadingWrapper.width()) / 2,
-                'top': ($fastGrid.height() - $loadingWrapper.height()) / 2
-            });
-
-            //没数据
-            var $noRecord = $fastGrid.find('.noRecord').html(this.opts.noRecordText)
-            $noRecord.css({
-                'left': ($fastGrid.width() - $noRecord.width()) / 2,
-                'top': ($fastGrid.height() - $noRecord.height()) / 2
-            }).hide();
 
             //滚动条事件
             var $head = this.$head;
@@ -137,30 +93,25 @@
                 };
             }
 
-            $(window).on('resize', function(){
-                $thisObject.reSize();
-            });
-
-        },
-
-        reSize: function(){
-            var $thisObject = this;
-            var opts = this.opts;
-            var $fastGrid = this.$fastGrid;
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
+            $(window).on('resize', function(){
+                $thisObject.initSize();
+                $thisObject.startLayout();
+                $thisObject.endLayout();
+                $optWrapper.css({
+                    width:$bodyWrapper.outerWidth(true),
+                    height:$bodyWrapper.outerHeight(true)
+                })
+            });
+        },
+
+        initSize: function(){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
 
             //设置高宽
-            if(opts.width === '100%'){
-                $fastGrid.css('width' , '100%');
-            }else{
-                $fastGrid.width(opts.width)
-            }
-            if(opts.height === '100%'){
-                $fastGrid.css('height' , '100%');
-            }else{
-                $fastGrid.height(opts.height);
-            }
+            $fastGrid.width(opts.width).height(opts.height);
 
             if(!opts.frame){
                 //计算边距
@@ -194,13 +145,6 @@
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
             });
 
-            $thisObject.startLayout();
-            $thisObject.endLayout();
-
-            $optWrapper.css({
-                width:$bodyWrapper.outerWidth(true),
-                height:$bodyWrapper.outerHeight(true)
-            })
         },
 
         initHead: function(){
@@ -565,6 +509,7 @@
 
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
+            this.startLayout();
 
             if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
@@ -612,7 +557,6 @@
             }
             $body.append($tbody);
 
-            this.startLayout();
             this.setStyle();
             this.fixLayout();
             this.endLayout();

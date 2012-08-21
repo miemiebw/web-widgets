@@ -107,7 +107,6 @@
         },
 
         initSize: function(){
-            var $thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
 
@@ -145,9 +144,6 @@
                 'left': ($fastGrid.width() - $noRecord.width()) / 2,
                 'top': ($fastGrid.height() - $noRecord.height()) / 2
             });
-
-
-
 
         },
 

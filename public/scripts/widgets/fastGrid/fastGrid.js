@@ -12,6 +12,7 @@
         this.init($el);
         this.initHead();
         this.initOptBoard();
+        this.setLayout();
         if(this.opts.autoLoad){
             this.load();
         }
@@ -40,7 +41,7 @@
                         '<div class="loading"></div>',
                         '<p>'+ this.opts.loadingText +'</p>',
                     '</div>',
-                    '<span class="noData"></span>',
+                    '<span class="noData">'+ this.opts.noDataText +'</span>',
                 '</div>'
             ];
 
@@ -55,7 +56,6 @@
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('body').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
-
             //放回原位置
             if(itemIndex === 0 && $elParent.children().length == 0){
                 $elParent.append(this.$fastGrid);
@@ -63,8 +63,6 @@
                 $elParent.children().eq(itemIndex).before(this.$fastGrid);
             }
 
-            $fastGrid.find('.noData').html(this.opts.noDataText).hide();
-            $thisObject.initSize();
 
 
             //滚动条事件
@@ -95,21 +93,20 @@
 
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
-            $(window).on('resize', function(){
-                $thisObject.initSize();
-                $thisObject.startLayout(true);
-                $thisObject.endLayout(true);
-                $optWrapper.css({
-                    width:$bodyWrapper.outerWidth(true),
-                    height:$bodyWrapper.outerHeight(true)
-                })
+            $(window).resize(function(){
+                $thisObject.setLayout();
             });
         },
 
-        initSize: function(){
+        setLayout: function(){
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
-
+            var $headWrapper = this.$headWrapper;
+            var $head = this.$head;
+            var $optWrapper = this.$optWrapper;
+            var $ths = this.$ths;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
             //设置高宽
             $fastGrid.width(opts.width).height(opts.height);
 
@@ -144,6 +141,25 @@
                 'left': ($fastGrid.width() - $noData.width()) / 2,
                 'top': ($fastGrid.height() - $noData.height()) / 2
             });
+
+            $optWrapper.css({
+                width:$bodyWrapper.outerWidth(true),
+                height:$bodyWrapper.outerHeight(true)
+            });
+
+            $head.width($head.width());
+            $body.width($head.width());
+            $headWrapper.width($fastGrid.width());
+            $bodyWrapper.width($fastGrid.width())
+                .height($fastGrid.height() - $headWrapper.outerHeight(true));
+            if(true){
+                $fastGrid.append($bodyWrapper);
+            }
+            //调整滚动条
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
+            }
 
         },
 
@@ -615,7 +631,7 @@
 
         },
 
-        startLayout: function(detach){
+        startLayout: function(){
             var $headWrapper = this.$headWrapper;
             var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
@@ -625,10 +641,6 @@
             $bodyWrapper.width(9999);
             $head.width('auto');//使其可以自由伸展
             $body.width('auto');
-            if(true){
-                $bodyWrapper.detach();
-            }
-
 
         },
 
@@ -651,7 +663,7 @@
             }
         },
 
-        endLayout: function(detach){
+        endLayout: function(){
             var $thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
@@ -666,9 +678,7 @@
             $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            if(true){
-                $fastGrid.append($bodyWrapper);
-            }
+
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
             if($bodyWrapper.scrollLeft() === 0){

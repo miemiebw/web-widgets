@@ -40,7 +40,7 @@
                         '<div class="loading"></div>',
                         '<p>'+ this.opts.loadingText +'</p>',
                     '</div>',
-                    '<span class="noRecord"></span>',
+                    '<span class="noData"></span>',
                 '</div>'
             ];
 
@@ -53,7 +53,7 @@
             this.$head = $fastGrid.find('.tableHead');
             this.$optWrapper = $fastGrid.find('.optWrapper');
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
-            this.$body = $el.addClass('tableBody').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
+            this.$body = $el.addClass('body').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
 
             //放回原位置
@@ -63,7 +63,7 @@
                 $elParent.children().eq(itemIndex).before(this.$fastGrid);
             }
 
-            $fastGrid.find('.noRecord').html(this.opts.noRecordText).hide();
+            $fastGrid.find('.noData').html(this.opts.noDataText).hide();
             $thisObject.initSize();
 
 
@@ -139,10 +139,10 @@
             });
 
             //没数据
-            var $noRecord = $fastGrid.find('.noRecord');
-            $noRecord.css({
-                'left': ($fastGrid.width() - $noRecord.width()) / 2,
-                'top': ($fastGrid.height() - $noRecord.height()) / 2
+            var $noData = $fastGrid.find('.noData');
+            $noData.css({
+                'left': ($fastGrid.width() - $noData.width()) / 2,
+                'top': ($fastGrid.height() - $noData.height()) / 2
             });
 
         },
@@ -267,13 +267,13 @@
             var $ths = this.$ths;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
-            var $noRecord = $fastGrid.find('.noRecord');
+            var $noData = $fastGrid.find('.noData');
 
             $optWrapper.detach();
             //向下按钮
             var $optDnButton = $('<a class="optDnButton"></a>').on('click', function(e){
                 e.preventDefault();
-                $noRecord.hide();
+                $noData.hide();
                 $(this).slideUp('fast');
                 $optWrapper.css({
                     width:$bodyWrapper.outerWidth(true),
@@ -302,8 +302,8 @@
             var $optUpButton = $('<a class="optUpButton"></a>').on('click', function(e){
                 e.preventDefault();
                 $optWrapper.slideUp().queue(function(next){
-                    if(!$noRecord.data('hasData')){
-                        $noRecord.show();
+                    if(!$noData.data('hasData')){
+                        $noData.show();
                     }
                     next();
                 });
@@ -512,7 +512,7 @@
             this.startLayout();
 
             if(items  && items.length != 0 && opts.cols){
-                $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
+                $.data($fastGrid.find('.noData').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
                     var $tr = $('<tr></tr>');
@@ -547,7 +547,7 @@
                     $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
                 }
             }else{
-                $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
+                $.data($fastGrid.find('.noData').show()[0], 'hasData', false);
 
                 var $td = $('<td></td>').css({
                     'border':'0px',
@@ -704,7 +704,7 @@
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
-        noRecordText: '没有数据',
+        noDataText: '没有数据',
         cols: [],
         sortName: '',
         sortStatus: 'asc',

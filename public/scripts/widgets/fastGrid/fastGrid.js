@@ -514,7 +514,6 @@
             }else{
                 $.each($ths, function(index){
                     var $th = $ths.eq(index);
-                    $th.width($th.width());
                     $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
 
                 });

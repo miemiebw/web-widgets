@@ -564,6 +564,9 @@
                 $head.css('left', 0);
             }
 
+            //IE8 bug
+            $bodyWrapper.append($body);
+
             //遮罩
             $fastGrid.find('.mask').width($fastGrid.width())
                 .height($fastGrid.height());

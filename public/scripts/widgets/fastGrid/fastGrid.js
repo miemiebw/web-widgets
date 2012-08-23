@@ -13,7 +13,7 @@
         this.initEvents();
         this.initHead();
         this.initOption();
-        this.resize();
+        this.calcLayout();
         if(this.opts.autoLoad){
             this.load();
         }
@@ -63,11 +63,6 @@
             }
         },
 
-        resize: function(){
-            var $thisObject = this;
-            var opts = this.opts;
-            $thisObject.calcLayout();
-        },
 
         initEvents: function(){
             var $thisObject = this;
@@ -83,7 +78,7 @@
 
 
             $(window).on('resize', function(){
-                $thisObject.resize();
+                $thisObject.calcLayout();
             });
 
             //滚动条事件
@@ -262,9 +257,7 @@
                 $thisObject.prepareWrapper();
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
-                    console.dir($ths.eq(index).width());
-                    var $th = $ths.eq(index).show(index).width(opts.cols[index].width);
-                    console.dir($th.width());
+                    var $th = $ths.eq(index).show(index);
                     $body.find('tr > td:nth-child('+(index+1)+')').show();
                     $thisObject.alignColumn(index);
                 }else{
@@ -521,6 +514,7 @@
             }else{
                 $.each($ths, function(index){
                     var $th = $ths.eq(index);
+                    $th.width($th.width());
                     $tbody.find('tr > td:nth-child('+(index+1)+')').width($th.width()).css('max-width',$th.width());
 
                 });

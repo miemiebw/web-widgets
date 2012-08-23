@@ -93,9 +93,15 @@
 
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
-            $(window).resize(function(){
-                $thisObject.setLayout();
-            });
+
+            if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1)
+                || (typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ){
+                $(window).resize(function(){
+                    $thisObject.setLayout();
+                });
+            }
+
+
         },
 
         setLayout: function(){

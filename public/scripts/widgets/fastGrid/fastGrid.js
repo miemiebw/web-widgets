@@ -257,7 +257,7 @@
                 $thisObject.prepareWrapper();
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
-                    var $th = $ths.eq(index).show(index);
+                    var $th = $ths.eq(index).show();
                     $body.find('tr > td:nth-child('+(index+1)+')').show();
                     $thisObject.alignColumn(index);
                 }else{

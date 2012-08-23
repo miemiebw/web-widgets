@@ -27,7 +27,7 @@
             var fastGrid = [
                 '<div class="fastGrid">',
                     '<div class="headWrapper">',
-                        '<table class="tableHead">',
+                        '<table class="head">',
                         '</table>',
                         '<div class="resizePosition"></div>',
                     '</div>',
@@ -51,7 +51,7 @@
             var $fastGrid = $(fastGrid.join(''));
             this.$fastGrid = $fastGrid;
             this.$headWrapper = $fastGrid.find('.headWrapper');
-            this.$head = $fastGrid.find('.tableHead');
+            this.$head = $fastGrid.find('.head');
             this.$optWrapper = $fastGrid.find('.optWrapper');
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('body').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);

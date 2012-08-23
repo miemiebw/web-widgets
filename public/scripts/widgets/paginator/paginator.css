@@ -17,42 +17,73 @@
     *display: inline;
     *zoom: 1;
     margin-left: 5px;
-    vertical-align: middle;
+    line-height: 16px;
 }
 
 .paginator ul li div.pageNo{
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    line-height: 16px;
-    *line-height: 14px;
-    vertical-align: middle;
+    vertical-align: baseline;
 }
+
+.paginator ul li input{
+    width:20px;
+    margin:0 3px;
+    text-align:center;
+}
+
 
 .paginator ul li a{
     display: block;
     border: 1px solid #ccc;
     padding: 0 2px;
+    _width: 12px;
     min-width: 12px;
     height: 16px;
     text-align: center;
     line-height: 16px;
+    cursor: pointer;
 }
 
 .paginator ul li a.head{
     background: url(images/arrow_state_red_head.png) no-repeat center center;
 }
 
+.paginator ul li a.grayhead{
+    cursor: default;
+    text-decoration: none;
+    background: url(images/arrow_state_gray_head.png) no-repeat center center;
+}
+
 .paginator ul li a.prev{
     background: url(images/arrow_state_red_left.png) no-repeat center center;
+}
+
+.paginator ul li a.grayprev{
+    cursor: default;
+    text-decoration: none;
+    background: url(images/arrow_state_gray_left.png) no-repeat center center;
 }
 
 .paginator ul li a.next{
     background: url(images/arrow_state_red_right.png) no-repeat center center;
 }
 
+.paginator ul li a.graynext{
+    cursor: default;
+    text-decoration: none;
+    background: url(images/arrow_state_gray_right.png) no-repeat center center;
+}
+
 .paginator ul li a.tail{
     background: url(images/arrow_state_red_tail.png) no-repeat center center;
+}
+
+.paginator ul li a.graytail{
+    cursor: default;
+    text-decoration: none;
+    background: url(images/arrow_state_gray_tail.png) no-repeat center center;
 }
 
 .paginator ul li a.current{
@@ -65,8 +96,7 @@
     color: #333;
 }
 
-.paginator .recordText {
-    vertical-align: middle;
+.paginator .totalCountText {
 }
 
 .paginator .pageSize{
@@ -74,12 +104,11 @@
     *display: inline;
     *zoom: 1;
     margin-left: 5px;
-    vertical-align: middle;
 }
 
 .paginator select{
     border: 1px solid #ccc;
-    padding: 2px;
+    padding: 1px;
 }
 
 .paginator input{

@@ -12,6 +12,7 @@
         this.init($el);
         this.initHead();
         this.initOptBoard();
+        this.setLayout();
         if(this.opts.autoLoad){
             this.load();
         }
@@ -40,7 +41,7 @@
                         '<div class="loading"></div>',
                         '<p>'+ this.opts.loadingText +'</p>',
                     '</div>',
-                    '<span class="noRecord"></span>',
+                    '<span class="noData">'+ this.opts.noDataText +'</span>',
                 '</div>'
             ];
 
@@ -53,22 +54,7 @@
             this.$head = $fastGrid.find('.tableHead');
             this.$optWrapper = $fastGrid.find('.optWrapper');
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
-            this.$body = $el.addClass('tableBody').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
-
-
-            //设置高宽
-            if(this.opts.width === '100%'){
-                this.$fastGrid.css('width' , '100%');
-            }else{
-                this.$fastGrid.width(this.opts.width)
-            }
-            if(this.opts.height === '100%'){
-                this.$fastGrid.css('height' , '100%');
-            }else{
-                this.$fastGrid.height(this.opts.height);
-            }
-
-
+            this.$body = $el.addClass('body').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
             //放回原位置
             if(itemIndex === 0 && $elParent.children().length == 0){
@@ -78,6 +64,51 @@
             }
 
 
+
+            //滚动条事件
+            var $head = this.$head;
+            this.$bodyWrapper.on('scroll', function(e){
+                $head.css('left',- $(this).scrollLeft());
+            });
+            //选中事件
+            var $body = this.$body;
+            $body.on('click','td',function(e){
+                var $this = $(this);
+                if(!$this.parent().hasClass('selected')){
+                    $thisObject.select($this.parent().index());
+                }else{
+                    $thisObject.deselect($this.parent().index());
+                }
+                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+            });
+
+            //其实只有IE6不支持hover，这里需要改一下
+            if ($.browser.msie) {
+                if ($.browser.version == "6.0"){
+                    $body.find('tbody').on('hover','tr', function (e) {
+                        $(this).toggleClass('hover', e.type === 'mouseenter');
+                    });
+                };
+            }
+
+            var $optWrapper = this.$optWrapper;
+            var $bodyWrapper = this.$bodyWrapper;
+            $(window).resize(function(){
+                $thisObject.setLayout();
+            });
+        },
+
+        setLayout: function(){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
+            var $head = this.$head;
+            var $optWrapper = this.$optWrapper;
+            var $ths = this.$ths;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
+            //设置高宽
+            $fastGrid.width(opts.width).height(opts.height);
 
             if(!opts.frame){
                 //计算边距
@@ -105,37 +136,29 @@
             });
 
             //没数据
-            var $noRecord = $fastGrid.find('.noRecord').html(this.opts.noRecordText)
-            $noRecord.css({
-                'left': ($fastGrid.width() - $noRecord.width()) / 2,
-                'top': ($fastGrid.height() - $noRecord.height()) / 2
-            }).hide();
-
-            //滚动条事件
-            var $head = this.$head;
-            this.$bodyWrapper.on('scroll', function(e){
-                $head.css('left',- $(this).scrollLeft());
-            });
-            //选中事件
-            var $body = this.$body;
-            $body.on('click','td',function(e){
-                var $this = $(this);
-                if(!$this.parent().hasClass('selected')){
-                    $thisObject.select($this.parent().index());
-                }else{
-                    $thisObject.deselect($this.parent().index());
-                }
-                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+            var $noData = $fastGrid.find('.noData');
+            $noData.css({
+                'left': ($fastGrid.width() - $noData.width()) / 2,
+                'top': ($fastGrid.height() - $noData.height()) / 2
             });
 
-            //其实只有IE6不支持hover，这里需要改一下
-            if ($.browser.msie) {
-                if ($.browser.version == "6.0"){
-                    $body.find('tbody').on('hover','tr', function (e) {
-                        $(this).toggleClass('hover', e.type === 'mouseenter');
-                    });
-                };
+            $optWrapper.css({
+                width:$bodyWrapper.outerWidth(true),
+                height:$bodyWrapper.outerHeight(true)
+            });
+
+            $head.width($head.width());
+            $body.width($head.width());
+            $headWrapper.width($fastGrid.width());
+            $bodyWrapper.width($fastGrid.width())
+                .height($fastGrid.height() - $headWrapper.outerHeight(true));
+
+            //调整滚动条
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
             }
+
         },
 
         initHead: function(){
@@ -258,13 +281,13 @@
             var $ths = this.$ths;
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
-            var $noRecord = $fastGrid.find('.noRecord');
+            var $noData = $fastGrid.find('.noData');
 
             $optWrapper.detach();
             //向下按钮
             var $optDnButton = $('<a class="optDnButton"></a>').on('click', function(e){
                 e.preventDefault();
-                $noRecord.hide();
+                $noData.hide();
                 $(this).slideUp('fast');
                 $optWrapper.css({
                     width:$bodyWrapper.outerWidth(true),
@@ -293,8 +316,8 @@
             var $optUpButton = $('<a class="optUpButton"></a>').on('click', function(e){
                 e.preventDefault();
                 $optWrapper.slideUp().queue(function(next){
-                    if(!$noRecord.data('hasData')){
-                        $noRecord.show();
+                    if(!$noData.data('hasData')){
+                        $noData.show();
                     }
                     next();
                 });
@@ -390,13 +413,17 @@
                 dataType: 'json',
                 cache: false
             }).done(function(data){
+                var items = data;
+                if($.isArray(data[opts.root])){
+                    items = data[opts.root];
+                }
                 if(opts.remoteSort){
-                    $thisObject.populate(data);
+                    $thisObject.populate(items);
                 }else{
-                    $thisObject.loadNative(data);
+                    $thisObject.loadNative(items);
                 }
                 if(opts.onSuccess){
-                    opts.onSuccess($thisObject, args);
+                    opts.onSuccess($thisObject, data);
                 }
             }).fail(function(data){
                 if(opts.onError){
@@ -496,9 +523,10 @@
 
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
+            this.startLayout();
 
             if(items  && items.length != 0 && opts.cols){
-                $.data($fastGrid.find('.noRecord').hide()[0], 'hasData', true);
+                $.data($fastGrid.find('.noData').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
 
                     var $tr = $('<tr></tr>');
@@ -533,7 +561,7 @@
                     $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
                 }
             }else{
-                $.data($fastGrid.find('.noRecord').show()[0], 'hasData', false);
+                $.data($fastGrid.find('.noData').show()[0], 'hasData', false);
 
                 var $td = $('<td></td>').css({
                     'border':'0px',
@@ -543,7 +571,6 @@
             }
             $body.append($tbody);
 
-            this.startLayout();
             this.setStyle();
             this.fixLayout();
             this.endLayout();
@@ -602,7 +629,7 @@
 
         },
 
-        startLayout: function(detach){
+        startLayout: function(){
             var $headWrapper = this.$headWrapper;
             var $head = this.$head;
             var $bodyWrapper = this.$bodyWrapper;
@@ -612,10 +639,6 @@
             $bodyWrapper.width(9999);
             $head.width('auto');//使其可以自由伸展
             $body.width('auto');
-            if(true){
-                $bodyWrapper.detach();
-            }
-
 
         },
 
@@ -638,7 +661,7 @@
             }
         },
 
-        endLayout: function(detach){
+        endLayout: function(){
             var $thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
@@ -653,9 +676,7 @@
             $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            if(true){
-                $fastGrid.append($bodyWrapper);
-            }
+
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
             if($bodyWrapper.scrollLeft() === 0){
@@ -691,7 +712,7 @@
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
-        noRecordText: '没有数据',
+        noDataText: '没有数据',
         cols: [],
         sortName: '',
         sortStatus: 'asc',

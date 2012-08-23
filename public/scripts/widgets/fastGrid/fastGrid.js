@@ -152,9 +152,7 @@
             $headWrapper.width($fastGrid.width());
             $bodyWrapper.width($fastGrid.width())
                 .height($fastGrid.height() - $headWrapper.outerHeight(true));
-            if(true){
-                $fastGrid.append($bodyWrapper);
-            }
+
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
             if($bodyWrapper.scrollLeft() === 0){

@@ -1,0 +1,266 @@
+
+.fastGrid {
+    border: 1px solid #ccc;
+    position: relative;
+    overflow: hidden;
+}
+
+.fastGrid table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+/* 遮罩 */
+.fastGrid .mask{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: #ddd;
+    display: none;
+}
+
+/* 加载包装 */
+.fastGrid .loadingWrapper{
+    position: absolute;
+    text-align: center;
+    display: none;
+}
+/* 加载图片 */
+.fastGrid .loadingWrapper .loading{
+    margin: 5px auto;
+    width: 32px;
+    height: 32px;
+    background: url(images/loading.gif);
+}
+/* 标题包装 */
+.fastGrid .headWrapper{
+    width: 9999px;
+    background: url(images/header_bg.gif) repeat-x;
+    position: relative;
+    overflow: hidden;
+    height: 27px;
+}
+/* 标题 */
+.fastGrid .headWrapper .head{
+    position: relative;
+}
+
+
+.fastGrid .headWrapper .head th{
+    border-right: 1px solid #ddd;
+    line-height: 27px;
+    font-weight: bold;
+    position: relative;
+    padding: 0 5px;
+}
+
+
+.fastGrid .headWrapper .head th .content{
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    height: 27px;
+}
+
+.fastGrid .headWrapper .head th .resize{
+    position: absolute;;
+    right: -6px;
+    _right: -4px;
+    top:0px;
+    width: 4px;
+    height: 27px;
+    cursor: col-resize;
+}
+
+.fastGrid .headWrapper .head th .title{
+    color: #000;
+    vertical-align: middle;
+}
+
+.fastGrid .headWrapper .head th .sortStatus{
+    margin-left: 2px;
+    width: 7px;
+    height: 27px;
+    overflow: hidden;
+    vertical-align: middle;
+    display: none;
+}
+
+.fastGrid .headWrapper .head th .asc{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    background: url(images/up.png) no-repeat center center;
+}
+
+.fastGrid .headWrapper .head th .desc{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    background: url(images/dn.png) no-repeat center center;
+}
+
+/* 选项板 */
+.fastGrid .optWrapper{
+    background: #efefef;
+    display: none;
+    position: relative;
+    -webkit-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -moz-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -o-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    -ms-box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+    box-shadow: inset 0px 0px 2px 1px #d9d9d9;
+}
+
+.fastGrid .optWrapper h1{
+    margin: 0 10px;
+    padding: 10px 0 5px 0;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.fastGrid .optWrapper label{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 95px;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fastGrid .optWrapper label input{
+    padding: 0px;
+    margin: 0 5px 0 10px;
+    border: 0px;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+}
+
+.fastGrid .optWrapper label span{
+    vertical-align: middle;
+}
+
+/* 内容包装器 */
+.fastGrid .bodyWrapper{
+    width: 9999px;
+    overflow:auto;
+}
+
+.fastGrid .bodyWrapper .body{
+    table-layout: fixed;
+}
+
+.fastGrid .headWrapper .resizePosition{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 2px;
+    height: 27px;
+    background: #999;
+    cursor: col-resize;
+    display: none;
+}
+
+/* 内容 */
+.fastGrid .body tr{
+
+}
+
+.fastGrid .body tr.even{
+    background: #ededed;
+}
+
+.fastGrid .body td{
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    line-height: 24px;
+    padding: 0 5px;
+    text-align: left;
+}
+
+.fastGrid .body td.colSelected{
+    background: #efefef;
+}
+
+.fastGrid .body td.colSelectedEven{
+    background: #e9e9e9;
+}
+
+.fastGrid .body tr.hover td{
+    background: #FFEDAC;
+}
+
+.fastGrid .body tr:hover td{
+    background: #FFEDAC;
+}
+
+.fastGrid .body tr.selected{
+
+}
+
+.fastGrid .body tr.selected td{
+    background: #ffdaa0;
+}
+
+.fastGrid .nowrap{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+
+
+/* 无数据 */
+.fastGrid .noData{
+    text-align: center;
+    position: absolute;
+}
+
+.fastGrid .optDnButton{
+    position: absolute;
+    display: block;
+    width: 50px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow:1px 1px 3px #ccc;
+    background: url(images/arrow_down.png) no-repeat center center;
+    background-color: #fff;
+}
+
+.fastGrid .optUpButton{
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    display: block;
+    width: 50px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-bottom: 0px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow:1px 1px 3px #ccc;
+    background: url(images/arrow_up.png) no-repeat center center;
+    background-color: #fff;
+}
+
+.fastGrid .transparent {
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 5-7 */
+    filter: alpha(opacity=50);
+    /* Netscape */
+    -moz-opacity: 0.5;
+    /* Safari 1.x */
+    -khtml-opacity: 0.5;
+    /* Good browsers */
+    opacity: 0.5;
+}
+

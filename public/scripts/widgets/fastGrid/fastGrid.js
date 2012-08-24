@@ -13,14 +13,15 @@
         this.initEvents();
         this.initHead();
         this.initOption();
-        this.calcLayout();
         if(this.opts.autoLoad){
             this.load();
+        }else{
+            this.calcLayout();
         }
     };
 
     FastGrid.prototype = {
-
+        isInit: false,
         initLayout: function($el){
             var $elParent = $el.parent();
             var elIndex = $el.index();
@@ -282,6 +283,9 @@
             if(opts.url && !$.isArray(items)){
                 $thisObject.loadAjax(args);
             }else{
+                if(!items){
+                    items = opts.items;
+                }
                 $thisObject.loadNative(items);
                 if(opts.onSuccess){
                     opts.onSuccess($thisObject, args);
@@ -399,6 +403,7 @@
         populate: function(items){
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
+            var $head = this.$head;
             var $ths = this.$ths;
             var $body = this.$body;
             var $tbody = $body.find('tbody').detach().empty();
@@ -406,6 +411,7 @@
             $fastGrid.find('.mask').show();
             $fastGrid.find('.loadingWrapper').show();
             this.prepareWrapper();
+
             if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noData').hide()[0], 'hasData', true);
                 $.each(items, function(rowIndex, item){
@@ -508,7 +514,6 @@
 
             if(colIndex >= 0){
                 var $th = $ths.eq(colIndex);
-                $th.width($th.width());
                 $tbody.find('tr > td:nth-child('+(colIndex+1)+')').width($th.width()).css('max-width',$th.width());
 
             }else{
@@ -553,7 +558,8 @@
             $headWrapper.width($fastGrid.width());
 
             //表内容
-            $body.width($head.width());
+
+            $body.width(0);
             $bodyWrapper.width($fastGrid.width());
             $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
 
@@ -589,7 +595,7 @@
                 width:$bodyWrapper.outerWidth(true),
                 height:$bodyWrapper.outerHeight(true)
             });
-
+            this.isInit = true;
         },
 
 
@@ -671,11 +677,11 @@
         method: 'POST',
         items: [],
         root: '',
+        scroll: 'both', //hidden, horizontal,vertical
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',
         noDataText: '没有数据',
-        scroll: 'both', //hidden, horizontal, vertical
         cols: [],
         sortName: '',
         sortStatus: 'asc',

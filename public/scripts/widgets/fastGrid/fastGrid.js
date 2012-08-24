@@ -575,7 +575,10 @@
 
             //设置高宽
             $fastGrid.width(opts.width);
-            $fastGrid.height(opts.height);
+            if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+                $fastGrid.height(opts.height);
+            }
+
 
             if(!opts.frame){
                 //计算边距
@@ -589,16 +592,17 @@
                     + parseInt($fastGrid.css('border-bottom-width'),10)
                     + parseInt($fastGrid.css('padding-top'),10)
                     + parseInt($fastGrid.css('padding-bottom'),10);
-                $fastGrid.height($fastGrid.height() - fgHBP);
+                if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+                    $fastGrid.height($fastGrid.height() - fgHBP);
+                }
+
             }
 
             //表内容高
-            if(opts.scroll === 'hidden' || opts.scroll === 'horizontal'){
-                $fastGrid.height('auto');
-                $bodyWrapper.height('auto');
-            }else{
+            if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
                 $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
             }
+
 
 
             //表头

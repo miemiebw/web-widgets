@@ -190,11 +190,11 @@
 }
 
 .fastGrid .body tr.hover td{
-    background: #FFEDAC;
+    background: #dfe8f6;
 }
 
 .fastGrid .body tr:hover td{
-    background: #FFEDAC;
+    background: #dfe8f6;
 }
 
 .fastGrid .body tr.selected{
@@ -202,7 +202,7 @@
 }
 
 .fastGrid .body tr.selected td{
-    background: #dfe8f6;
+    background: #FFEDAC;
 }
 
 .fastGrid .nowrap{

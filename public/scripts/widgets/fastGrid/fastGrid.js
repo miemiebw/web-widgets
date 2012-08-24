@@ -616,26 +616,20 @@
                 var ua = navigator.userAgent.toLowerCase();
                 var scrollW = 0;
                 if(/windows nt/.test(ua)){
-                    console.log('windows');
                     scrollW = 17;
                 }
 
                 if($body.height() <= $bodyWrapper.height()){
                     scrollW = 0;
                 }
-                console.log('scrollW:',scrollW);
                 var hww = $fastGrid.width() - scrollW;
-                console.log('hww:',hww);
                 var hw = $head.width();
-                console.log('hw:',hw);
                 var w = (hww - hw) /  $head.find('th:visible').length;
-                console.log('w:',w);
                 this.prepareWrapper();
                 $head.find('th:visible').each(function(i,item){
                     $(item).width($(item).width() + w);
                 });
                 var lastW = $fastGrid.width() - $head.width() - scrollW;
-                console.log(lastW);
                 $head.find('th:visible').eq(-1).width($head.find('th:visible').eq(-1).width() + lastW);
                 $thisObject.alignColumn();
                 $head.width($head.width());

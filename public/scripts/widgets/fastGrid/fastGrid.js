@@ -579,7 +579,13 @@
             }
 
             //表内容高
-            $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+            if(opts.scroll === 'hidden' || opts.scroll === 'horizontal'){
+                $fastGrid.height('auto');
+                $bodyWrapper.height('auto');
+            }else{
+                $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+            }
+
 
             //表头
 

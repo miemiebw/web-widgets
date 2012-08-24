@@ -436,11 +436,13 @@
 
             if(items  && items.length != 0 && opts.cols){
                 $.data($fastGrid.find('.noData').hide()[0], 'hasData', true);
-                $.each(items, function(rowIndex, item){
+                for(var rowIndex=0; rowIndex < items.length; rowIndex++){
+                    var item = items[rowIndex];
 
                     var $tr = $('<tr></tr>');
                     $.data($tr[0], 'item',item);
-                    $.each(opts.cols, function(colIndex, col){
+                    for(var colIndex=0; colIndex < opts.cols.length; colIndex++){
+                        var col = opts.cols[colIndex];
 
                         var $td = $('<td></td>').width($ths.eq(colIndex).width());
                         if($ths.eq(colIndex).is(':hidden')){
@@ -463,9 +465,9 @@
 
                         $tr.append($td.append($textWrap));
 
-                    });
+                    };
                     $tbody.append($tr);
-                });
+                };
                 if(opts.nowrap){
                     $tbody.find('td').addClass('nowrap').find('> span').addClass('nowrap');
                 }

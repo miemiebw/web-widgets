@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="modify">
+    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css" afterPath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade" afterPath="$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade" afterPath="$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade" />
     </list>
     <ignored path="widgets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,19 +26,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="fastGrid.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="fastGrid.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="581" column="38" selection-start="21598" selection-end="21604" vertical-scroll-proportion="-16.185184">
+            <state line="264" column="39" selection-start="10139" selection-end="10139" vertical-scroll-proportion="0.6819307">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fastGrid-native-multiSelect.jade" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="fastGrid-native-multiSelect.jade" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="216" column="77" selection-start="15215" selection-end="15215" vertical-scroll-proportion="0.9772455">
+            <state line="177" column="21" selection-start="13098" selection-end="13098" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fastGrid-ajax-nowrap.jade" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="121" column="8" selection-start="3854" selection-end="3854" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -93,7 +101,6 @@
         <option value="$PROJECT_DIR$/views/examples/paginator.jade" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/paginator/paginator.js" />
         <option value="$PROJECT_DIR$/public/stockQuotePage.json" />
-        <option value="$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade" />
         <option value="$PROJECT_DIR$/public/styles/quote.json" />
         <option value="$PROJECT_DIR$/app/controllers/textProposal-controller.js" />
         <option value="$PROJECT_DIR$/views/examples/resize.jade" />
@@ -101,8 +108,9 @@
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid1/fastGrid.js" />
         <option value="$PROJECT_DIR$/public/stockQuote.json" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css" />
-        <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
         <option value="$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade" />
+        <option value="$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade" />
+        <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
       </list>
     </option>
   </component>
@@ -644,7 +652,15 @@
       <created>1345788570182</created>
       <updated>1345788570182</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="modify">
+      <created>1345789658176</created>
+      <updated>1345789658176</updated>
+    </task>
+    <task id="LOCAL-00068" summary="modify">
+      <created>1345789821197</created>
+      <updated>1345789821197</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -833,11 +849,6 @@
         <state line="17" column="26" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="13" selection-start="1304" selection-end="4142" vertical-scroll-proportion="0.7847826" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/stockQuote.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="76" column="31" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.5005988">
@@ -855,16 +866,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
+    <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="581" column="38" selection-start="21598" selection-end="21604" vertical-scroll-proportion="-16.185184">
+        <state line="177" column="21" selection-start="13098" selection-end="13098" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade">
+    <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-ajax-nowrap.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="77" selection-start="15215" selection-end="15215" vertical-scroll-proportion="0.9772455">
+        <state line="121" column="8" selection-start="3854" selection-end="3854" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="264" column="39" selection-start="10139" selection-end="10139" vertical-scroll-proportion="0.6819307">
           <folding />
         </state>
       </provider>

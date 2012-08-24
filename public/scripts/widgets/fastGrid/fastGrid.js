@@ -76,9 +76,12 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
-            $(window).on('resize', function(){
-                $thisObject.calcLayout();
-            });
+            if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
+                typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
+                $(window).on('resize', function(){
+                    $thisObject.calcLayout();
+                });
+            }
 
             //滚动条事件
             $bodyWrapper.on('scroll', function(e){

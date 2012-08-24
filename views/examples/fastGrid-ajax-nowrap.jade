@@ -118,6 +118,9 @@ block append script
         height: '100%',
         url: '/stockQuote.json',
         method: 'get',
+        sortName: 'DAYCHANGERATE',
+        sortStatus: 'desc',
+        remoteSort: true,
         nowrap: true,
         cols: cols
       });

@@ -120,7 +120,7 @@
         sortStatus:'desc',
         remoteSort:true,
         cols:cols,
-        onSuccess:function ($fg, data) {
+        onSuccess:function (fg, data) {
             $('#plain').paginator('render', {
                 pageNo:data.pageNo,
                 totalCount:data.totalCount,
@@ -152,7 +152,7 @@
         sortName:'newPrice',
         sortStatus:'asc',
         cols:cols,
-        onSuccess:function ($fg, data) {
+        onSuccess:function (fg, data) {
             $('#search').paginator('render', {
                 pageNo:data.pageNo,
                 totalCount:data.totalCount,

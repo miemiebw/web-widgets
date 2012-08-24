@@ -65,10 +65,11 @@
     <ul>
         <li><a href="textProposal.html">textProposal</a></li>
         <li><a href="fastGrid-options.html">fastGrid-options</a></li>
+        <li><a href="fastGrid-ajax.html">fastGrid-ajax</a></li>
         <li><a href="fastGrid-ajax-nowrap.html">fastGrid-ajax-nowrap</a></li>
+        <li><a href="fastGrid-native.html">fastGrid-native</a></li>
         <li><a href="fastGrid-native-multiSelect.html">fastGrid-native-multiSelect</a></li>
         <li><a href="paginator-style-grid.html">paginator-style-grid</a></li>
-
     </ul>
 </div>
 <div class="mainWrapper"><h1>1.options</h1>
@@ -86,12 +87,12 @@
         <tr>
             <td>width</td>
             <td><em>'100%'</em>, 500, '500px'</td>
-            <td>表格宽度。</td>
+            <td>表格宽度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
         </tr>
         <tr>
             <td>height</td>
             <td><em>'100%'</em>, 500, '500px'</td>
-            <td>表格高度。</td>
+            <td>表格高度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
         </tr>
         <tr>
             <td>url</td>
@@ -114,6 +115,16 @@
             <td>items</td>
             <td><em>[]</em>, Array</td>
             <td>数据使用本地对象数组。</td>
+        </tr>
+        <tr>
+            <td>root</td>
+            <td><em>''</em>, string</td>
+            <td>指定json对象的数组字段为数据。</td>
+        </tr>
+        <tr>
+            <td>scroll</td>
+            <td><em>both</em>, hidden, horizontal,vertical</td>
+            <td>表格滚动条。vertical为表格启动时，标题头自动充满表格,只显示垂直滚动条。horizontal为表格只显示水平滚动条,表格高度随数据内容调整。其他选项同理。</td>
         </tr>
         <tr>
             <td>nowrap</td>
@@ -162,17 +173,17 @@
         </tr>
         <tr>
             <td>onSuccess</td>
-            <td><em>function(){}</em>, function</td>
+            <td><em>function(fastGrid, data){}</em>, function</td>
             <td>数据加载成功后执行。</td>
         </tr>
         <tr>
             <td>onError</td>
-            <td><em>function(){}</em>, function</td>
+            <td><em>function(fastGrid, data){}</em>, function</td>
             <td>数据加载失败后执行。</td>
         </tr>
         <tr>
             <td>onSelected</td>
-            <td><em>function(item, rowIndex, colIndex){}</em>, function</td>
+            <td><em>function(fastGrid, item, rowIndex, colIndex){}</em>, function</td>
             <td>表格中的数据被选择时执行。item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。</td>
         </tr>
     </table>

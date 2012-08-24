@@ -76,8 +76,6 @@
             var $bodyWrapper = this.$bodyWrapper;
             var $body = this.$body;
 
-
-
             $(window).on('resize', function(){
                 $thisObject.calcLayout();
             });
@@ -86,6 +84,26 @@
             $bodyWrapper.on('scroll', function(e){
                 $head.css('left',- $(this).scrollLeft());
             });
+
+            //选中事件
+            var $body = this.$body;
+            $body.on('click','td',function(e){
+                var $this = $(this);
+                if(!$this.parent().hasClass('selected')){
+                    $thisObject.select($this.parent().index());
+                }else{
+                    $thisObject.deselect($this.parent().index());
+                }
+                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+            });
+            //IE6不支持hover
+            if ($.browser.msie) {
+                if ($.browser.version == "6.0"){
+                    $body.find('tbody').on('hover','tr', function (e) {
+                        $(this).toggleClass('hover', e.type === 'mouseenter');
+                    });
+                };
+            }
 
             //绑定排序事件
             $head.on('click','span.title', function(e){
@@ -124,34 +142,34 @@
                 $thisObject.setStyle();
                 $thisObject.calcLayout();
             }).on('mousedown', 'div.resize', function(e){
-                    //绑定调整列宽事件
-                    var $resize = $(this);
-                    var start = e.pageX;;
-                    var $resizePosition = $headWrapper.find('div.resizePosition')
-                        .css('left', e.pageX - $headWrapper.offset().left).show();
-                    document.body.onselectstart = function(){
-                        return false;//取消文字选择
-                    }
-                    $headWrapper.css('-moz-user-select','none');
-                    $headWrapper.on('mousemove', function(e){
-                        $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
-                    }).on('mouseup', function(e){
-                            //改变宽度
-                            $thisObject.prepareWrapper();
-                            $resize.parent().parent().width($resize.parent().width() + e.pageX - start);
-                            $thisObject.alignColumn($resize.parent().parent().index());
-                            $thisObject.calcLayout();
+                //绑定调整列宽事件
+                var $resize = $(this);
+                var start = e.pageX;;
+                var $resizePosition = $headWrapper.find('div.resizePosition')
+                    .css('left', e.pageX - $headWrapper.offset().left).show();
+                document.body.onselectstart = function(){
+                    return false;//取消文字选择
+                }
+                $headWrapper.css('-moz-user-select','none');
+                $headWrapper.on('mousemove', function(e){
+                    $resizePosition.css('left', e.pageX - $headWrapper.offset().left);
+                }).on('mouseup', function(e){
+                        //改变宽度
+                        $thisObject.prepareWrapper();
+                        $resize.parent().parent().width($resize.parent().width() + e.pageX - start);
+                        $thisObject.alignColumn($resize.parent().parent().index());
+                        $thisObject.calcLayout();
 
-                            $headWrapper.mouseleave();
-                        }).on('mouseleave',function(e){
-                            $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
-                            $resizePosition.hide();
-                            document.body.onselectstart = function(){
-                                return true;//开启文字选择
-                            }
-                            $headWrapper.css('-moz-user-select','text');
-                        });
-                });
+                        $headWrapper.mouseleave();
+                    }).on('mouseleave',function(e){
+                        $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
+                        $resizePosition.hide();
+                        document.body.onselectstart = function(){
+                            return true;//开启文字选择
+                        }
+                        $headWrapper.css('-moz-user-select','text');
+                    });
+            });
 
 
         },
@@ -459,7 +477,12 @@
             $body.append($tbody);
 
             this.setStyle();
-            this.alignColumn();
+            if((opts.scroll === 'hidden' || opts.scroll === 'vertical') && !this.isInit){
+
+            }else{
+                this.alignColumn();
+            }
+
             this.calcLayout();
             $fastGrid.find('.mask').hide();
             $fastGrid.find('.loadingWrapper').hide();
@@ -526,6 +549,7 @@
         },
 
         calcLayout: function(){
+            var $thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
             var $headWrapper = this.$headWrapper;
@@ -553,15 +577,45 @@
                     + parseInt($fastGrid.css('padding-bottom'),10);
                 $fastGrid.height($fastGrid.height() - fgHBP);
             }
+
+            //表内容高
+            $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+
             //表头
+
             $head.width($head.width());
             $headWrapper.width($fastGrid.width());
+            if((opts.scroll === 'hidden' || opts.scroll === 'vertical') && !this.isInit){
+                var ua = navigator.userAgent.toLowerCase();
+                var scrollW = 0;
+                if(/windows nt/.test(ua)){
+                    scrollW = 17;
+                }
+
+                if($body.height() <= $bodyWrapper.height()){
+                    scrollW = 0;
+                }
+
+                var hww = $fastGrid.width() - scrollW;
+                var hw = $head.width();
+                var w = (hww - hw) /  $head.find('th:visible').length;
+                this.prepareWrapper();
+                $head.find('th:visible').each(function(i,item){
+                    $(item).width($(item).width() + w);
+                });
+                var lastW = $fastGrid.width() - $head.width() - scrollW;
+                console.log(lastW);
+                $head.find('th:visible').eq(-1).width($head.find('th:visible').eq(-1).width() + lastW);
+                $thisObject.alignColumn();
+                $head.width($head.width());
+                $headWrapper.width($fastGrid.width());
+            }
+
 
             //表内容
-
             $body.width(0);
             $bodyWrapper.width($fastGrid.width());
-            $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+
 
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));

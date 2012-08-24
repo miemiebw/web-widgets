@@ -13,10 +13,9 @@
         this.initEvents();
         this.initHead();
         this.initOption();
+        this.calcLayout();
         if(this.opts.autoLoad){
             this.load();
-        }else{
-            this.calcLayout();
         }
     };
 
@@ -228,6 +227,11 @@
                 e.preventDefault();
                 $noData.hide();
                 $(this).slideUp('fast');
+
+                if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                    $fastGrid.height($fastGrid.height());
+                }
+
                 $optWrapper.css({
                     width:$bodyWrapper.outerWidth(true),
                     height:$bodyWrapper.outerHeight(true)
@@ -254,9 +258,13 @@
             //向上按钮
             var $optUpButton = $('<a class="optUpButton"></a>').on('click', function(e){
                 e.preventDefault();
+
                 $optWrapper.slideUp().queue(function(next){
                     if(!$noData.data('hasData')){
                         $noData.show();
+                    }
+                    if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                        $fastGrid.height('auto');
                     }
                     next();
                 });

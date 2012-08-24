@@ -184,8 +184,9 @@
             var $tr = $('<tr></tr>');
             if(opts.cols){
                 $.each(opts.cols, function(colIndex, col){
-                    var $th = $('<th><div class="content"><span class="title"></span><div class="resize"></div></div></th>').width(col.width);
+                    var $th = $('<th><div class="content"><span class="title"></span><div class="resize"></div></div></th>');
 
+                    if(col.width) $th.width(col.width);
                     if(col.hidden === true) $th.hide();
                     if(col.align) $th.find('div.content').css('text-align', col.align);
                     if(col.title) $th.find('span.title').html(col.title);

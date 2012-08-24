@@ -622,7 +622,7 @@
 
 
             //表内容
-            $body.width(0);
+            $body.width($head.width());
             $bodyWrapper.width($fastGrid.width());
 
 

@@ -176,6 +176,7 @@ block append script
         sortName: 'range',
         sortStatus: 'desc',
         items: items,
+        scroll: 'vertical',
         cols: [
           {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,$row,rowIndex){
             var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {

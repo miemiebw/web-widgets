@@ -625,7 +625,7 @@
                 var hww = $fastGrid.width() - scrollW;
                 var hw = $head.width();
                 var w = (hww - hw) /  $head.find('th:visible').length;
-                w = w.toFixed(0);
+                w = Math.floor(w);
                 this.prepareWrapper();
                 $head.find('th:visible').each(function(i,item){
                     $(item).width($(item).width() + w);

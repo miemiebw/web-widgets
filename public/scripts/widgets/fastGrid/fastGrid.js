@@ -322,6 +322,8 @@
             var $thisObject = this;
             var opts = this.opts;
 
+            this.$fastGrid.find('.noData').hide();
+
             var items = args;
             if($.isPlainObject(args) && $.isArray(args[opts.root])){
                 items = args[opts.root];

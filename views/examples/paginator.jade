@@ -87,18 +87,7 @@ block append script
 
         ];
 
-      $('#plain').paginator({
-          style: 'plain',
-          pageNo: 8,
-          totalCount: 1362,
-          pageSize: 15,
-          onLoad: function(pageNo, pageSize){
-              $('#quoteTable').fastGrid('load',{
-                  pageNo: pageNo,
-                  pageSize: pageSize
-              });
-          }
-      });
+
 
       $('#quoteTable').fastGrid({
         width: '100%',
@@ -107,35 +96,16 @@ block append script
         method: 'get',
         root: 'items',
         nowrap: true,
-        sortName: 'udRange',
+        sortName: 'DAYCHANGERATE',
         sortStatus: 'desc',
         remoteSort: true,
         cols: cols,
-        onSuccess: function($fg, data){
-            console.log(data);
-            $('#plain').paginator('render', {
-                pageNo: data.pageNo,
-                totalCount: data.totalCount,
-                pageSize: data.pageSize
-            });
-        }
+        paginator: $('#plain').paginator({
+            style: 'plain'
+        })
       });
 
 
-
-
-      $('#search').paginator({
-            style: 'search',
-            pageNo: 6,
-            totalCount: 456742,
-            pageSize: 50,
-            onLoad: function(pageNo, pageSize){
-                $('#quoteTable2').fastGrid('load',{
-                    pageNo: pageNo,
-                    pageSize: pageSize
-                });
-            }
-      });
       $('#quoteTable2').fastGrid({
         width: '100%',
         height: '250px',
@@ -143,16 +113,13 @@ block append script
         method: 'get',
         root: 'items',
         nowrap: true,
-        sortName: 'udLimit',
+        sortName: 'DAYCHANGERATE',
         sortStatus: 'asc',
         cols: cols,
-        onSuccess: function($fg, data){
-            $('#search').paginator('render', {
-                pageNo: data.pageNo,
-                totalCount: data.totalCount,
-                pageSize: data.pageSize
-            });
-        }
+        autoLoad: false,
+        paginator : $('#search').paginator({
+            style: 'search'
+        })
       });
 
 

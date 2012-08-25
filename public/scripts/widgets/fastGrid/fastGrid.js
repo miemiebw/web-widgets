@@ -55,6 +55,14 @@
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('body').empty().html('<tbody></tbody>').appendTo(this.$bodyWrapper);
 
+            //初始化表格
+            $.data($fastGrid.find('.noData').show()[0], 'hasData', false);
+            var $td = $('<td></td>').css({
+                'border':'0px',
+                'background': 'none'
+            }).html('&nbsp;');
+            this.$body.find('tbody').append($('<tr></tr>').append($td));
+
             //放回原位置
             if(elIndex === 0 && $elParent.children().length == 0){
                 $elParent.append(this.$fastGrid);
@@ -173,7 +181,15 @@
                     });
             });
 
-
+            //注册分页事件
+            if(opts.paginator && opts.paginator.paginator){
+                var $pg = opts.paginator;
+                $pg.paginator('option',{
+                    onLoad: function($pg, pageNo, pageSize){
+                        $thisObject.load();
+                    }
+                });
+            }
         },
 
         initHead: function(){
@@ -320,6 +336,10 @@
                 if(opts.onSuccess){
                     opts.onSuccess($thisObject, args);
                 }
+                if(opts.paginator && opts.paginator.paginator){
+                    var $pg = opts.paginator;
+                    $pg.paginator('render',args);
+                }
             }
         },
         loadAjax: function(args){
@@ -348,6 +368,12 @@
                     sortStatus: sortStatus
                 };
             }
+            //分页参数
+            if(opts.paginator && opts.paginator.paginator){
+                var $pg = opts.paginator;
+                params[$pg.paginator('option').pageNoName] = $pg.paginator('pageNo') ? $pg.paginator('pageNo') : 1;
+                params[$pg.paginator('option').pageSizeName] = $pg.paginator('pageSize');
+            }
             //
             if($.isFunction(opts.params)){
                 params = $.extend(params, opts.params());
@@ -374,6 +400,10 @@
                     if(opts.onSuccess){
                         opts.onSuccess($thisObject, data);
                     }
+                    if(opts.paginator && opts.paginator.paginator){
+                        var $pg = opts.paginator;
+                        $pg.paginator('render',data);
+                    }
                 }).fail(function(data){
                     if(opts.onError){
                         opts.onError($thisObject, data);
@@ -382,6 +412,7 @@
                     $fastGrid.find('.loadingWrapper').hide();
                 });
         },
+
 
         loadNative: function(items){
             var $thisObject = this;
@@ -767,6 +798,7 @@
         sortStatus: 'asc',
         remoteSort: false,
         autoLoad: true,
+        paginator: false,
         onSuccess: function(fastGrid, data){},
         onError: function(fastGrid, data){},
         onSelected: function(fastGrid, item, rowIndex, colIndex){}

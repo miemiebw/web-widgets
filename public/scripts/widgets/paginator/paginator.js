@@ -12,11 +12,11 @@
         $thisObject.opts = options;
 
         this.init();
-        this.render({
-            pageNo: options.pageNo,
-            totalCount: options.totalCount,
-            pageSize: options.pageSize
-        });
+
+        var params = {};
+        params[options.totalCountName] = 0;
+        params[options.pageNoName] = 0;
+        this.render(params);
     };
 
     Paginator.prototype = {
@@ -58,7 +58,7 @@
             var $pageNoList = this.$pageNoList;
             var $pageSizeList = this.$pageSizeList;
 
-            if(params[opts.totalCountName]){
+            if(params[opts.totalCountName] >= 0){
                 $pg.data('totalCount', params[opts.totalCountName]);
             }
 
@@ -69,7 +69,6 @@
             if(params[opts.pageSizeName]){
                 $pg.data('pageSize', params[opts.pageSizeName]);
             }
-
             $totalCountText.text($thisObject.formatString(opts.totalCountText, [$pg.data('totalCount')]));
             $pageSizeList.val($pg.data('pageSize'));
             $pageNoList.empty();

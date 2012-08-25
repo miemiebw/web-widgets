@@ -116,25 +116,9 @@
         multiSelect: true,
         nowrap: true,
         cols: cols,
-        onSuccess:function (fg, data) {
-            $('#search').paginator('render', {
-                pageNo:data.pageNo,
-                totalCount:data.totalCount,
-                pageSize:data.pageSize
-            });
-        }
-    });
-
-    $('#search').paginator({
-        style:'search',
-        pageSize:50,
-        onLoad:function (pageNo, pageSize) {
-
-            $('#quoteTable').fastGrid('load', {
-                pageNo:pageNo,
-                pageSize:pageSize
-            });
-        }
+        paginator: $('#search').paginator({
+            style:'search'
+        })
     });
 
 });</script>

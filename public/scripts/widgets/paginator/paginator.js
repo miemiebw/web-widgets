@@ -35,49 +35,64 @@
             $pg.append($content);
 
             this.$totalCountText = $pg.find('.totalCountText');
-            this.$numList =$pg.find('.numList');
-            this.$sizeList = $pg.find('.pageSize select');
+            this.$pageNoList =$pg.find('.numList');
+            this.$pageSizeList = $pg.find('.pageSize select');
 
-            var $sizeList = this.$sizeList;
-            $.each(opts.sizeList, function(index, item){
+            var $pageSizeList = this.$pageSizeList;
+            $.each(opts.pageSizeList, function(index, item){
                 var $option = $('<option></option>')
                     .prop('value',item)
-                    .text($thisObject.formatString(opts.sizeText,[item]));
-
-                if(item === opts.pageSize){
-                    $option.prop('selected','selected');
-                }
-
-                $sizeList.append($option);
+                    .text($thisObject.formatString(opts.pageSizeText,[item]));
+                $pageSizeList.append($option);
+            });
+            $pageSizeList.on('change', function(){
+                $thisObject.onLoad();
             });
         },
 
         render: function(params){
             var $thisObject = this;
             var opts = this.opts;
+            var $pg = this.$pg;
             var $totalCountText = this.$totalCountText;
-            var $numList = this.$numList;
-            var $sizeList = this.$sizeList;
+            var $pageNoList = this.$pageNoList;
+            var $pageSizeList = this.$pageSizeList;
 
-            $totalCountText.text($thisObject.formatString(opts.totalCountText,[params.totalCount]));
-            $sizeList.val(params.pageSize);
-            if( params.pageNo && params.totalCount &&  params.pageSize){
-                $sizeList.one('change',function(){
-                    opts.onLoad(params.pageNo,$sizeList.val());
-                });
+            if(params[opts.totalCountName]){
+                $pg.data('totalCount', params[opts.totalCountName]);
             }
-            $numList.empty();
+
+
+            if(params[opts.pageNoName]){
+                $pg.data('pageNo', params[opts.pageNoName]);
+            }
+            if(params[opts.pageSizeName]){
+                $pg.data('pageSize', params[opts.pageSizeName]);
+            }
+
+            $totalCountText.text($thisObject.formatString(opts.totalCountText, [$pg.data('totalCount')]));
+            $pageSizeList.val($pg.data('pageSize'));
+            $pageNoList.empty();
+
             if(opts.style === 'plain'){
-                this.plain(params.pageNo, params.totalCount, $sizeList.val());
+                this.plain($pg.data('pageNo'), $pg.data('totalCount'), $pageSizeList.val());
             }else if(opts.style === 'search'){
-                this.search(params.pageNo, params.totalCount, $sizeList.val());
+                this.search($pg.data('pageNo'), $pg.data('totalCount'), $pageSizeList.val());
             }
+        },
+
+        onLoad: function(){
+            var opts = this.opts;
+            var $pg = this.$pg;
+            var $pageSizeList = this.$pageSizeList;
+            opts.onLoad(this,$pg.data('pageNo'),$pageSizeList.val());
         },
 
         search: function(pageNo, totalCount, pageSize){
             var $thisObject = this;
             var opts = this.opts;
-            var $numList = this.$numList;
+            var $pg = this.$pg;
+            var $pageNoList = this.$pageNoList;
 
             var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
             totalPage = totalPage ? totalPage : 0;
@@ -87,17 +102,18 @@
                 pageNo = totalPage;
             }
 
-
             var $head = $('<li><a title="首页">&nbsp</a></li>');
             if(pageNo<=1){
                 $head.find('a').addClass('grayhead');
             }else{
                 $head.find('a').addClass('head').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(1,pageSize);
+                    $pg.data('pageNo', 1);
+                    $thisObject.onLoad();
                 });
             }
-            $numList.append($head);
+            $pageNoList.append($head);
+
 
             var $prev = $('<li><a title="上一页">&nbsp</a></li>');
             if(pageNo<=1){
@@ -105,11 +121,11 @@
             }else{
                 $prev.find('a').addClass('prev').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo-1,pageSize);
+                    $pg.data('pageNo', pageNo-1);
+                    $thisObject.onLoad();
                 });
             }
-            $numList.append($prev);
-            //计算总页数
+            $pageNoList.append($prev);
 
             var $input = $('<li>第<input><div class="pageNo"></div></li>');
             $input.find('input').val(pageNo).on('keydown',function(e){
@@ -117,14 +133,14 @@
                     if(/^[0-9]*[1-9][0-9]*$/.exec($(this).val())){
                         var val = parseInt($(this).val(),10);
                         if(val<= totalPage ){
-                            opts.onLoad(val,pageSize);
+                            $pg.data('pageNo', val);
+                            $thisObject.onLoad();
                         }
                     }
                 }
             });
-
             $input.find('.pageNo').html($thisObject.formatString('页/共{0}页',['<strong>'+totalPage+'</strong>']));
-            $numList.append($input);
+            $pageNoList.append($input);
 
             var $next = $('<li><a title="下一页">&nbsp</a></li>');
             if(pageNo>=totalPage){
@@ -132,10 +148,11 @@
             }else{
                 $next.find('a').addClass('next').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo+1,pageSize);
+                    $pg.data('pageNo', pageNo+1);
+                    $thisObject.onLoad();
                 });
             }
-            $numList.append($next);
+            $pageNoList.append($next);
 
             var $tail = $('<li><a title="尾页">&nbsp</a></li>');
             if(pageNo>=totalPage){
@@ -143,16 +160,18 @@
             }else{
                 $tail.find('a').addClass('tail').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(totalPage,pageSize);
-                });;
+                    $pg.data('pageNo', totalPage);
+                    $thisObject.onLoad();
+                });
             }
-            $numList.append($tail);
+            $pageNoList.append($tail);
         },
 
         plain: function(pageNo, totalCount, pageSize){
             var $thisObject = this;
             var opts = this.opts;
-            var $numList = this.$numList;
+            var $pg = this.$pg;
+            var $pageNoList = this.$pageNoList;
 
             var totalPage = totalCount % pageSize === 0 ? parseInt(totalCount/pageSize) : parseInt(totalCount/pageSize) + 1;
             totalPage = totalPage ? totalPage : 0;
@@ -163,20 +182,20 @@
             }else if(pageNo < 1 && totalPage != 0){
                 pageNo = 1;
             }
-
+            //
             var $prev = $('<li><a title="上一页">&nbsp</a></li>');
             if(pageNo<=1){
                 $prev.find('a').addClass('grayprev');
             }else{
                 $prev.find('a').addClass('prev').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo-1,pageSize);
+                    $pg.data('pageNo', pageNo-1);
+                    $thisObject.onLoad();
                 });
             }
-            $numList.append($prev);
-
+            $pageNoList.append($prev);
+            /////
             var list = [1];
-            var left = pageNo-2;
             for(var i= 0; i < 5; i++){
                 var no = pageNo - 2 + i;
 
@@ -204,22 +223,27 @@
                 }else{
                     $li.find('a').text(item).prop('title','第'+item+'页').on('click', function(e){
                         e.preventDefault();
-                        opts.onLoad(item, pageSize);
+                        $pg.data('pageNo', item);
+                        $thisObject.onLoad();
                     });
                 }
-                $numList.append($li);
+                $pageNoList.append($li);
             });
 
+            //
             var $next = $('<li><a title="下一页">&nbsp</a></li>');
             if(pageNo>=totalPage){
                 $next.find('a').addClass('graynext');
             }else{
                 $next.find('a').addClass('next').on('click', function(e){
                     e.preventDefault();
-                    opts.onLoad(pageNo+1,pageSize);
+                    $pg.data('pageNo', pageNo+1);
+                    $thisObject.onLoad();
                 });
             }
-            $numList.append($next);
+            $pageNoList.append($next);
+
+
         },
 
         formatString:function(text,args){
@@ -229,6 +253,22 @@
                     : match
                     ;
             });
+        },
+
+        option: function(options){
+            if(options){
+                this.opts = $.extend(this.opts, options);
+            }else{
+                return this.opts;
+            }
+
+        },
+
+        pageNo: function(){
+            return this.$pg.data('pageNo')
+        },
+        pageSize: function(){
+            return this.$pageSizeList.val();
         }
     };
 
@@ -244,14 +284,14 @@
         });
     };
     $.fn.paginator.defaults = {
-        sizeText: '每页{0}条',
-        totalCountText: '共{0}条记录',
         style: 'plain',// and search
-        pageSize: 15,
-        totalCount: 0,
-        pageNo: 0,
-        sizeList: [15, 30, 50],
-        onLoad: function(pageNo, pageSize){
+        totalCountName: 'totalCount',
+        pageNoName: 'pageNo',
+        pageSizeName: 'pageSize',
+        pageSizeText: '每页{0}条',
+        totalCountText: '共{0}条记录',
+        pageSizeList: [15, 30, 50],
+        onLoad: function($pg, pageNo, pageSize){
             console.log('pageNo: %s', pageNo);
             console.log('size: %s', pageSize);
         }

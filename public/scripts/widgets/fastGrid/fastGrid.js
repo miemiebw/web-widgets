@@ -452,6 +452,8 @@
                     }else if(col.type === 'int'){
                         av = parseInt(av, 10);
                         bv = parseInt(bv, 10)
+                    }else{
+                        return sortStatus === 'desc' ? -av.localeCompare(bv)  : av.localeCompare(bv);
                     }
                     return av > bv ? (sortStatus === 'desc' ? -1 : 1) : (sortStatus === 'desc' ? 1 : -1);
                 }, function(){

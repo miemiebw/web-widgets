@@ -22,4 +22,9 @@ module.exports = function(app){
             title: 'fastGrid-options'
         });
     });
+    app.get('/examples/test', function(req, res){
+        res.render('examples/test',{
+            title: 'test'
+        });
+    });
 };

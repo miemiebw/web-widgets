@@ -11,8 +11,9 @@
 
         this._initLayout($el);
         this._initHead();
+        this._initOption();
         this._initEvents();
-        this._populate(options.items);
+        this.load();
     };
 
     FastGrid.prototype = {
@@ -33,6 +34,14 @@
                     '<div class="bodyWrapper">',
 
                     '</div>',
+                    '<a class="optDnButton"></a>',
+                    '<div class="mask transparent">',
+                    '</div>',
+                    '<div class="loadingWrapper">',
+                        '<div class="loading"></div>',
+                        '<p>'+ this.opts.loadingText +'</p>',
+                    '</div>',
+                    '<span class="noData" data-nodata="true">'+ this.opts.noDataText +'</span>',
                 '</div>'
             ];
 
@@ -42,6 +51,7 @@
             this.$style = $fastGrid.find('style');
             this.$headWrapper = $fastGrid.find('.headWrapper');
             this.$head = $fastGrid.find('.head');
+            this.$optWrapper = $fastGrid.find('.optWrapper');
             this.$bodyWrapper = $fastGrid.find('.bodyWrapper');
             this.$body = $el.addClass('body').empty()
                 .html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>')
@@ -58,6 +68,7 @@
             var opts = this.opts;
             $fastGrid.width(opts.width);
             $fastGrid.height(opts.height);
+            this._refreshNoData();
         },
 
         _initHead: function(){
@@ -107,18 +118,69 @@
             }
         },
 
+        _initOption: function(){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $optWrapper = this.$optWrapper;
+            var $headWrapper = this.$headWrapper;
+
+            $fastGrid.find('a.optDnButton').css({
+                'top': $headWrapper.outerHeight(true),
+                'right': 20
+            });
+
+            if(opts.cols){
+                var optHtml = ['<a class="optUpButton"></a>'];
+                optHtml.push('<h1>显示列</h1>');
+                for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
+                    var col = opts.cols[colIndex];
+                    optHtml.push('<label><input type="checkbox"  ');
+                    if(!col.hidden) optHtml.push('checked="checked"');
+                    optHtml.push('/><span>');
+                    optHtml.push(col.title);
+                    optHtml.push('</span></label>');
+                }
+                $optWrapper.html(optHtml.join(''));
+            }
+
+            $optWrapper.width('100%').height($fastGrid.height() - $headWrapper.outerHeight(true));
+        },
+
         _initEvents: function(){
             var $thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
             var $headWrapper = this.$headWrapper;
             var $head = this.$head;
+            var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
 
             if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
                     $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+                    //调整option
+                    if($optWrapper.is(':visible')){
+                        $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+                    }
+                    //调整noData
+                    var $noData = $fastGrid.find('.noData');
+                    if($noData.is(':visible')){
+                        $noData.css({
+                            'left': ($fastGrid.width() - $noData.width()) / 2,
+                            'top': ($fastGrid.height() - $noData.height()) / 2
+                        });
+                    }
+                    //调整loading
+                    var $mask = $fastGrid.find('.mask');
+                    if($mask.is(':visible')){
+                        $mask.width($fastGrid.width()).height($fastGrid.height());
+                        var $loadingWrapper = $fastGrid.find('.loadingWrapper');
+                        $loadingWrapper.css({
+                            'left': ($fastGrid.width() - $loadingWrapper.width()) / 2,
+                            'top': ($fastGrid.height() - $loadingWrapper.height()) / 2
+                        })
+                    }
                 });
             }
 
@@ -178,14 +240,58 @@
                 });
             });
 
+            //向下按钮
+            var $optDnButton = $fastGrid.find('a.optDnButton').on('click', function(e){
+                e.preventDefault();
+                $thisObject._hideNoData();
+                $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+                $(this).slideUp('fast');
+                $optWrapper.slideDown();
+            }).on('mouseleave', function(){
+                $(this).slideUp('fast');
+            });
+            $bodyWrapper.on('mouseenter', function(){
+                $optDnButton.slideUp('fast');
+            });
+            $fastGrid.on('mouseleave', function(){
+                $optDnButton.slideUp('fast');
+            });
+            $headWrapper.on('mouseenter',function(){
+                if($optWrapper.is(':hidden')){
+                    $optDnButton.slideDown('fast');
+                }
+            });
+
+            //向上按钮
+            $fastGrid.find('a.optUpButton').on('click', function(e){
+                e.preventDefault();
+                $optWrapper.slideUp().queue(function(next){
+                    $thisObject._refreshNoData();
+                    next();
+                });
+            });
+            //隐藏列
+
+            $optWrapper.on('click', ':checkbox', function(e){
+                var index = $optWrapper.find('label').index($(this).parent());
+                if(this.checked){
+                    opts.cols[index].hidden = false;
+                    $thisObject._colsWidth();
+                }else{
+                    opts.cols[index].hidden = true;
+                    $thisObject._colsWidth();
+                }
+            });
+
         },
 
         _populate: function(items){
             var opts = this.opts;
-            var $ths = this.$ths;
+            var $fastGrid = this.$fastGrid;
             var $body = this.$body;
 
             if(items  && items.length != 0 && opts.cols){
+                $fastGrid.find('.noData').data('nodata',false);
                 var tbodyHtmls = [];
                 tbodyHtmls.push('<tbody>');
                 for(var rowIndex=0; rowIndex < items.length; rowIndex++){
@@ -219,9 +325,13 @@
                 tbodyHtmls.push('</tbody>');
                 $body.empty().html(tbodyHtmls.join(''));
             }else{
+                $fastGrid.find('.noData').data('nodata',true);
                 $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
             }
             this._setStyle();
+            this._hideLoading();
+            this._refreshNoData();
+            //this._expandCols();
         },
 
         _setStyle: function(){
@@ -285,6 +395,64 @@
             }
             $body.width($head.width());
             $bodyWrapper.width('100%');
+
+            //调整滚动条
+            $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
+            if($bodyWrapper.scrollLeft() === 0){
+                $head.css('left', 0);
+            }
+        },
+
+        _expandCols: function(){
+            var opts = this.opts;
+            var $fastGrid = this.$fastGrid;
+            var $style = this.$style;
+            var $head = this.$head;
+            var $ths = this.$ths;
+            var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
+            //滚动条宽度
+            var ua = navigator.userAgent.toLowerCase();
+            var scrollW = 0;
+            if(/windows nt/.test(ua)){
+                scrollW = 17;
+            }
+            if($body.height() <= $bodyWrapper.height()){
+                scrollW = 0;
+            }
+            var hww = $fastGrid.width() - scrollW;
+            var hw = $head.width();
+            var w = (hww - hw) /  $head.find('th:visible').length;
+            w = Math.floor(w);//每行要增加的宽度
+
+            $bodyWrapper.width(9999);
+            $body.width('auto');
+            var style = [];
+            for(var colIndex=0; colIndex<$ths.length; colIndex++){
+                var $th = $ths.eq(colIndex);
+                style.push('.'+this._genColClass(colIndex) + ' {');
+                var width = $.data($th[0],'col-width');
+                $.data($th[0],'col-width' ,width+w);
+                width = $.data($th[0],'col-width');
+                style.push('width: '+ width +'px;');
+                style.push('max-width: '+ width +'px;');
+                if(opts.cols[colIndex].align){
+                    style.push('text-align: '+opts.cols[colIndex].align+';');
+                }
+                if(opts.cols[colIndex].hidden){
+                    style.push('display: none; ');
+                }
+                style.push(' }');
+            }
+
+
+            try{
+                $style.text(style.join(''));
+            }catch(error){
+                $style[0].styleSheet.cssText = style.join('');//IE fix
+            }
+            $body.width($head.width());
+            $bodyWrapper.width('100%');
         },
 
         _genColClass: function(colIndex){
@@ -295,7 +463,6 @@
         },
 
         _nativeSorter: function(colIndex, sortStatus){
-            console.log(sortStatus);
             var col = this.opts.cols[colIndex];
             this.$body.find('tr > td:nth-child('+(colIndex+1)+')')
                 .sortElements(function(a, b){
@@ -313,13 +480,135 @@
                 }, function(){
                     return this.parentNode;
                 });
+        },
+
+        _showLoading: function(){
+            var $fastGrid = this.$fastGrid;
+            //遮罩
+            $fastGrid.find('.mask').width($fastGrid.width())
+                .height($fastGrid.height()).show();
+            //加载包装器位置
+            var $loadingWrapper = $fastGrid.find('.loadingWrapper');
+            $loadingWrapper.css({
+                'left': ($fastGrid.width() - $loadingWrapper.width()) / 2,
+                'top': ($fastGrid.height() - $loadingWrapper.height()) / 2
+            }).show();
+        },
+        _hideLoading: function(){
+            var $fastGrid = this.$fastGrid;
+            $fastGrid.find('.mask').hide();
+            $fastGrid.find('.loadingWrapper').hide();
+        },
+
+        _refreshNoData: function(){
+            var $fastGrid = this.$fastGrid;
+            //无数据文字位置
+            var $noData = $fastGrid.find('.noData');
+
+            if($noData.data('nodata')){
+                $noData.css({
+                    'left': ($fastGrid.width() - $noData.width()) / 2,
+                    'top': ($fastGrid.height() - $noData.height()) / 2
+                }).show();
+            }else{
+                $noData.hide();
+            }
+        },
+        _hideNoData: function(){
+            this.$fastGrid.find('.noData').hide();
+        },
+
+        _loadAjax: function(args){
+            var $thisObject = this;
+            var opts = this.opts;
+            var params = {};
+            //获得远程排序参数
+            if(opts.remoteSort){
+                var sortName = '';
+                var sortStatus = '';
+                var $titles = this.$ths.find('.title');
+                for(var colIndex=0; colIndex<$titles.length; colIndex++){
+                    var status = $.data($titles[colIndex], 'sortStatus');
+                    if(status){
+                        sortName = opts.cols[colIndex].name;
+                        sortStatus = status;
+                    }
+                }
+                params.sortName = sortName;
+                params.sortStatus = sortStatus;
+            }
+            //opt的params可以使函数，例如收集过滤的参数
+            if($.isFunction(opts.params)){
+                params = $.extend(params, opts.params());
+            }else if($.isPlainObject()){
+                params = $.extend(params, opts.params);
+            }
+            //合并load的参数
+            params = $.extend(params, args);
+            $.ajax({
+                type: opts.method,
+                url: opts.url,
+                data: params,
+                dataType: 'json',
+                cache: false
+            }).done(function(data){
+                //获得root对象
+                var items = data;
+                if($.isArray(data[opts.root])){
+                    items = data[opts.root];
+                }
+                if(opts.remoteSort){
+                    $thisObject._populate(items);
+                }else{
+                    $thisObject._loadNative(items);
+                }
+
+            }).fail(function(data){
+                if(opts.onError){
+                    opts.onError($thisObject, data);
+                }
+            });
+        },
+
+        _loadNative: function(items){
+            this._populate(items);
+            //排序滞后是因为排序的是显示值
+            var $ths = this.$ths;
+            var sortColIndex = -1;
+            var sortStatus = '';
+            $ths.find('.title').each(function(index, item){
+                var status = $.data(item, 'sortStatus');
+                if(status){
+                    sortColIndex = index;
+                    sortStatus = status;
+                }
+            });
+            var sortStatus = sortStatus === 'desc' ? 'asc' : 'desc';
+            if(sortColIndex >=0){
+                $ths.eq(sortColIndex).find('.title').data('sortStatus',sortStatus).click();
+            }
+        },
+
+        load: function(args){
+            this._hideNoData();
+            this._showLoading();
+            var opts = this.opts;
+            var items = args;
+            if($.isPlainObject(args) && $.isArray(args[opts.root])){
+                items = args[opts.root];
+            }
+            if(opts.url && !$.isArray(items)){
+                this._loadAjax(args);
+            }else{
+                if(!items){
+                    items = opts.items;
+                }
+                this._loadNative(items);
+                if(opts.onSuccess){
+                    opts.onSuccess(this, args);
+                }
+            }
         }
-
-
-
-
-
-
 
     };
 

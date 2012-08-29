@@ -284,6 +284,18 @@
                 }
             });
 
+            //选中事件
+            var $body = this.$body;
+            $body.on('click','td',function(e){
+                var $this = $(this);
+                if(!$this.parent().hasClass('selected')){
+                    $thisObject.select($this.parent().index());
+                }else{
+                    $thisObject.deselect($this.parent().index());
+                }
+                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+            });
+
             //IE6不支持hover
             if ($.browser.msie) {
                 if ($.browser.version == "6.0"){
@@ -333,6 +345,10 @@
                 };
                 tbodyHtmls.push('</tbody>');
                 $body.empty().html(tbodyHtmls.join(''));
+                var $trs = $body.find('tr');
+                for(var rowIndex=0; rowIndex < items.length; rowIndex++){
+                    $.data($trs.eq(rowIndex)[0],'item',items[rowIndex]);
+                }
             }else{
                 $fastGrid.find('.noData').data('nodata',true);
                 $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
@@ -437,8 +453,8 @@
             }
             var hww = $fastGrid.width() - scrollW;
             var hw = $head.width();
-            var w = (hww - hw) /  $head.find('th:visible').length;
-            w = Math.floor(w);//每行要增加的宽度
+            var w = (hww - hw) /  $head.find('th:visible').length;//每行要增加的宽度
+            w = Math.floor(w);
 
             $bodyWrapper.width(9999);
             $body.width('auto');
@@ -623,6 +639,59 @@
                     opts.onSuccess(this, args);
                 }
             }
+        },
+
+        //选中
+        select: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+
+            if(typeof args === 'number'){
+                var $tr = $body.find('tr').eq(args);
+                if(!opts.multiSelect){
+                    $body.find('tr.selected').removeClass('selected');
+                }
+                if(!$tr.hasClass('selected')){
+                    $tr.addClass('selected');
+                }
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        var $this = $(this);
+                        if(!$this.hasClass('selected')){
+                            $this.addClass('selected');
+                        }
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+                $body.find('tr').addClass('selected');
+            }
+        },
+        //取消选中
+        deselect: function(args){
+            var opts = this.opts;
+            var $body = this.$body;
+            if(typeof args === 'number'){
+                $body.find('tr').eq(args).removeClass('selected');
+            }else if(typeof args === 'function'){
+                $.each($body.find('tr'), function(index, tr){
+                    if(args($.data(this, 'item'))){
+                        $(this).removeClass('selected');
+                    }
+                });
+            }else if(typeof args === 'string' && args === 'all'){
+                $body.find('tr.selected').removeClass('selected');
+            }
+        },
+
+        selected: function(){
+            var $body = this.$body;
+            var selected = [];
+            $.each($body.find('tr.selected'), function(index ,item){
+                selected.push($.data(this,'item'));
+            });
+            return selected;
         }
 
     };

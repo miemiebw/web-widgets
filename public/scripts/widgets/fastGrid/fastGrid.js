@@ -154,6 +154,7 @@
             var $head = this.$head;
             var $optWrapper = this.$optWrapper;
             var $bodyWrapper = this.$bodyWrapper;
+            var $body = this.$body;
 
             if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
@@ -283,6 +284,14 @@
                 }
             });
 
+            //IE6不支持hover
+            if ($.browser.msie) {
+                if ($.browser.version == "6.0"){
+                    $body.find('tbody').on('hover','tr', function (e) {
+                        $(this).toggleClass('hover', e.type === 'mouseenter');
+                    });
+                };
+            }
         },
 
         _populate: function(items){
@@ -395,6 +404,12 @@
             }
             $body.width($head.width());
             $bodyWrapper.width('100%');
+            //fix IE8
+            if ($.browser.msie) {
+                if ($.browser.version == "8.0"){
+                    $bodyWrapper.append($body);
+                };
+            }
 
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));

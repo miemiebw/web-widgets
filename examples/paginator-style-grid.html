@@ -51,11 +51,8 @@
 <script src="../public/scripts/widgets/paginator/paginator.js">;</script>
 <script>$(document).ready(function () {
     var cols = [
-        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex,row){
-            var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
-                $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
-            });
-            return $a;
+        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
+            return '<a href="#" class="btnPrice"></a>';
         }},
         {title:'名称', name:'', width: 50, sortable: true, align: 'center', renderer: function(val,item){
             return item.SECUABBR + '(' + item.SECUCODE + ')';
@@ -115,7 +112,12 @@
         sortStatus:'desc',
         remoteSort:true,
         cols:cols,
-        paginator: $('#plain').paginator({})
+        paginator: $('#plain').paginator({}),
+        onSelected: function(fastGrid, item, rowIndex, colIndex){
+            if(colIndex === 0){
+                alert(JSON.stringify(item));
+            }
+        }
     });
 
     $('#quoteTable2').fastGrid({
@@ -131,7 +133,12 @@
         autoLoad: false,
         paginator: $('#search').paginator({
             style:'search'
-        })
+        }),
+        onSelected: function(fastGrid, item, rowIndex, colIndex){
+            if(colIndex === 0){
+                alert(JSON.stringify(item));
+            }
+        }
     });
 
     $('#btnDisplay').on('click', function(e){

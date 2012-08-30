@@ -81,11 +81,8 @@
             sortName: 'range',
             sortStatus: 'desc',
             cols: [
-                {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,$row,rowIndex){
-                    var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
-                        $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
-                    });
-                    return $a;
+                {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
+                    return '<a href="#" class="btnPrice"></a>';
                 }},
                 {title:'名称', name:'', width: 120, align: 'center', renderer: function(val,item){
                     return item.secuAbbr + '(' + item.secuCode + ')';
@@ -109,19 +106,18 @@
                 }},
                 {title:'市值', name:'marketValue', width: 80, align: 'right'},
                 {title:'盈亏', name:'marketValue', width: 80, hidden: true, align: 'right'},
-                {title:'深度', name:'', width: 50, align: 'center', renderer: function(val,item,items,$row,rowIndex){
-                    var $a = $('<a href="#" class="btnDeep"></a>').hover(function (e) {
-                        $(this).toggleClass('btnDeepSelected', e.type === 'mouseenter');
-                    });
-                    return $a;
+                {title:'深度', name:'', width: 50, align: 'center', renderer: function(val,item,items,rowIndex){
+                    return '<a href="#" class="btnDeep"></a>';
                 }},
-                {title:'日历', name:'', width: 50, align: 'center', renderer: function(val,item,items,$row,rowIndex){
-                    var $a = $('<a href="#" class="btnCal"></a>').hover(function (e) {
-                        $(this).toggleClass('btnCalSelected', e.type === 'mouseenter');
-                    });
-                    return $a;
+                {title:'日历', name:'', width: 50, align: 'center', renderer: function(val,item,items,rowIndex){
+                    return '<a href="#" class="btnCal"></a>';
                 }}
-            ]
+            ],
+            onSelected: function(fastGrid, item, rowIndex, colIndex){
+                if(colIndex === 0 || colIndex === 7 || colIndex === 8){
+                    alert(JSON.stringify(item));
+                }
+            }
         });
 
         var items = [

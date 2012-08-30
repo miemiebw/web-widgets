@@ -460,13 +460,8 @@ $(document).ready(function () {
     ];
 
     var cols = [
-        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex,row){
-            var $a = $('<a href="#" class="btnPrice"></a>').hover(function (e) {
-                $(this).toggleClass('btnPriceSelected', e.type === 'mouseenter');
-            }).on('click', function(){
-                        alert(JSON.stringify(item));
-                    });
-            return $a;
+        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
+            return '<a href="#" class="btnPrice"></a>';
         }},
         {title:'名称', name:'', width: 150, sortable: true, align: 'center', renderer: function(val,item){
             return item.SECUABBR + '(' + item.SECUCODE + ')';
@@ -524,7 +519,12 @@ $(document).ready(function () {
         items: items,
         nowrap:true,
         sortName:'DAYCHANGERATE',
-        sortStatus:'desc'
+        sortStatus:'desc',
+        onSelected: function(fastGrid, item, rowIndex, colIndex){
+            if(colIndex === 0 ){
+                alert(JSON.stringify(item));
+            }
+        }
     });
 
     $('#quoteTable2').fastGrid({
@@ -535,7 +535,12 @@ $(document).ready(function () {
         nowrap:true,
         sortName:'CLOSINGPRICE',
         sortStatus:'asc',
-        scroll: 'hidden'
+        scroll: 'hidden',
+        onSelected: function(fastGrid, item, rowIndex, colIndex){
+            if(colIndex === 0 ){
+                alert(JSON.stringify(item));
+            }
+        }
     });
 
 });</script>

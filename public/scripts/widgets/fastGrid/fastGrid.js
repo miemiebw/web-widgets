@@ -151,7 +151,7 @@
         },
 
         _initEvents: function(){
-            var $thisObject = this;
+            var thisObject = this;
             var opts = this.opts;
             var $fastGrid = this.$fastGrid;
             var $headWrapper = this.$headWrapper;
@@ -216,10 +216,10 @@
                 $this.siblings('.sortStatus').addClass(sortStatus);
 
                 if(opts.remoteSort){
-                    $thisObject.load()
+                    thisObject.load()
                 }else{
-                    $thisObject._nativeSorter($titles.index($this), sortStatus);
-                    $thisObject._setStyle();
+                    thisObject._nativeSorter($titles.index($this), sortStatus);
+                    thisObject._setStyle();
                 }
             }).on('mousedown', 'div.resize', function(e){
                 var $resize = $(this);
@@ -235,7 +235,7 @@
                 }).on('mouseup', function(e){
                     //改变宽度
                     $.data($resize.parent().parent()[0],'col-width',$resize.parent().width() + e.pageX - start);
-                    $thisObject._colsWidth($resize.parent().parent().index());
+                    thisObject._colsWidth($resize.parent().parent().index());
                     $headWrapper.mouseleave();
                 }).on('mouseleave',function(e){
                     $headWrapper.off('mouseup').off('mouseleave').off('mousemove');
@@ -250,7 +250,7 @@
             //向下按钮
             var $optDnButton = $fastGrid.find('a.optDnButton').on('click', function(e){
                 e.preventDefault();
-                $thisObject._hideNoData();
+                thisObject._hideNoData();
                 $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                 $(this).slideUp('fast');
                 if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
@@ -276,7 +276,7 @@
             $fastGrid.find('a.optUpButton').on('click', function(e){
                 e.preventDefault();
                 $optWrapper.slideUp().queue(function(next){
-                    $thisObject._refreshNoData();
+                    thisObject._refreshNoData();
                     if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
                         $fastGrid.height('auto');
                     }
@@ -289,10 +289,10 @@
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
                     opts.cols[index].hidden = false;
-                    $thisObject._colsWidth();
+                    thisObject._colsWidth();
                 }else{
                     opts.cols[index].hidden = true;
-                    $thisObject._colsWidth();
+                    thisObject._colsWidth();
                 }
             });
 
@@ -301,9 +301,9 @@
             $body.on('click','td',function(e){
                 var $this = $(this);
                 if(!$this.parent().hasClass('selected')){
-                    $thisObject.select($this.parent().index());
+                    thisObject.select($this.parent().index());
                 }else{
-                    $thisObject.deselect($this.parent().index());
+                    thisObject.deselect($this.parent().index());
                 }
                 opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
@@ -541,7 +541,7 @@
         },
 
         _loadAjax: function(args){
-            var $thisObject = this;
+            var thisObject = this;
             var opts = this.opts;
             var params = {};
             //获得远程排序参数
@@ -580,14 +580,14 @@
                     items = data[opts.root];
                 }
                 if(opts.remoteSort){
-                    $thisObject._populate(items);
+                    thisObject._populate(items);
                 }else{
-                    $thisObject._loadNative(items);
+                    thisObject._loadNative(items);
                 }
 
             }).fail(function(data){
                 if(opts.onError){
-                    opts.onError($thisObject, data);
+                    opts.onError(thisObject, data);
                 }
             });
         },

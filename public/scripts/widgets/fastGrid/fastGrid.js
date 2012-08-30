@@ -305,7 +305,8 @@
                 }else{
                     thisObject.deselect($this.parent().index());
                 }
-                opts.onSelected($.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                console.dir();
+                opts.onSelected(thisObject,$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
 
             //IE6不支持hover
@@ -379,7 +380,6 @@
             this._setStyle();
             this._hideLoading();
             this._refreshNoData();
-            console.log( $.data($body[0],'loadCount'));
             if((opts.scroll === 'hidden' || opts.scroll === 'vertical') && $.data($body[0],'loadCount') === 1){
                 this._expandCols();
             }
@@ -490,7 +490,6 @@
         },
 
         _genColClass: function(colIndex){
-            console.dir(this.opts);
             return 'fg-col'+colIndex+'-'+this.opts.id;
         },
 

@@ -305,7 +305,6 @@
                 }else{
                     thisObject.deselect($this.parent().index());
                 }
-                console.dir();
                 opts.onSelected(thisObject,$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
 

@@ -79,6 +79,9 @@
             height: '100%',
             multiSelect: true,
             cols: [
+                {title:'行号', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
+                    return rowIndex+1;
+                }},
                 {title:'行情', name:'', width: 40, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
                     return '<a href="#" class="btnPrice"></a>';
                 }},

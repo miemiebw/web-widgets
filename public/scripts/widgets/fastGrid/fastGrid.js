@@ -8,7 +8,7 @@
     var FastGrid = function(element, options){
         var $el = $(element);
         this.opts = options;
-
+        this.opts.id = (((1 + Math.random()) * 0x10000) | 0).toString(16);
         this._initLayout($el);
         this._initHead();
         this._initOption();
@@ -283,8 +283,8 @@
                     next();
                 });
             });
-            //隐藏列
 
+            //隐藏列
             $optWrapper.on('click', ':checkbox', function(e){
                 var index = $optWrapper.find('label').index($(this).parent());
                 if(this.checked){
@@ -478,9 +478,10 @@
             $.data(last[0],'col-width' ,$.data(last[0],'col-width') + lastOffsize);
             this._colsWidth();
         },
-        rnum: Math.floor(Math.random()*11),
+
         _genColClass: function(colIndex){
-            return 'fg-col'+colIndex+'-'+this.rnum;
+            console.dir(this.opts);
+            return 'fg-col'+colIndex+'-'+this.opts.id;
         },
 
         _nativeSorter: function(colIndex, sortStatus){

@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c454d097-4601-41bd-b6d2-a624d7f1f96b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" afterPath="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-ajax.html" afterPath="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html" afterPath="$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-native.html" afterPath="$PROJECT_DIR$/examples/fastGrid-native.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/paginator-style-grid.html" afterPath="$PROJECT_DIR$/examples/paginator-style-grid.html" />
     </list>
     <ignored path="web-widgets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,10 +52,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fastGrid-native-multiSelect.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="fastGrid-native-multiSelect.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="69" selection-start="3460" selection-end="3460" vertical-scroll-proportion="-9.5">
+            <state line="117" column="33" selection-start="4652" selection-end="4652" vertical-scroll-proportion="0.684949">
               <folding />
             </state>
           </provider>
@@ -68,16 +64,16 @@
       <file leaf-file-name="fastGrid-native.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/fastGrid-native.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="500" column="81" selection-start="16373" selection-end="16373" vertical-scroll-proportion="-17.642857">
+            <state line="490" column="50" selection-start="15876" selection-end="15876" vertical-scroll-proportion="-47.5">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="paginator-style-grid.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="paginator-style-grid.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/paginator-style-grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="81" selection-start="3428" selection-end="3428" vertical-scroll-proportion="0.65433675">
+            <state line="90" column="0" selection-start="3533" selection-end="3533" vertical-scroll-proportion="-20.357143">
               <folding />
             </state>
           </provider>
@@ -114,9 +110,9 @@
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
         <option value="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
-        <option value="$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-native.html" />
         <option value="$PROJECT_DIR$/examples/paginator-style-grid.html" />
+        <option value="$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html" />
       </list>
     </option>
   </component>
@@ -355,7 +351,19 @@
       <created>1346314603215</created>
       <updated>1346314603215</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="modify">
+      <created>1346314835985</created>
+      <updated>1346314835985</updated>
+    </task>
+    <task id="LOCAL-00008" summary="modify">
+      <created>1346315491304</created>
+      <updated>1346315491304</updated>
+    </task>
+    <task id="LOCAL-00009" summary="modify">
+      <created>1346315599094</created>
+      <updated>1346315599094</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -467,23 +475,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html">
+    <entry file="file://$PROJECT_DIR$/examples/paginator-style-grid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="69" selection-start="3460" selection-end="3460" vertical-scroll-proportion="-9.5">
+        <state line="90" column="0" selection-start="3533" selection-end="3533" vertical-scroll-proportion="-20.357143">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/fastGrid-native.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="500" column="81" selection-start="16373" selection-end="16373" vertical-scroll-proportion="-17.642857">
+        <state line="490" column="50" selection-start="15876" selection-end="15876" vertical-scroll-proportion="-47.5">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/paginator-style-grid.html">
+    <entry file="file://$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="81" selection-start="3428" selection-end="3428" vertical-scroll-proportion="0.65433675">
+        <state line="117" column="33" selection-start="4652" selection-end="4652" vertical-scroll-proportion="0.684949">
           <folding />
         </state>
       </provider>

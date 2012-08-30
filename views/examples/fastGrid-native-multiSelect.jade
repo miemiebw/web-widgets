@@ -209,7 +209,13 @@ block append script
 
             return '<a href="#" class="btnCal"></a>';
           }}
-        ]
+        ],
+        onSelected: function(fastGrid, item, rowIndex, colIndex){
+                    console.log(colIndex);
+                    if(colIndex === 0){
+                        alert(JSON.stringify(item));
+                    }
+                }
       });
 
 

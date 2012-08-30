@@ -67,8 +67,11 @@
             //设置尺寸
             var opts = this.opts;
             $fastGrid.width(opts.width);
+            if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
             $fastGrid.height(opts.height);
+            }
             this._refreshNoData();
+            $.data(this.$body[0],'loadCount',0);
         },
 
         _initHead: function(){
@@ -102,8 +105,9 @@
                 var $fastGrid = this.$fastGrid;
                 var $headWrapper = this.$headWrapper;
                 var $bodyWrapper = this.$bodyWrapper;
+                if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
                 $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
-
+                }
                 //初始化排序状态
                 if(opts.sortName){
                     for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
@@ -159,7 +163,9 @@
             if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
-                    $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+                    if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+                        $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
+                    }
                     //调整option
                     if($optWrapper.is(':visible')){
                         $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
@@ -247,6 +253,9 @@
                 $thisObject._hideNoData();
                 $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                 $(this).slideUp('fast');
+                if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                    $fastGrid.height($fastGrid.height());
+                }
                 $optWrapper.slideDown();
             }).on('mouseleave', function(){
                 $(this).slideUp('fast');
@@ -268,6 +277,9 @@
                 e.preventDefault();
                 $optWrapper.slideUp().queue(function(next){
                     $thisObject._refreshNoData();
+                    if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                        $fastGrid.height('auto');
+                    }
                     next();
                 });
             });
@@ -349,6 +361,7 @@
                 for(var rowIndex=0; rowIndex < items.length; rowIndex++){
                     $.data($trs.eq(rowIndex)[0],'item',items[rowIndex]);
                 }
+                $.data($body[0],'loadCount', $.data($body[0],'loadCount') + 1);
             }else{
                 $fastGrid.find('.noData').data('nodata',true);
                 $body.empty().html('<tbody><td style="border: 0px;background: none;">&nbsp;</td></tbody>');
@@ -356,9 +369,11 @@
             this._setStyle();
             this._hideLoading();
             this._refreshNoData();
-            //this._expandCols();
+            console.log( $.data($body[0],'loadCount'));
+            if((opts.scroll === 'hidden' || opts.scroll === 'vertical') && $.data($body[0],'loadCount') === 1){
+                this._expandCols();
+            }
         },
-
         _setStyle: function(){
             var $head = this.$head;
             var $ths = this.$ths;
@@ -399,8 +414,8 @@
                 var $th = $ths.eq(colIndex);
                 style.push('.'+this._genColClass(colIndex) + ' {');
                 var width = $.data($th[0],'col-width');
-                if((!width || width <$th.width()) && (index < 0 || width < 10) ){
-                    $.data($th[0],'col-width' ,$th.width());
+                if(!width || width < $th.find('span.title').width() + 10 ){
+                    $.data($th[0],'col-width' ,$th.find('span.title').width() + 10);
                     width = $.data($th[0],'col-width');
                 }
                 style.push('width: '+ width +'px;');
@@ -413,19 +428,16 @@
                 }
                 style.push(' }');
             }
+            $body.detach();
             try{
                 $style.text(style.join(''));
             }catch(error){
                 $style[0].styleSheet.cssText = style.join('');//IE fix
             }
+
             $body.width($head.width());
             $bodyWrapper.width('100%');
-            //fix IE8
-            if ($.browser.msie) {
-                if ($.browser.version == "8.0"){
-                    $bodyWrapper.append($body);
-                };
-            }
+            $bodyWrapper.append($body);
 
             //调整滚动条
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
@@ -444,52 +456,30 @@
             var $body = this.$body;
             //滚动条宽度
             var ua = navigator.userAgent.toLowerCase();
-            var scrollW = 0;
+            var scrollWidth = 0;
             if(/windows nt/.test(ua)){
-                scrollW = 17;
+                scrollWidth = 17;
             }
-            if($body.height() <= $bodyWrapper.height()){
-                scrollW = 0;
+            if($body.height() <= $bodyWrapper.height() || opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                scrollWidth = 0;
             }
-            var hww = $fastGrid.width() - scrollW;
-            var hw = $head.width();
-            var w = (hww - hw) /  $head.find('th:visible').length;//每行要增加的宽度
-            w = Math.floor(w);
-
-            $bodyWrapper.width(9999);
-            $body.width('auto');
-            var style = [];
-            for(var colIndex=0; colIndex<$ths.length; colIndex++){
-                var $th = $ths.eq(colIndex);
-                style.push('.'+this._genColClass(colIndex) + ' {');
-                var width = $.data($th[0],'col-width');
-                $.data($th[0],'col-width' ,width+w);
-                width = $.data($th[0],'col-width');
-                style.push('width: '+ width +'px;');
-                style.push('max-width: '+ width +'px;');
-                if(opts.cols[colIndex].align){
-                    style.push('text-align: '+opts.cols[colIndex].align+';');
-                }
-                if(opts.cols[colIndex].hidden){
-                    style.push('display: none; ');
-                }
-                style.push(' }');
-            }
-
-
-            try{
-                $style.text(style.join(''));
-            }catch(error){
-                $style[0].styleSheet.cssText = style.join('');//IE fix
-            }
-            $body.width($head.width());
-            $bodyWrapper.width('100%');
+            var offsize = Math.floor(( $fastGrid.width() - $head.width() - scrollWidth) / $head.find('th:visible').length);
+            var wt = 0;
+            var fix = 0
+            $head.find('th:visible').each(function(i,item){
+                var width = $.data(this,'col-width');
+                wt = wt + width;
+                width = (width + offsize) <10 ? 10 : width + offsize;
+                fix = fix + width;
+                $.data(this,'col-width' ,width);
+            });
+            var lastOffsize = ($fastGrid.width() - scrollWidth) - (($head.width() - wt) + (fix));
+            var last = $head.find('th:visible').eq(-1);
+            $.data(last[0],'col-width' ,$.data(last[0],'col-width') + lastOffsize);
+            this._colsWidth();
         },
-
+        rnum: Math.floor(Math.random()*11),
         _genColClass: function(colIndex){
-            if(!this.rnum){
-                this.rnum = Math.floor(Math.random()*11);
-            }
             return 'fg-col'+colIndex+'-'+this.rnum;
         },
 

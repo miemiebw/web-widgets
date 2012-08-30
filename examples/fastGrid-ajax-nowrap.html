@@ -75,7 +75,7 @@
         {title:'名称', name:'', width: 50, sortable: true, align: 'center', renderer: function(val,item){
             return item.SECUABBR + '(' + item.SECUCODE + ')';
         }},
-        {title:'今收盘', name:'CLOSINGPRICE', width: 50, sortable: true, align: 'right', renderer: function(val,item){
+        {title:'今收盘', name:'CLOSINGPRICE', width: 50, sortable: true,type:'number', align: 'right', renderer: function(val,item){
             return val.toFixed(2);
         }},
         {title:'涨跌额', name:'DAYCHANGE', width: 50, align: 'right', renderer: function(val){
@@ -86,7 +86,7 @@
             }
             return val.toFixed(2);
         }},
-        {title:'涨跌幅', name:'DAYCHANGERATE', width: 50, align: 'right', sortable: true, renderer: function(val){
+        {title:'涨跌幅', name:'DAYCHANGERATE', width: 50,type:'number', align: 'right', sortable: true, renderer: function(val){
             if(val > 0){
                 return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
             }else if(val < 0){
@@ -103,7 +103,7 @@
         {title:'昨收盘', name:'PREVCLOSINGPRICE', width: 50, align: 'right', renderer: function(val){
             return val.toFixed(2);
         }},
-        {title:'今开盘', name:'OPENINGPRICE',type: 'float', width: 50, sortable: true, align: 'right', renderer: function(val){
+        {title:'今开盘', name:'OPENINGPRICE',type: 'float', width: 50, sortable: true,type:'number', align: 'right', renderer: function(val){
             return val.toFixed(2);
         }},
 

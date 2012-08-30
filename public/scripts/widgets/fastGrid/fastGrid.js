@@ -504,7 +504,7 @@
                         bv = parseFloat(bv);
                     }else{
                         //各个浏览器localeCompare的结果不一致
-                        //return sortStatus === 'desc' ? -av.localeCompare(bv)  : av.localeCompare(bv);
+                        return sortStatus === 'desc' ? -av.localeCompare(bv)  : av.localeCompare(bv);
                     }
                     return av > bv ? (sortStatus === 'desc' ? -1 : 1) : (sortStatus === 'desc' ? 1 : -1);
                 }, function(){

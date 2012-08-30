@@ -1,0 +1,49 @@
+extends ../layout
+
+block append link
+  link(rel='stylesheet', href='/scripts/widgets/fastGrid/fastGrid.css')
+  style
+    .wrapper{
+      width: 500px;
+      height: 250px;
+      margin:0 auto;
+      padding: 40px 0 0 0;
+    }
+block content
+  div.wrapper
+    a#btn 点击
+    style#s1
+        .col{
+          width: 50px;
+        }
+    table#g1
+      tr
+        th.col hahah
+        th.col hahah
+        th.col hahah
+        th.col hahah
+    table#g2
+      tr
+        td.col hohohohohoho
+        td.col hohohohohoho
+        td.col hohohohohoho
+        td.col hohohohohoho
+
+block append script
+  script(src='/scripts/json2.js')
+
+  script
+    $(document).ready(function(){
+        $('#btn').on('click', function(){
+
+
+            try{
+              $('#s1').text('.col{ width: 120px; }');
+            }
+            //IE fix
+            catch(error){
+              $('#s1')[0].styleSheet.cssText = '.col{ width: 120px; }';
+
+            }
+        });
+    });

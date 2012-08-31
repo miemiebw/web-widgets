@@ -470,6 +470,11 @@
             var scrollWidth = 0;
             if(/windows nt/.test(ua)){
                 scrollWidth = 17;
+                if ($.browser.msie) {
+                    if ($.browser.version == "8.0"){
+                        scrollWidth = 18;
+                    }
+                }
             }
             if($body.height() <= $bodyWrapper.height() || opts.fitRows){
                 scrollWidth = 0;
@@ -488,8 +493,8 @@
                 var minWidth = $(th).find('span.title').width() + 10;
                 if(width + offsize < minWidth ){
                     $.data(th,'col-width' ,minWidth);
-                    totalOffsize = totalOffsize - (minWidth - (width + offsize));
-                    hasMini = true;
+                    totalOffsize = totalOffsize  - (minWidth - width);
+                    hasMin = true;
                 }
             });
             if(hasMin){

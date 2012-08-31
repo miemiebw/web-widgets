@@ -564,8 +564,7 @@
                         sortStatus = status;
                     }
                 }
-                params.sortName = sortName;
-                params.sortStatus = sortStatus;
+                params.sorts = sortName+'.'+sortStatus;
             }
 
             //分页参数

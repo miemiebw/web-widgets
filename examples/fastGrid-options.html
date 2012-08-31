@@ -122,9 +122,14 @@
             <td>指定json对象的数组字段为数据。</td>
         </tr>
         <tr>
-            <td>scroll</td>
-            <td><em>both</em>, hidden, horizontal,vertical</td>
-            <td>表格滚动条。vertical为表格启动时，标题头自动充满表格,只显示垂直滚动条。horizontal为表格只显示水平滚动条,表格高度随数据内容调整。其他选项同理。</td>
+            <td>fitCols</td>
+            <td><em>false</em>, true</td>
+            <td>true:表格启动时列伸展，自动充满表格。</td>
+        </tr>
+        <tr>
+            <td>fitRows</td>
+            <td><em>false</em>, true</td>
+            <td>true:行自动充满表格，不显示垂直滚动条。</td>
         </tr>
         <tr>
             <td>nowrap</td>
@@ -142,7 +147,7 @@
             <td>数据载入时的提示文字。</td>
         </tr>
         <tr>
-            <td>noRecordText</td>
+            <td>noDataText</td>
             <td><em>‘没有数据’</em>, string</td>
             <td>没有数据时的提示文字。</td>
         </tr>
@@ -231,8 +236,8 @@
         </tr>
         <tr>
             <td>renderer</td>
-            <td>function(val,item,items,rowIndex, row){ return val;}</td>
-            <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引, row 行element;
+            <td>function(val,item,items,rowIndex){ return val;}</td>
+            <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
                 返回值: 可以是文本，html文本和jQuery对象。
             </td>
         </tr>

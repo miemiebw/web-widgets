@@ -535,7 +535,7 @@ $(document).ready(function () {
         nowrap:true,
         sortName:'CLOSINGPRICE',
         sortStatus:'asc',
-        scroll: 'hidden',
+        fitRows: true,
         onSelected: function(fastGrid, item, rowIndex, colIndex){
             if(colIndex === 0 ){
                 alert(JSON.stringify(item));

@@ -488,8 +488,8 @@
                 var minWidth = $(th).find('span.title').width() + 10;
                 if(width + offsize < minWidth ){
                     $.data(th,'col-width' ,minWidth);
-                    totalOffsize = totalOffsize - (minWidth - (width + offsize));
-                    hasMini = true;
+                    totalOffsize = totalOffsize  - (minWidth - width);
+                    hasMin = true;
                 }
             });
             if(hasMin){

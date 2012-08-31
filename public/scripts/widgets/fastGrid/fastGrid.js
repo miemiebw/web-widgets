@@ -481,7 +481,7 @@
                 var th = $(this).parent().parent()[0]
                 var width = $.data(th,'col-width');
                 wt = wt + width;
-                width = (width + offsize) <10 ? 10 : width + offsize;
+                width = (width + offsize) <$(th).find('span.title').width() + 10 ? $(th).find('span.title').width()+10 : width + offsize;
                 fix = fix + width;
                 $.data(th,'col-width' ,width);
             });

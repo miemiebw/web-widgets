@@ -470,6 +470,11 @@
             var scrollWidth = 0;
             if(/windows nt/.test(ua)){
                 scrollWidth = 17;
+                if ($.browser.msie) {
+                    if ($.browser.version == "8.0"){
+                        scrollWidth = 18;
+                    }
+                }
             }
             if($body.height() <= $bodyWrapper.height() || opts.fitRows){
                 scrollWidth = 0;

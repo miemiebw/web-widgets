@@ -69,16 +69,16 @@
 <script src="../public/scripts/json2.js"></script>
 <script>$(document).ready(function () {
     var cols = [
-        {title:'行情', name:'', width: 30, align: 'center',sortable: true, renderer: function(val,item,items,rowIndex){
+        {title:'行情', name:'', width: 30, align: 'center',sortable: true,lockWidth:true,lockDisplay:true, renderer: function(val,item,items,rowIndex){
             return '<a href="#" class="btnPrice"></a>';
         }},
-        {title:'名称', name:'', width: 50, sortable: true, align: 'center', renderer: function(val,item){
+        {title:'名称', name:'', width: 50, sortable: true, align: 'center',lockDisplay:true, renderer: function(val,item){
             return item.SECUABBR + '(' + item.SECUCODE + ')';
         }},
-        {title:'今收盘', name:'CLOSINGPRICE', width: 50, sortable: true,type:'number', align: 'right', renderer: function(val,item){
+        {title:'今收盘', name:'CLOSINGPRICE', width: 50, sortable: true,type:'number',lockDisplay:true, align: 'right', renderer: function(val,item){
             return val.toFixed(2);
         }},
-        {title:'涨跌额', name:'DAYCHANGE', width: 50, align: 'right', renderer: function(val){
+        {title:'涨跌额', name:'DAYCHANGE', width: 50, align: 'right',lockDisplay:true, renderer: function(val){
             if(val > 0){
                 return '<span style="color: #b00">' + val.toFixed(2) + '</span>';
             }else if(val < 0){
@@ -97,8 +97,8 @@
         {title:'振幅', name:'AMPLITUDE', width: 50, align: 'right', renderer: function(val){
             return val.toFixed(2)+'%';
         }},
-        {title:'成交量(股)', name:'TURNOVERVOL', width: 50, align: 'right'},
-        {title:'成交额(元)', name:'TURNOVERVAL', width: 50, align: 'right'},
+        {title:'成交量(股)', name:'TURNOVERVOL', width: 50,lockDisplay:true, align: 'right'},
+        {title:'成交额(元)', name:'TURNOVERVAL', width: 50,lockDisplay:true, align: 'right'},
 
         {title:'昨收盘', name:'PREVCLOSINGPRICE', width: 50, align: 'right', renderer: function(val){
             return val.toFixed(2);

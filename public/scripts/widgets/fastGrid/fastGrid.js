@@ -474,21 +474,42 @@
             if($body.height() <= $bodyWrapper.height() || opts.fitRows){
                 scrollWidth = 0;
             }
-            var offsize = Math.floor(( $fastGrid.width() - $head.width() - scrollWidth) / $head.find('th:visible .resize').length);
-            var wt = 0;
-            var fix = 0
-            $head.find('th:visible .resize').each(function(i,item){
-                var th = $(this).parent().parent()[0]
-                var width = $.data(th,'col-width');
-                wt = wt + width;
-                width = (width + offsize) <$(th).find('span.title').width() + 10 ? $(th).find('span.title').width()+10 : width + offsize;
-                fix = fix + width;
-                $.data(th,'col-width' ,width);
-            });
-            var lastOffsize = ($fastGrid.width() - scrollWidth) - (($head.width() - wt) + (fix));
-            var last = $head.find('th:visible .resize').eq(-1).parent().parent();
-            $.data(last[0],'col-width' ,$.data(last[0],'col-width') + lastOffsize);
+
+            this._calWidth( $fastGrid.width() - $head.width() - scrollWidth ,$head.find('th:visible .resize'));
             this._colsWidth();
+        },
+
+        _calWidth: function(totalOffsize, $els){
+            var offsize = Math.floor(totalOffsize / $els.length);
+            var hasMin = false;
+            $els.each(function(index){
+                var th = $(this).parent().parent()[0];
+                var width = $.data(th,'col-width');
+                var minWidth = $(th).find('span.title').width() + 10;
+                if(width + offsize < minWidth ){
+                    $.data(th,'col-width' ,minWidth);
+                    totalOffsize = totalOffsize - (minWidth - (width + offsize));
+                    hasMini = true;
+                }
+            });
+            if(hasMin){
+                $els = $els.filter(function(el){
+                    var th = $(this).parent().parent()[0];
+                    return $(th).find('span.title').width() + 10 != $.data(th,'col-width');
+                });
+                this._calWidth(totalOffsize,$els);
+            }else{
+                var d = totalOffsize - (offsize * $els.length);
+                $els.each(function(index){
+                    var th = $(this).parent().parent()[0];
+                    var width = $.data(th,'col-width');
+                    if(index === $els.length - 1){
+                        $.data(th,'col-width' ,width + offsize + d);
+                    }else{
+                        $.data(th,'col-width' ,width + offsize);
+                    }
+                });
+            }
         },
 
         _genColClass: function(colIndex){

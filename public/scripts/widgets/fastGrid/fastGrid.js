@@ -90,8 +90,9 @@
                     if(col.sortable) theadHtmls.push('canSort ');
                     theadHtmls.push('">');
                     theadHtmls.push(col.title);
-                    theadHtmls.push('</span><div class="sortStatus"></div><div class="resize"></div></div>');
-                    theadHtmls.push('</th>');
+                    theadHtmls.push('</span><div class="sortStatus"></div>');
+                    if(!col.lockWidth) theadHtmls.push('<div class="resize"></div>');
+                    theadHtmls.push('</div></th>');
                 }
 
                 theadHtmls.push('</thead>');
@@ -140,6 +141,7 @@
                     var col = opts.cols[colIndex];
                     optHtml.push('<label><input type="checkbox"  ');
                     if(!col.hidden) optHtml.push('checked="checked"');
+                    if(col.lockDisplay) optHtml.push(' disabled="disabled"');
                     optHtml.push('/><span>');
                     optHtml.push(col.title);
                     optHtml.push('</span></label>');
@@ -472,18 +474,19 @@
             if($body.height() <= $bodyWrapper.height() || opts.fitRows){
                 scrollWidth = 0;
             }
-            var offsize = Math.floor(( $fastGrid.width() - $head.width() - scrollWidth) / $head.find('th:visible').length);
+            var offsize = Math.floor(( $fastGrid.width() - $head.width() - scrollWidth) / $head.find('th:visible .resize').length);
             var wt = 0;
             var fix = 0
-            $head.find('th:visible').each(function(i,item){
-                var width = $.data(this,'col-width');
+            $head.find('th:visible .resize').each(function(i,item){
+                var th = $(this).parent().parent()[0]
+                var width = $.data(th,'col-width');
                 wt = wt + width;
                 width = (width + offsize) <10 ? 10 : width + offsize;
                 fix = fix + width;
-                $.data(this,'col-width' ,width);
+                $.data(th,'col-width' ,width);
             });
             var lastOffsize = ($fastGrid.width() - scrollWidth) - (($head.width() - wt) + (fix));
-            var last = $head.find('th:visible').eq(-1);
+            var last = $head.find('th:visible .resize').eq(-1).parent().parent();
             $.data(last[0],'col-width' ,$.data(last[0],'col-width') + lastOffsize);
             this._colsWidth();
         },

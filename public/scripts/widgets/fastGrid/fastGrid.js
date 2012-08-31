@@ -67,7 +67,7 @@
             //设置尺寸
             var opts = this.opts;
             $fastGrid.width(opts.width);
-            if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+            if(!opts.fitRows){
             $fastGrid.height(opts.height);
             }
             this._refreshNoData();
@@ -105,7 +105,7 @@
                 var $fastGrid = this.$fastGrid;
                 var $headWrapper = this.$headWrapper;
                 var $bodyWrapper = this.$bodyWrapper;
-                if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+                if(!opts.fitRows){
                 $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                 }
                 //初始化排序状态
@@ -163,7 +163,7 @@
             if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
-                    if(opts.scroll != 'horizontal' && opts.scroll != 'hidden'){
+                    if(!opts.fitRows){
                         $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                     }
                     //调整option
@@ -253,7 +253,7 @@
                 thisObject._hideNoData();
                 $optWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                 $(this).slideUp('fast');
-                if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                if(opts.fitRows){
                     $fastGrid.height($fastGrid.height());
                 }
                 $optWrapper.slideDown();
@@ -277,7 +277,7 @@
                 e.preventDefault();
                 $optWrapper.slideUp().queue(function(next){
                     thisObject._refreshNoData();
-                    if(opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+                    if(opts.fitRows){
                         $fastGrid.height('auto');
                     }
                     next();
@@ -379,7 +379,7 @@
             this._setStyle();
             this._hideLoading();
             this._refreshNoData();
-            if((opts.scroll === 'hidden' || opts.scroll === 'vertical') && $.data($body[0],'loadCount') === 1){
+            if((opts.fitCols) && $.data($body[0],'loadCount') <= 1){
                 this._expandCols();
             }
         },
@@ -469,7 +469,7 @@
             if(/windows nt/.test(ua)){
                 scrollWidth = 17;
             }
-            if($body.height() <= $bodyWrapper.height() || opts.scroll === 'horizontal' || opts.scroll === 'hidden'){
+            if($body.height() <= $bodyWrapper.height() || opts.fitRows){
                 scrollWidth = 0;
             }
             var offsize = Math.floor(( $fastGrid.width() - $head.width() - scrollWidth) / $head.find('th:visible').length);
@@ -736,7 +736,8 @@
         method: 'POST',
         items: [],
         root: '',
-        scroll: 'both', //hidden, horizontal,vertical
+        fitCols: false,
+        fitRows: false,
         nowrap: false,
         multiSelect: false,
         loadingText: '正在载入...',

@@ -301,13 +301,14 @@
             //选中事件
             var $body = this.$body;
             $body.on('click','td',function(e){
+                e.preventDefault();
                 var $this = $(this);
                 if(!$this.parent().hasClass('selected')){
                     thisObject.select($this.parent().index());
                 }else{
                     thisObject.deselect($this.parent().index());
                 }
-                opts.onSelected(thisObject,$.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                opts.onSelected(this, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
 
             //IE6不支持hover
@@ -757,8 +758,8 @@
     };
 
     $.fn.fastGrid.defaults = {
-        width: '100%',
-        height: '100%',
+        width: 'auto',
+        height: '280px',
         url: false,
         params: {}, //可以是object也可以是function
         method: 'POST',

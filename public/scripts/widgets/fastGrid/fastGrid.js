@@ -29,7 +29,7 @@
 
             var fastGrid = [
                 '<div class="fastGrid">',
-                    '<div><style></style></div>',
+                    '<style></style>',
                     '<div class="headWrapper">',
                         '<table class="head">',
                         '</table>',
@@ -428,7 +428,7 @@
             var style = [];
             for(var colIndex=0; colIndex<$ths.length; colIndex++){
                 var $th = $ths.eq(colIndex);
-                style.push('td.'+this._genColClass(colIndex)+ ' th.'+this._genColClass(colIndex) + ' {');
+                style.push('.'+this._genColClass(colIndex) + ' {');
                 var width = $.data($th[0],'col-width');
                 if(!width || width < $th.find('span.title').width() + 10 ){
                     $.data($th[0],'col-width' ,$th.find('span.title').width() + 10);

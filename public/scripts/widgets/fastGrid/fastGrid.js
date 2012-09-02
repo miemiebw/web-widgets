@@ -425,7 +425,6 @@
 
             $bodyWrapper.width(9999);
             $body.width('auto');
-
             var style = [];
             for(var colIndex=0; colIndex<$ths.length; colIndex++){
                 var $th = $ths.eq(colIndex);
@@ -446,17 +445,11 @@
                 style.push(' }');
             }
             $body.detach();
-            var $styleParent = $style.parent();
-            var styleIndex = $style.index();
-            $style.detach();
             try{
                 $style.text(style.join(''));
             }catch(error){
                 $style[0].styleSheet.cssText = style.join('');//IE fix
             }
-            $styleParent.children().eq(styleIndex-1).after($style);
-
-
             $body.width($head.width());
             $bodyWrapper.width('100%');
             $bodyWrapper.append($body);

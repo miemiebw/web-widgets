@@ -118,13 +118,11 @@
     ];
 
     $('#quoteTable').fastGrid({
-        width: '100%',
-        height: '100%',
         url: '../public/stockQuote.json',
         method: 'get',
         nowrap: true,
         cols: cols,
-        onSelected: function(fastGrid, item, rowIndex, colIndex){
+        onSelected: function(td, item, rowIndex, colIndex){
             if(colIndex === 0){
                 alert(JSON.stringify(item));
             }
@@ -132,8 +130,6 @@
     });
 
     $('#quoteTable2').fastGrid({
-        width: '100%',
-        height: '100%',
         url: '../public/stockQuote.json',
         method: 'get',
         nowrap: false,
@@ -141,7 +137,7 @@
         sortStatus: 'desc',
         remoteSort: false,
         cols: cols,
-        onSelected: function(fastGrid, item, rowIndex, colIndex){
+        onSelected: function(td, item, rowIndex, colIndex){
             if(colIndex === 0){
                 alert(JSON.stringify(item));
             }

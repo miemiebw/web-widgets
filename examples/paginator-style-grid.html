@@ -102,8 +102,6 @@
 
 
     $('#quoteTable').fastGrid({
-        width:'100%',
-        height:'250px',
         url:'../public/stockQuotePage.json',
         method:'get',
         root:'items',
@@ -121,8 +119,6 @@
     });
 
     $('#quoteTable2').fastGrid({
-        width:'100%',
-        height:'250px',
         url:'../public/stockQuotePage.json',
         method:'get',
         root:'items',
@@ -134,7 +130,7 @@
         paginator: $('#search').paginator({
             style:'search'
         }),
-        onSelected: function(fastGrid, item, rowIndex, colIndex){
+        onSelected: function(td, item, rowIndex, colIndex){
             if(colIndex === 0){
                 alert(JSON.stringify(item));
             }

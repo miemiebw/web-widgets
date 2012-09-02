@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c454d097-4601-41bd-b6d2-a624d7f1f96b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" afterPath="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
     </list>
     <ignored path="web-widgets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,16 +27,7 @@
       <file leaf-file-name="fastGrid.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="490" column="68" selection-start="19910" selection-end="19910" vertical-scroll-proportion="0.41212872">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fastGrid.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="29" selection-start="750" selection-end="775" vertical-scroll-proportion="0.0">
+            <state line="563" column="21" selection-start="22694" selection-end="22694" vertical-scroll-proportion="0.46163365">
               <folding />
             </state>
           </provider>
@@ -46,7 +36,7 @@
       <file leaf-file-name="fastGrid-native-multiSelect.jade" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="188" column="15" selection-start="13695" selection-end="13695" vertical-scroll-proportion="0.0">
+            <state line="176" column="21" selection-start="13086" selection-end="13086" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -64,7 +54,7 @@
       <file leaf-file-name="fastGrid-controller.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/fastGrid-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="2" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0">
+            <state line="24" column="2" selection-start="747" selection-end="747" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,25 +71,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="gh-pages" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
-  </component>
-  <component name="GitLogSettings">
-    <option name="myStructureFilterPaths" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" />
         <option value="$PROJECT_DIR$/examples/paginator-style-grid.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-native-multiSelect.html" />
-        <option value="$PROJECT_DIR$/app/controllers/fastGrid-controller.js" />
-        <option value="$PROJECT_DIR$/examples/fastGrid-native.html" />
-        <option value="$PROJECT_DIR$/examples/fastGrid-ajax-nowrap.html" />
-        <option value="$PROJECT_DIR$/examples/fastGrid-options.html" />
-        <option value="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
         <option value="$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade" />
-        <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css" />
+        <option value="$PROJECT_DIR$/app/controllers/fastGrid-controller.js" />
+        <option value="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
+        <option value="$PROJECT_DIR$/examples/fastGrid-native.html" />
+        <option value="$PROJECT_DIR$/examples/fastGrid-options.html" />
         <option value="$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js" />
       </list>
     </option>
@@ -379,35 +365,7 @@
       <created>1346378767076</created>
       <updated>1346378767076</updated>
     </task>
-    <task id="LOCAL-00016" summary="modify sort expression">
-      <created>1346378798339</created>
-      <updated>1346378798339</updated>
-    </task>
-    <task id="LOCAL-00017" summary="modify doc">
-      <created>1346379344265</created>
-      <updated>1346379344265</updated>
-    </task>
-    <task id="LOCAL-00018" summary="add col option : lockDisplay , lockWidth">
-      <created>1346380735558</created>
-      <updated>1346380735558</updated>
-    </task>
-    <task id="LOCAL-00019" summary="add col option : lockDisplay , lockWidth">
-      <created>1346380967500</created>
-      <updated>1346380967500</updated>
-    </task>
-    <task id="LOCAL-00020" summary="add col option : lockDisplay , lockWidth">
-      <created>1346381131269</created>
-      <updated>1346381131269</updated>
-    </task>
-    <task id="LOCAL-00021" summary="modify fitCols arithmetic">
-      <created>1346382602570</created>
-      <updated>1346382602570</updated>
-    </task>
-    <task id="LOCAL-00022" summary="modify fitCols arithmetic">
-      <created>1346394134756</created>
-      <updated>1346394134756</updated>
-    </task>
-    <option name="localTasksCounter" value="23" />
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -415,10 +373,10 @@
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22711472" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.77288526" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6709154" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -471,7 +429,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify fitCols arithmetic" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify sort expression" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -487,9 +445,6 @@
     <MESSAGE value="fix" />
     <MESSAGE value="modify" />
     <MESSAGE value="modify sort expression" />
-    <MESSAGE value="modify doc" />
-    <MESSAGE value="add col option : lockDisplay , lockWidth" />
-    <MESSAGE value="modify fitCols arithmetic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -518,28 +473,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/fastGrid-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="2" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0">
+        <state line="24" column="2" selection-start="747" selection-end="747" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/examples/fastGrid-native-multiSelect.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="15" selection-start="13695" selection-end="13695" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="29" selection-start="750" selection-end="775" vertical-scroll-proportion="0.0">
+        <state line="176" column="21" selection-start="13086" selection-end="13086" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/widgets/fastGrid/fastGrid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="490" column="68" selection-start="19910" selection-end="19910" vertical-scroll-proportion="0.41212872">
+        <state line="563" column="21" selection-start="22694" selection-end="22694" vertical-scroll-proportion="0.46163365">
           <folding />
         </state>
       </provider>

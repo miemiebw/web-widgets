@@ -1,8 +1,23 @@
 
 .fastGrid {
+    font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
+    font-size: 12px;
+    color: #333;
     border: 1px solid #ccc;
     position: relative;
     overflow: hidden;
+}
+
+.fastGrid input, .fastGrid button, .fastGrid textarea, .fastGrid select, .fastGrid label, .fastGrid h1{
+    font-family: 'Helvetica Neue',helvetica, arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+}
+
+.fastGrid h1{
+    margin: 0;
+    padding: 0;
+    line-height: 1.5em;
 }
 
 .fastGrid table {

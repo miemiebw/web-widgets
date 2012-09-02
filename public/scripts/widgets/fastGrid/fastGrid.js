@@ -63,8 +63,8 @@
                 .appendTo(this.$bodyWrapper);
 
             //放回原位置
-            if(elIndex === 0 && $elParent.children().length == 0){
-                $elParent.append(this.$fastGrid);
+            if(elIndex === 0 || $elParent.children().length == 0){
+                $elParent.prepend(this.$fastGrid);
             }else{
                 $elParent.children().eq(elIndex-1).after(this.$fastGrid);
             }

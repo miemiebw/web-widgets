@@ -13,7 +13,12 @@
         this._initHead();
         this._initOption();
         this._initEvents();
-        this.load();
+        if(options.autoLoad){
+            this.load();
+        }
+        if(options.fitCols){
+            this._expandCols();
+        }
     };
 
     FastGrid.prototype = {

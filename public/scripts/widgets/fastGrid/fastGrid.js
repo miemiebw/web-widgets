@@ -66,7 +66,7 @@
             if(elIndex === 0 && $elParent.children().length == 0){
                 $elParent.append(this.$fastGrid);
             }else{
-                $elParent.children().eq(elIndex).before(this.$fastGrid);
+                $elParent.children().eq(elIndex-1).after(this.$fastGrid);
             }
 
             //设置尺寸
@@ -599,7 +599,9 @@
                         sortStatus = status;
                     }
                 }
-                params.sorts = sortName+'.'+sortStatus;
+                if(sortName){
+                    params.sort = sortName+'.'+sortStatus;
+                }
             }
 
             //分页参数

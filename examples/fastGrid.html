@@ -100,7 +100,212 @@
             </div>
 
         </div>
-        <div class="tab-pane" id="doc">文档内容...</div>
+        <div class="tab-pane" id="doc">
+        <h3>1.表选项</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>名称</th>
+                <th>可选值</th>
+                <th>描述</th>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td><em>'auto'</em>, 500, '500px'</td>
+                <td>表格宽度。参数为'auto'和以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+            </tr>
+            <tr>
+                <td>height</td>
+                <td><em>'280px'</em>, 500, '500px'</td>
+                <td>表格高度。如果以'%'结尾,表格可在调整窗口尺寸时根据父元素调整尺寸。</td>
+            </tr>
+            <tr>
+                <td>url</td>
+                <td><em>false</em>, string</td>
+                <td>ajax请求数据的地址。</td>
+            </tr>
+            <tr>
+                <td>params</td>
+                <td><em>{}</em>, object, function(){ return {}; }</td>
+                <td>ajax请求的参数。可以是普通对象或函数。
+                    函数返回一个参数对象，每次调用ajax时调用。
+                </td>
+            </tr>
+            <tr>
+                <td>method</td>
+                <td><em>'post'</em>, ‘get’</td>
+                <td>ajax提交方式。</td>
+            </tr>
+            <tr>
+                <td>items</td>
+                <td><em>[]</em>, Array</td>
+                <td>数据使用本地对象数组。</td>
+            </tr>
+            <tr>
+                <td>root</td>
+                <td><em>''</em>, string</td>
+                <td>指定json对象的数组字段为数据。</td>
+            </tr>
+            <tr>
+                <td>fitCols</td>
+                <td><em>false</em>, true</td>
+                <td>true:表格启动时列伸展，自动充满表格。</td>
+            </tr>
+            <tr>
+                <td>fitRows</td>
+                <td><em>false</em>, true</td>
+                <td>true:行自动充满表格，不显示垂直滚动条。</td>
+            </tr>
+            <tr>
+                <td>nowrap</td>
+                <td><em>false</em>, true</td>
+                <td>表格显示的数据超出列宽时是否换行。</td>
+            </tr>
+            <tr>
+                <td>multiSelect</td>
+                <td><em>false</em>, true</td>
+                <td>数据使用本地对象数组。</td>
+            </tr>
+            <tr>
+                <td>loadingText</td>
+                <td><em>‘正在载入...’</em>, string</td>
+                <td>数据载入时的提示文字。</td>
+            </tr>
+            <tr>
+                <td>noDataText</td>
+                <td><em>‘没有数据’</em>, string</td>
+                <td>没有数据时的提示文字。</td>
+            </tr>
+            <tr>
+                <td>cols</td>
+                <td><em>[]</em>, Array</td>
+                <td>数据模型。</td>
+            </tr>
+            <tr>
+                <td>sortName</td>
+                <td><em>''</em>, string</td>
+                <td>排序的字段名。</td>
+            </tr>
+            <tr>
+                <td>sortStatus</td>
+                <td><em>'asc'</em>, string</td>
+                <td>排序方向。</td>
+            </tr>
+            <tr>
+                <td>remoteSort</td>
+                <td><em>false</em>, true</td>
+                <td>是否使用服务器端排序。当值为true时，sortName和sortStatus会作为参数放入ajax请求中。</td>
+            </tr>
+            <tr>
+                <td>autoLoad</td>
+                <td><em>true</em>, false</td>
+                <td>是否表格准备好时加载数据。</td>
+            </tr>
+            <tr>
+                <td>onSuccess</td>
+                <td><em>function(fastGrid, data){}</em>, function</td>
+                <td>数据加载成功后执行。</td>
+            </tr>
+            <tr>
+                <td>onError</td>
+                <td><em>function(fastGrid, data){}</em>, function</td>
+                <td>数据加载失败后执行。</td>
+            </tr>
+            <tr>
+                <td>onSelected</td>
+                <td><em>function(td, item, rowIndex, colIndex){}</em>, function</td>
+                <td>表格中的数据被选择时执行。td：选中的TD元素；item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。</td>
+            </tr>
+        </table>
+        <h3>2.列选项</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>名称</th>
+                <th>可选值</th>
+                <th>描述</th>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>string</td>
+                <td>标题文字。</td>
+            </tr>
+            <tr>
+                <td>width</td>
+                <td>int</td>
+                <td>标题宽度像素值。</td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>string</td>
+                <td>字段名。</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>'int','float'</td>
+                <td>字段类型。在本地排序时用于转换文字。</td>
+            </tr>
+            <tr>
+                <td>align</td>
+                <td><em>'left'</em>, 'center', 'right'</td>
+                <td>文字位置。</td>
+            </tr>
+            <tr>
+                <td>hidden</td>
+                <td><em>false</em>, true</td>
+                <td>是否隐藏列。</td>
+            </tr>
+            <tr>
+                <td>lockDipaly</td>
+                <td><em>false</em>, true</td>
+                <td>是否锁定列的显示状态。</td>
+            </tr>
+            <tr>
+                <td>lockWidth</td>
+                <td><em>false</em>, true</td>
+                <td>是否锁定列宽。被锁定的列不参与fitCols选项的计算。</td>
+            </tr>
+            <tr>
+                <td>sortable</td>
+                <td><em>false</em>, true</td>
+                <td>是否可排序。</td>
+            </tr>
+            <tr>
+                <td>renderer</td>
+                <td>function(val,item,items,rowIndex){ return val;}</td>
+                <td>显示规则。参数: val 值, item 对象, items 对象数组, rowIndex 行索引;
+                    返回值: 可以是文本，html文本。
+                </td>
+            </tr>
+        </table>
+        <h3>3.表操作</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th>名称</th>
+                <th>参数</th>
+                <th>描述</th>
+            </tr>
+            <tr>
+                <td>load</td>
+                <td>{}, []</td>
+                <td>如果配置过ajax选项，则这里是ajax参数，如果传入对象数组，则为加载本地数据。</td>
+            </tr>
+            <tr>
+                <td>selected</td>
+                <td>无参数</td>
+                <td>返回选择行的对象数组。</td>
+            </tr>
+            <tr>
+                <td>select</td>
+                <td>int, function(item){ return true; }, 'all'</td>
+                <td>选中参数条件的行。int: 选中索引行; function: 过滤函数, item参数为行数据; 'all': 选中所有行。</td>
+            </tr>
+            <tr>
+                <td>deselect</td>
+                <td>int, function(item){ return true; }, 'all'</td>
+                <td>取消选中参数条件的行。int: 取消选择索引行; function: 过滤函数, item参数为行数据; 'all': 取消选中所有行。</td>
+            </tr>
+        </table>
+
+        </div>
     </div>
 </div>
 

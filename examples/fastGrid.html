@@ -22,6 +22,29 @@
         .btnPrice:hover {
             background: url(../public/images/botton_g2.gif) no-repeat;
         }
+
+        .paginator {
+            font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+        .paginator input, .paginator button, .paginator textarea, .paginator select, .paginator label, .paginator h1{
+            font-family: 'Helvetica Neue',helvetica, arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+            line-height: 12px;
+        }
+        .paginator ul{
+            margin: 0;
+        }
+        .paginator .pageSize{
+            vertical-align: middle;
+        }
+        .paginator select{
+            width: auto;
+            height: auto;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -140,7 +163,27 @@
                     <table id="table13"></table>
                 </div>
             </div>
-
+            <h3>7 分页示例</h3>
+            <div style="text-indent: 2em;">
+                这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
+                这里使用的分页器有两种样式布局，分别为<code>style: 'search'</code>和<code>style: 'plain'</code>。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>7.1 搜索样式</h4>
+                    <table id="table14"></table>
+                    <div style="text-align:right;">
+                        <div id="paginator14"></div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <h4>7.2 普通样式</h4>
+                    <table id="table15"></table>
+                    <div style="text-align:right;">
+                        <div id="paginator15"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="tab-pane" id="doc">
         <h3>1.表选项</h3>
@@ -626,8 +669,6 @@ $(document).ready(function () {
         items: items
     });
 
-
-
     //fitRows
     $('#table12').fastGrid({
         fitRows: true,
@@ -637,6 +678,26 @@ $(document).ready(function () {
     $('#table13').fastGrid({
         cols: cols,
         items: items
+    });
+
+    //分页
+    $('#table14').fastGrid({
+        cols: cols,
+        url: '../public/stockQuotePage.json',
+        method: 'get',
+        root: 'items',
+        paginator : $('#paginator14').paginator({
+            style: 'search'
+        })
+    });
+    $('#table15').fastGrid({
+        cols: cols,
+        url: '../public/stockQuotePage.json',
+        method: 'get',
+        root: 'items',
+        paginator : $('#paginator15').paginator({
+            style: 'plain'
+        })
     });
 });
 </script>

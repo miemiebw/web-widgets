@@ -82,8 +82,12 @@
                 $fastGrid.width(opts.width);
             }
             if(!opts.fitRows){
-            $fastGrid.height(opts.height);
+                $fastGrid.height(opts.height);
             }
+            if (opts.fitRows && $.browser.msie && ($.browser.version == "7.0" || $.browser.version == "6.0")){
+                this.$bodyWrapper.css('overflow-y','hidden');
+            }
+
             this._refreshNoData();
             $.data(this.$body[0],'loadCount',0);
         },
@@ -477,6 +481,10 @@
             $bodyWrapper.scrollLeft(-parseInt($head.css('left'),10));
             if($bodyWrapper.scrollLeft() === 0){
                 $head.css('left', 0);
+            }
+
+            if (opts.fitRows && $.browser.msie && ($.browser.version == "7.0" || $.browser.version == "6.0") && $head.width() > $bodyWrapper.width()){
+                this.$bodyWrapper.css('padding-bottom','17px');
             }
         },
 

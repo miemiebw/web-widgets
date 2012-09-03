@@ -111,6 +111,35 @@
                     <table id="table9"></table>
                 </div>
             </div>
+            <h3>5 fitCols示例</h3>
+            <div style="text-indent: 2em;">
+                当表选项<code>fitCols</code>设置为<code>true</code>时，表格在第一次数据加载时计算列宽，将其充满整个表格。每列的计算后宽度不小于标题的最小列宽，即<strong>文字宽度</strong>+<strong>排序状态宽度</strong>。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>5.1 fitCols:true</h4>
+                    <table id="table10"></table>
+                </div>
+                <div class="span6">
+                    <h4>5.2 fitCols:false</h4>
+                    <table id="table11"></table>
+                </div>
+            </div>
+
+            <h3>6 fitRows示例</h3>
+            <div style="text-indent: 2em;">
+                表选项<code>fitRows</code>设置表格高度随表格内容高度延伸，所以当设置为<code>true</code>时，表格不会出现垂直滚动条。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>6.1 fitRows:true</h4>
+                    <table id="table12"></table>
+                </div>
+                <div class="span6">
+                    <h4>6.2 fitRows:false</h4>
+                    <table id="table13"></table>
+                </div>
+            </div>
 
         </div>
         <div class="tab-pane" id="doc">
@@ -397,7 +426,7 @@ $(document).ready(function () {
 
 
 
-
+    //排序
     var cols3 = [
         {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
             return '<a href="#" class="btnPrice"></a>';
@@ -566,6 +595,47 @@ $(document).ready(function () {
     });
     $('#table9').fastGrid({
         cols: cols8,
+        items: items
+    });
+
+
+    //fitCols
+    var cols10 = [
+        {title:'行情', name:'', align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
+            return '<a href="#" class="btnPrice"></a>';
+        }},
+        { title:'股票代码', name:'SECUCODE' , align:'center' },
+        { title:'股票名称', name:'SECUABBR' , align:'center'},
+        { title:'今收盘', name:'CLOSINGPRICE' , align:'right', renderer: fixed2},
+        { title:'涨跌幅', name:'DAYCHANGERATE' , align:'right',renderer: function(val){
+            if(val > 0){
+                return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
+            }else if(val < 0){
+                return '<span style="color: #0b0">' + val.toFixed(2) +'%' + '</span>';
+            }
+            return val.toFixed(2)+'%';
+        }}
+    ];
+    $('#table10').fastGrid({
+        cols: cols10,
+        items: items,
+        fitCols: true
+    });
+    $('#table11').fastGrid({
+        cols: cols10,
+        items: items
+    });
+
+
+
+    //fitRows
+    $('#table12').fastGrid({
+        fitRows: true,
+        cols: cols,
+        items: items
+    });
+    $('#table13').fastGrid({
+        cols: cols,
         items: items
     });
 });

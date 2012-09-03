@@ -184,24 +184,38 @@
                     <table id="table13"></table>
                 </div>
             </div>
-            <h3>7 分页示例</h3>
+            <h3>7 multiSelect示例</h3>
+            <div style="text-indent: 2em;">
+                表选项<code>multiSelect</code>设置表格是否可多选。可通过表操作<code>$('#table').fastGird('selected')</code>获取选择的行对象。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>7.1 multiSelect:true</h4>
+                    <table id="table14"></table>
+                </div>
+                <div class="span6">
+                    <h4>7.2 multiSelect:false</h4>
+                    <table id="table15"></table>
+                </div>
+            </div>
+            <h3>8 分页示例</h3>
             <div style="text-indent: 2em;">
                 这里的分页示例借助了分页器，开发者可以根据自己的需求选择使用其他分页器。
                 这里使用的分页器有两种样式布局，分别为<code>style: 'search'</code>和<code>style: 'plain'</code>。
             </div>
             <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
                 <div class="span6">
-                    <h4>7.1 搜索样式</h4>
-                    <table id="table14"></table>
+                    <h4>8.1 搜索样式</h4>
+                    <table id="table16"></table>
                     <div style="text-align:right;">
-                        <div id="paginator14"></div>
+                        <div id="paginator16"></div>
                     </div>
                 </div>
                 <div class="span6">
-                    <h4>7.2 普通样式</h4>
-                    <table id="table15"></table>
+                    <h4>8.2 普通样式</h4>
+                    <table id="table17"></table>
                     <div style="text-align:right;">
-                        <div id="paginator15"></div>
+                        <div id="paginator17"></div>
                     </div>
                 </div>
             </div>
@@ -701,22 +715,33 @@ $(document).ready(function () {
         items: items
     });
 
-    //分页
+    //多选
     $('#table14').fastGrid({
+        multiSelect: true,
         cols: cols,
-        url: '../public/stockQuotePage.json',
-        method: 'get',
-        root: 'items',
-        paginator : $('#paginator14').paginator({
-            style: 'search'
-        })
+        items: items
     });
     $('#table15').fastGrid({
         cols: cols,
+        items: items
+    });
+
+    //分页
+    $('#table16').fastGrid({
+        cols: cols,
         url: '../public/stockQuotePage.json',
         method: 'get',
         root: 'items',
-        paginator : $('#paginator15').paginator({
+        paginator : $('#paginator16').paginator({
+            style: 'search'
+        })
+    });
+    $('#table17').fastGrid({
+        cols: cols,
+        url: '../public/stockQuotePage.json',
+        method: 'get',
+        root: 'items',
+        paginator : $('#paginator17').paginator({
             style: 'plain'
         })
     });

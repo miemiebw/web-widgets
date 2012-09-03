@@ -162,6 +162,7 @@
 .fastGrid .bodyWrapper{
     width: 9999px;
     overflow:auto;
+    min-height: 0%; /* fix IE9 hover */
 }
 
 .fastGrid .bodyWrapper .body{

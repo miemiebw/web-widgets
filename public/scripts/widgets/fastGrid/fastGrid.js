@@ -343,12 +343,15 @@
             var $body = this.$body;
             $body.on('click','td',function(e){
                 var $this = $(this);
+                var action = opts.onSelected(e, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                if(action === false){
+                    return;
+                }
                 if(!$this.parent().hasClass('selected')){
                     thisObject.select($this.parent().index());
                 }else{
                     thisObject.deselect($this.parent().index());
                 }
-                opts.onSelected(e, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
             //checkbox列
             if(opts.checkCol){

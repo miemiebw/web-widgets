@@ -357,8 +357,8 @@
             </tr>
             <tr>
                 <td>onSelected</td>
-                <td><em>function(td, item, rowIndex, colIndex){}</em>, function</td>
-                <td>表格中的数据被选择时执行。td：选中的TD元素；item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。</td>
+                <td><em>function(e, item, rowIndex, colIndex){}</em>, function</td>
+                <td>表格中的数据被选择时执行。e：事件对象；item：当前数据行对应的对象；rowIndex：行索引；colIndex：列索引。</td>
             </tr>
         </table>
         <h3>2.列选项</h3>
@@ -484,7 +484,7 @@ $(document).ready(function () {
     }
     var cols = [
         {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:100, align:'center' },
         { title:'股票名称', name:'SECUABBR' ,width:100, align:'center'},
@@ -536,7 +536,7 @@ $(document).ready(function () {
     //排序
     var cols3 = [
         {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,width:100, sortable: true, align:'center' },
         { title:'股票名称', name:'SECUABBR' ,width:100, sortable: true, align:'center'},
@@ -591,7 +591,7 @@ $(document).ready(function () {
     //锁定列宽
     var cols5 = [
         {title:'行情', name:'', align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' ,lockWidth:true, align:'center' },
         { title:'股票名称', name:'SECUABBR' ,lockWidth:true, align:'center'},
@@ -613,7 +613,7 @@ $(document).ready(function () {
     //隐藏列
     var cols6 = [
         {title:'行情', name:'', align: 'center', renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' , align:'center', hidden: true },
         { title:'股票名称', name:'SECUABBR' , align:'center'},
@@ -636,7 +636,7 @@ $(document).ready(function () {
     //隐藏列
     var cols7 = [
         {title:'行情', name:'', align: 'center',lockDisplay: true, renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' , align:'center' },
         { title:'股票名称', name:'SECUABBR' , lockDisplay: true,align:'center'},
@@ -659,7 +659,7 @@ $(document).ready(function () {
 
     var cols8 = [
         {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票', name:'SECUCODE' ,width:80, align:'center', renderer: function(val, item){
             return  item.SECUABBR + '(' + item.SECUCODE + ')';
@@ -709,7 +709,7 @@ $(document).ready(function () {
     //fitCols
     var cols10 = [
         {title:'行情', name:'', align: 'center',lockWidth:true, renderer: function(val,item,items,rowIndex){
-            return '<a href="#" class="btnPrice"></a>';
+            return '<div class="btnPrice"></div>';
         }},
         { title:'股票代码', name:'SECUCODE' , align:'center' },
         { title:'股票名称', name:'SECUABBR' , align:'center'},

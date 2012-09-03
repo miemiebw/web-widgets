@@ -90,6 +90,12 @@
 
             this._refreshNoData();
             $.data(this.$body[0],'loadCount',0);
+
+            if(opts.checkCol){
+                opts.cols.unshift({title:'<input type="checkbox">', align: 'center' ,lockWidth: true, renderer:function(){
+                    return '<input type="checkbox">';
+                }});
+            }
         },
 
         _initHead: function(){
@@ -98,6 +104,7 @@
 
             if(opts.cols){
                 var theadHtmls = ['<thead>'];
+
                 for(var colIndex=0; colIndex< opts.cols.length; colIndex++){
                     var col = opts.cols[colIndex];
                     theadHtmls.push('<th class="');
@@ -155,7 +162,12 @@
             if(opts.cols){
                 var optHtml = ['<a class="optUpButton"></a>'];
                 optHtml.push('<h1>显示列</h1>');
+
+
                 for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
+                    if(opts.checkCol && colIndex===0){
+                        continue;
+                    }
                     var col = opts.cols[colIndex];
                     optHtml.push('<label><input type="checkbox"  ');
                     if(!col.hidden) optHtml.push('checked="checked"');
@@ -228,12 +240,12 @@
 
             //排序事件
             $head.on('click','span.title', function(e){
-                e.preventDefault();
                 var $this = $(this);
                 var $titles = $head.find('span.title');
                 if(!opts.cols[$titles.index($this)].sortable){
                     return;
                 }
+                e.preventDefault();
                 //取得当前列下一个排序状态
                 var sortStatus = $.data(this, 'sortStatus') === 'asc' ? 'desc' : 'asc';
                 //清除排序状态
@@ -329,16 +341,25 @@
             //选中事件
             var $body = this.$body;
             $body.on('click','td',function(e){
-                e.preventDefault();
                 var $this = $(this);
                 if(!$this.parent().hasClass('selected')){
                     thisObject.select($this.parent().index());
                 }else{
                     thisObject.deselect($this.parent().index());
                 }
-                opts.onSelected(this, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
+                opts.onSelected(e, $.data($this.parent()[0], 'item'), $this.parent().index(), $this.index());
             });
+            //checkbox列
+            if(opts.checkCol){
+                $head.find('th:first :checkbox').on('click', function(){
+                    if(this.checked){
+                        thisObject.select('all');
+                    }else{
+                        thisObject.deselect('all');
+                    }
 
+                });
+            }
             //IE6不支持hover
             if ($.browser.msie) {
                 if ($.browser.version == "6.0"){
@@ -412,6 +433,15 @@
             this._refreshNoData();
             if((opts.fitCols) && $.data($body[0],'loadCount') <= 1){
                 this._expandCols();
+            }
+            //checkbox列
+            var $head = this.$head;
+            if(opts.checkCol){
+                if($head.find('th:first :checkbox')[0].checked){
+                    this.select('all');
+                }else{
+                    this.deselect('all');
+                }
             }
         },
         _setStyle: function(){
@@ -729,9 +759,15 @@
                 var $tr = $body.find('tr').eq(args);
                 if(!opts.multiSelect){
                     $body.find('tr.selected').removeClass('selected');
+                    if(opts.checkCol){
+                        $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                    }
                 }
                 if(!$tr.hasClass('selected')){
                     $tr.addClass('selected');
+                    if(opts.checkCol){
+                        $tr.find('td:first :checkbox').prop('checked','checked');
+                    }
                 }
             }else if(typeof args === 'function'){
                 $.each($body.find('tr'), function(index, tr){
@@ -739,12 +775,16 @@
                         var $this = $(this);
                         if(!$this.hasClass('selected')){
                             $this.addClass('selected');
+                            if(opts.checkCol){
+                                $tr.find('td:first :checkbox').prop('checked','checked');
+                            }
                         }
                     }
                 });
             }else if(typeof args === 'string' && args === 'all'){
                 $body.find('tr.selected').removeClass('selected');
                 $body.find('tr').addClass('selected');
+                $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','checked');
             }
         },
         //取消选中
@@ -753,14 +793,23 @@
             var $body = this.$body;
             if(typeof args === 'number'){
                 $body.find('tr').eq(args).removeClass('selected');
+                if(opts.checkCol){
+                    $body.find('tr').eq(args).find('td:first :checkbox').prop('checked','');
+                }
             }else if(typeof args === 'function'){
                 $.each($body.find('tr'), function(index, tr){
                     if(args($.data(this, 'item'))){
                         $(this).removeClass('selected');
+                        if(opts.checkCol){
+                            $(this).find('td:first :checkbox').prop('checked','');
+                        }
                     }
                 });
             }else if(typeof args === 'string' && args === 'all'){
                 $body.find('tr.selected').removeClass('selected');
+                if(opts.checkCol){
+                    $body.find('tr > td:nth-child(1)').find(':checkbox').prop('checked','');
+                }
             }
         },
 
@@ -801,6 +850,7 @@
         fitRows: false,
         nowrap: false,
         multiSelect: false,
+        checkCol: false,
         loadingText: '正在载入...',
         noDataText: '没有数据',
         cols: [],

@@ -171,8 +171,8 @@ block append script
       $('#hotTable').fastGrid({
         height: '100%',
         items: items,
-        nowrap: true,
-        fitCols:true,
+        checkCol: true,
+        multiSelect: true,
         autoLoad: false,
         cols: [
           {title:'行情', name:'', width: 30, align: 'center',sortable: true,lockWidth:true, renderer: function(val,item,items,$row,rowIndex){
@@ -210,9 +210,9 @@ block append script
             return '<a href="#" class="btnCal"></a>';
           }}
         ],
-        onSelected: function(td, item, rowIndex, colIndex){
-            console.log(td);
-            if(colIndex === 0){
+        onSelected: function(e, item, rowIndex, colIndex){
+            if(colIndex === 1){
+                e.preventDefault();
                 alert(JSON.stringify(item));
             }
         }

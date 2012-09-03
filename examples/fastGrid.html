@@ -55,7 +55,6 @@
                 </div>
             </div>
             <h3>2 排序示例</h3>
-
             <div style="text-indent: 2em;">
                 排序参数为<code>sortName</code>和<code>sortStatus</code>。
                 如果初始化时设置排序列，则直接显示排序后数据。
@@ -96,6 +95,20 @@
                     <div class="well well-small" style="margin-top: 20px;">
                         锁定列显示状态选项为<code>lockDisplay: true</code>。锁定列显示状态后，在选项板中列选项会被值为灰色，此列则不可调整显示状态。
                     </div>
+                </div>
+            </div>
+            <h3>4 nowrap示例</h3>
+            <div style="text-indent: 2em;">
+                表选项<code>nowrap</code>设置单元格内容超出单元格长度时是否折行显示。
+            </div>
+            <div class="row-fluid"  style="margin-top: 20px;border-bottom: 1px solid #ddd;padding-bottom: 15px;">
+                <div class="span6">
+                    <h4>4.1 nowrap:true</h4>
+                    <table id="table8"></table>
+                </div>
+                <div class="span6">
+                    <h4>4.2 nowrap:false</h4>
+                    <table id="table9"></table>
                 </div>
             </div>
 
@@ -504,6 +517,55 @@ $(document).ready(function () {
     $('#table7').fastGrid({
         height: 200,
         cols: cols7,
+        items: items
+    });
+
+
+    var cols8 = [
+        {title:'行情', name:'', width: 30, align: 'center', renderer: function(val,item,items,rowIndex){
+            return '<a href="#" class="btnPrice"></a>';
+        }},
+        { title:'股票', name:'SECUCODE' ,width:80, align:'center', renderer: function(val, item){
+            return  item.SECUABBR + '(' + item.SECUCODE + ')';
+        } },
+        { title:'今收盘', name:'CLOSINGPRICE' ,width:60, align:'right', renderer: fixed2},
+        { title:'涨跌幅', name:'DAYCHANGERATE' ,width:60, align:'right',renderer: function(val){
+            if(val > 0){
+                return '<span style="color: #b00">' + val.toFixed(2) +'%' + '</span>';
+            }else if(val < 0){
+                return '<span style="color: #0b0">' + val.toFixed(2) +'%' + '</span>';
+            }
+            return val.toFixed(2)+'%';
+        }},
+        { title:'涨跌额', name:'DAYCHANGE' ,width:60, align:'right', renderer: function(val){
+            if(val > 0){
+                return '<span style="color: #b00">' + val.toFixed(2) + '</span>';
+            }else if(val < 0){
+                return '<span style="color: #0b0">' + val.toFixed(2) + '</span>';
+            }
+            return val.toFixed(2);
+        }},
+        { title:'振幅', name:'AMPLITUDE' ,width:60, align:'right', renderer: function(val){
+            return val.toFixed(2)+'%';
+        }},
+        { title:'成交量(手)', name:'TURNOVERVOL' ,width:100, align:'right', renderer: function(val){
+            return (val / 100).toFixed(2);
+        }},
+        { title:'成交额(万)', name:'TURNOVERVAL' ,width:100, align:'right', renderer: function(val){
+            return (val / 10000).toFixed(2);
+        }},
+        { title:'昨收盘', name:'PREVCLOSINGPRICE' ,width:60, align:'right', renderer: fixed2},
+        { title:'今开盘', name:'OPENINGPRICE',width:60, align:'right', renderer: fixed2},
+        { title:'最高价', name:'HIGHESTPRICE' ,width:60, align:'right', renderer: fixed2},
+        { title:'最低价', name:'LOWESTPRICE' ,width:60, align:'right', renderer: fixed2}
+    ];
+    $('#table8').fastGrid({
+        cols: cols8,
+        items: items,
+        nowrap: true
+    });
+    $('#table9').fastGrid({
+        cols: cols8,
         items: items
     });
 });

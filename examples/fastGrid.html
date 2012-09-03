@@ -755,7 +755,7 @@ $(document).ready(function () {
         cols: cols,
         items: items,
         onSelected: function(e, item, rowIndex, colIndex){
-            if(colIndex === 1){
+            if(colIndex === 0){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作
             }
@@ -765,7 +765,7 @@ $(document).ready(function () {
         cols: cols,
         items: items,
         onSelected: function(e, item, rowIndex, colIndex){
-            if(colIndex === 1){
+            if(colIndex === 0){
                 alert(JSON.stringify(item));
                 return false;//返回false取消执行选中或取消选中的操作
             }

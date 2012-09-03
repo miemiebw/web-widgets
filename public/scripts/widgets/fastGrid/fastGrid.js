@@ -71,7 +71,16 @@
 
             //设置尺寸
             var opts = this.opts;
-            $fastGrid.width(opts.width);
+            if ($.browser.msie && $.browser.version == "6.0" && (opts.width === '' || opts.width === 'auto')){
+                $fastGrid.width('100%');
+                var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
+                    + parseInt($fastGrid.css('border-right-width'),10)
+                    + parseInt($fastGrid.css('padding-left'),10)
+                    + parseInt($fastGrid.css('padding-right'),10);
+                $fastGrid.width($fastGrid.width() - fgWBP);
+            }else{
+                $fastGrid.width(opts.width);
+            }
             if(!opts.fitRows){
             $fastGrid.height(opts.height);
             }
@@ -170,6 +179,16 @@
             if((typeof opts.width === 'string' && opts.width.indexOf('%') === opts.width.length-1) ||
                 typeof opts.height === 'string' && opts.height.indexOf('%') === opts.height.length-1){
                 $(window).on('resize', function(){
+
+                    if ($.browser.msie && $.browser.version == "6.0" && (opts.width === '' || opts.width === 'auto')){
+                        $fastGrid.width('100%');
+                        var fgWBP = parseInt($fastGrid.css('border-left-width'),10)
+                            + parseInt($fastGrid.css('border-right-width'),10)
+                            + parseInt($fastGrid.css('padding-left'),10)
+                            + parseInt($fastGrid.css('padding-right'),10);
+                        $fastGrid.width($fastGrid.width() - fgWBP);
+                    }
+
                     if(!opts.fitRows){
                         $bodyWrapper.height($fastGrid.height() - $headWrapper.outerHeight(true));
                     }

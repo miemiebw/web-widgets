@@ -92,7 +92,8 @@
             $.data(this.$body[0],'loadCount',0);
 
             if(opts.checkCol){
-                opts.cols.unshift({title:'<input type="checkbox">', align: 'center' ,lockWidth: true, renderer:function(){
+                var chkHtml = opts.multiSelect ? '<input type="checkbox">' : '<input type="checkbox" disabled="disabled">';
+                opts.cols.unshift({title:chkHtml, align: 'center' ,lockWidth: true, renderer:function(){
                     return '<input type="checkbox">';
                 }});
             }

@@ -833,7 +833,7 @@
         return this.each(function(){
             var $this = $(this)
                 , data = $this.data('fastGrid')
-                , options = $.extend({}, $.fn.fastGrid.defaults, typeof option == 'object' && option);
+                , options = $.extend(true, {}, $.fn.fastGrid.defaults, typeof option == 'object' && option);
             if (!data) $this.data('fastGrid', (data = new FastGrid(this, options)))
         });
     };

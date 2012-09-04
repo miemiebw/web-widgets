@@ -92,9 +92,9 @@
             $.data(this.$body[0],'loadCount',0);
 
             if(opts.checkCol){
-                var chkHtml = opts.multiSelect ? '<input type="checkbox">' : '<input type="checkbox" disabled="disabled">';
+                var chkHtml = opts.multiSelect ? '<input type="checkbox" class="checkAll" >' : '<input type="checkbox" disabled="disabled" class="checkAll">';
                 opts.cols.unshift({title:chkHtml, align: 'center' ,lockWidth: true, renderer:function(){
-                    return '<input type="checkbox">';
+                    return '<input type="checkbox" class="check">';
                 }});
             }
         },
@@ -166,11 +166,12 @@
 
 
                 for(var colIndex=0; colIndex<opts.cols.length; colIndex++){
+                    optHtml.push('<label ');
                     if(opts.checkCol && colIndex===0){
-                        continue;
+                        optHtml.push('style="display:none;" ');
                     }
                     var col = opts.cols[colIndex];
-                    optHtml.push('<label><input type="checkbox"  ');
+                    optHtml.push('><input type="checkbox"  ');
                     if(!col.hidden) optHtml.push('checked="checked"');
                     if(col.lockDisplay) optHtml.push(' disabled="disabled"');
                     optHtml.push('/><span>');

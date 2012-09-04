@@ -75,6 +75,11 @@
     color: #000;
     vertical-align: middle;
 }
+
+.fastGrid .headWrapper .head th .title .checkAll{
+    height: 27px;
+}
+
 /* 可以排序 */
 .fastGrid .headWrapper .head th .canSort{
     cursor: pointer;
@@ -210,6 +215,9 @@
 
 .fastGrid .body tr.selected td{
     background: #FFEDAC;
+}
+.fastGrid .body td .check{
+    vertical-align: middle;
 }
 
 .fastGrid .nowrap{

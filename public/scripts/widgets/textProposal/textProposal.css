@@ -21,6 +21,8 @@
     z-index: 100;
     overflow:hidden;
     overflow-y:auto;
+    margin: 0;
+    list-style: none;
 }
 
 .textProposal .list li{

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="jquery 1.8.1">
-      <change type="DELETED" beforePath="D:\dev\javascript\web-widgets\examples\fastGrid-ajax-nowrap.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\dev\javascript\web-widgets\examples\fastGrid-native-multiSelect.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\dev\javascript\web-widgets\examples\fastGrid-options.html" afterPath="" />
-      <change type="DELETED" beforePath="D:\dev\javascript\web-widgets\examples\paginator-style-grid.html" afterPath="" />
+    <list default="true" id="ea8b0209-e9d9-4e97-adc5-d2b2fc81c219" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-ajax.html" afterPath="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid-native.html" afterPath="$PROJECT_DIR$/examples/fastGrid-native.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/fastGrid.html" afterPath="$PROJECT_DIR$/examples/fastGrid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/textProposal.html" afterPath="$PROJECT_DIR$/examples/textProposal.html" />
     </list>
     <ignored path="widgets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,16 +64,25 @@
       <file leaf-file-name="fastGrid-native.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/fastGrid-native.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="59" selection-start="140" selection-end="140" vertical-scroll-proportion="-2.7142856">
+            <state line="4" column="59" selection-start="131" selection-end="140" vertical-scroll-proportion="-2.7142856">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fastGrid.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="fastGrid.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/fastGrid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="9" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.26322418">
+            <state line="10" column="21" selection-start="383" selection-end="383" vertical-scroll-proportion="-6.785714">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="textProposal.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/textProposal.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="59" selection-start="148" selection-end="148" vertical-scroll-proportion="0.12117347">
               <folding />
             </state>
           </provider>
@@ -155,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/public/styles/quote.json" />
         <option value="$PROJECT_DIR$/app/controllers/fastGrid-controller.js" />
         <option value="$PROJECT_DIR$/views/examples/test.jade" />
         <option value="$PROJECT_DIR$/views/examples/paginator.jade" />
@@ -171,6 +172,7 @@
         <option value="$PROJECT_DIR$/examples/fastGrid-ajax.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid-native.html" />
         <option value="$PROJECT_DIR$/examples/fastGrid.html" />
+        <option value="$PROJECT_DIR$/examples/textProposal.html" />
       </list>
     </option>
   </component>
@@ -827,7 +829,11 @@
       <created>1346911560435</created>
       <updated>1346911560435</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="modify">
+      <created>1346912303859</created>
+      <updated>1346912303859</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers>
       <GitHub shared="false">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -866,6 +872,7 @@
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792583" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41946697" sideWeight="0.49752998" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908458" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -880,7 +887,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833958" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792583" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39976826" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -923,7 +929,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix css" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -953,7 +959,6 @@
     <MESSAGE value="add data" />
     <MESSAGE value="add chinese sort" />
     <MESSAGE value="jquery 1.8.1" />
-    <MESSAGE value="modify" />
     <MESSAGE value="fix ie7 ie6 fitRows" />
     <MESSAGE value="fix ie6 ie7 fitRows" />
     <MESSAGE value="modify example" />
@@ -961,16 +966,12 @@
     <MESSAGE value="test" />
     <MESSAGE value="checkbox" />
     <MESSAGE value="fix css" />
+    <MESSAGE value="modify" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/styles/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/fastGrid-controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="24" selection-start="856" selection-end="856" vertical-scroll-proportion="0.51861703" />
@@ -1048,16 +1049,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/fastGrid-native.html">
+    <entry file="file://$PROJECT_DIR$/examples/fastGrid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="59" selection-start="140" selection-end="140" vertical-scroll-proportion="-2.7142856">
+        <state line="10" column="21" selection-start="383" selection-end="383" vertical-scroll-proportion="-6.785714">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/fastGrid.html">
+    <entry file="file://$PROJECT_DIR$/examples/fastGrid-native.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="9" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.26322418">
+        <state line="4" column="59" selection-start="131" selection-end="140" vertical-scroll-proportion="-2.7142856">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/textProposal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="59" selection-start="148" selection-end="148" vertical-scroll-proportion="0.12117347">
           <folding />
         </state>
       </provider>

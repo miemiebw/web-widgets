@@ -7,6 +7,7 @@
 }
 
 .paginator ul{
+    margin: 0;
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -104,11 +105,15 @@
     *display: inline;
     *zoom: 1;
     margin-left: 5px;
+    vertical-align: middle
 }
 
 .paginator select{
     border: 1px solid #ccc;
     padding: 1px;
+    width: auto;
+    height: auto;
+    margin: 0;
 }
 
 .paginator input{

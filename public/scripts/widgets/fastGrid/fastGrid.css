@@ -141,6 +141,7 @@
 }
 
 .fastGrid .optWrapper label{
+    font-size: 12px;
     display: inline-block;
     *display: inline;
     *zoom: 1;

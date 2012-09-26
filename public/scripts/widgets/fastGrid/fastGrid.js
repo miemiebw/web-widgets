@@ -674,7 +674,7 @@
             //opt的params可以使函数，例如收集过滤的参数
             if($.isFunction(opts.params)){
                 params = $.extend(params, opts.params());
-            }else if($.isPlainObject()){
+            }else if($.isPlainObject(opts.params)){
                 params = $.extend(params, opts.params);
             }
             //合并load的参数

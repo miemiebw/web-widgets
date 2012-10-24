@@ -219,7 +219,7 @@
                     if($noData.is(':visible')){
                         $noData.css({
                             'left': ($fastGrid.width() - $noData.width()) / 2,
-                            'top': ($fastGrid.height() - $noData.height()) / 2
+                            'top': ($fastGrid.height() + $headWrapper.height() - $noData.height()) / 2
                         });
                     }
                     //调整loading
@@ -627,13 +627,14 @@
 
         _refreshNoData: function(){
             var $fastGrid = this.$fastGrid;
+            var $headWrapper = this.$headWrapper;
             //无数据文字位置
             var $noData = $fastGrid.find('.noData');
 
             if($noData.data('nodata')){
                 $noData.css({
                     'left': ($fastGrid.width() - $noData.width()) / 2,
-                    'top': ($fastGrid.height() - $noData.height()) / 2
+                    'top': ($fastGrid.height() + $headWrapper.height() - $noData.height()) / 2
                 }).show();
             }else{
                 $noData.hide();
@@ -674,7 +675,7 @@
             //opt的params可以使函数，例如收集过滤的参数
             if($.isFunction(opts.params)){
                 params = $.extend(params, opts.params());
-            }else if($.isPlainObject()){
+            }else if($.isPlainObject(opts.params)){
                 params = $.extend(params, opts.params);
             }
             //合并load的参数

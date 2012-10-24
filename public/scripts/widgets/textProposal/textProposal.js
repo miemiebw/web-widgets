@@ -62,6 +62,10 @@
             var $this = this;
 
             //设置下拉位置
+            var left = $input.css('margin-left');
+            if(left === 'auto'){
+                left = '0px';
+            }
             $list.width($input.outerWidth(false)-2)
                 .css('top', $input.outerHeight(true))
                 .css('left', $input.css('margin-left'));

@@ -68,7 +68,7 @@
             }
             $list.width($input.outerWidth(false)-2)
                 .css('top', $input.outerHeight(true))
-                .css('left', $input.css('margin-left'));
+                .css('left', left);
             if (opts.items) {
                 $this._prcessProposals(opts.items);
             } else if (opts.url) {
